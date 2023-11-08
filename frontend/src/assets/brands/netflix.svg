@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 9.2 299.816 299.816" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="linearGradient13368" x1="78.23394" y1="423.76712" x2="221.66281" y2="365.09167" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.204829, 0, 0, 0.204829, 96.000849, 59.526063)" xlink:href="#linearGradient19332"/>
+    <linearGradient id="linearGradient19332">
+      <stop style="stop-color:#b1060f;stop-opacity:1" offset="0" id="stop19328"/>
+      <stop style="stop-color:#7b010c;stop-opacity:1" offset="0.5461" id="stop19560"/>
+      <stop style="stop-color:#e50914;stop-opacity:0;" offset="1" id="stop19330"/>
+    </linearGradient>
+    <linearGradient id="linearGradient35889" x1="456.36462" y1="521.55957" x2="309.67599" y2="583.49475" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.204829, 0, 0, 0.204829, 96.000849, 59.526063)" xlink:href="#linearGradient35887"/>
+    <linearGradient id="linearGradient35887">
+      <stop style="stop-color:#b1060f;stop-opacity:1;" offset="0" id="stop35883"/>
+      <stop style="stop-color:#7b010c;stop-opacity:1" offset="0.625" id="stop36053"/>
+      <stop style="stop-color:#b1060f;stop-opacity:0;" offset="1" id="stop35885"/>
+    </linearGradient>
+  </defs>
+  <ellipse style="fill: rgb(37, 36, 36);" cx="149.908" cy="159.108" rx="149.908" ry="149.908" transform="matrix(0.9999999999999999, 0, 0, 0.9999999999999999, -5.684341886080802e-14, 0)"/>
+  <g transform="matrix(0.9999999999999999, 0, 0, 0.9999999999999999, -2.7750020027161213, 0)">
+    <path style="fill: url('#linearGradient13368'); stroke: none; stroke-width: 1px; stroke-linecap: butt; stroke-linejoin: miter; stroke-opacity: 1; fill-opacity: 1;" d="M 95.765 59.291 L 96.474 264.902 C 111.482 262.011 123.283 262.327 136.605 261.125 L 136.605 59.528 L 95.765 59.291 Z" id="path6055"/>
+    <path style="fill: url('#linearGradient35889'); stroke: none; stroke-width: 1px; stroke-linecap: butt; stroke-linejoin: miter; stroke-opacity: 1; fill-opacity: 1;" d="M 168.472 59.528 L 209.312 59.528 L 209.785 264.429 L 168.237 257.584 L 168.472 59.528 Z" id="path678"/>
+    <path style="fill: rgb(229, 9, 20); fill-opacity: 1; stroke: none; stroke-width: 1px; stroke-linecap: butt; stroke-linejoin: miter; stroke-opacity: 1;" d="M 96.238 59.528 C 97.18 61.888 167.056 260.654 167.056 260.654 C 178.538 260.57 193.933 262.444 209.075 264.193 L 136.367 59.528 L 96.238 59.528 Z" id="path362"/>
+  </g>
+</svg>

@@ -1,0 +1,11 @@
+{
+    "dialect": "mysql",
+    "host": "localhost",
+    "database": "benarbitrage",
+    "username": "root",
+    "password" : "",
+    "port": 3306, 
+    "additional": {
+      "timestamps": false
+    }
+}

@@ -1,0 +1,274 @@
+@import url("@fontsource/poppins/400.css");
+@import url("@fontsource/poppins/500.css");
+@import url("@fontsource/poppins/700.css");
+@import url("@fontsource/poppins/800.css");
+@import url("@fontsource/montserrat/400.css");
+@import url("@fontsource/montserrat/500.css");
+@import url("@fontsource/montserrat/700.css");
+@import url("@fontsource/montserrat/800.css");
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  color: rgb(88, 88, 88);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #ededf2;
+}
+
+html.dark body {
+  background-color: #3d3c62;
+}
+
+body {
+  font-family: poppins, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.performance,
+.market-price {
+  font-family: montserrat, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+p {
+  line-height: 1.6em;
+}
+
+p + p {
+  margin-top: 16px;
+}
+
+.top-nav-bar::-webkit-scrollbar,
+.mobile-menu::-webkit-scrollbar {
+  display: none;
+}
+
+.emphasis-underline {
+  position: relative;
+  z-index: 1;
+}
+
+:root {
+  --emphasis-underline-color: #e5c775;
+}
+
+.dark {
+  --emphasis-underline-color: #51507c;
+}
+
+.emphasis-underline::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: var(--emphasis-underline-color);
+  height: 6px;
+  width: 60%;
+  z-index: -1;
+}
+
+.mobile-menu {
+  background-color: #6a688399;
+  animation: show-mobile-menu 0.3s ease forwards;
+  position: fixed;
+  display: none;
+}
+
+@keyframes show-mobile-menu {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hide-mobile-menu {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.mobile-menu-content {
+  animation: show-mobile-menu-content 0.3s ease forwards;
+  display: none;
+}
+
+@keyframes show-mobile-menu-content {
+  from {
+    transform: translateY(60px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes hide-mobile-menu-content {
+  from {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(60px);
+    opacity: 0;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease;
+}
+
+.animate-fade-out {
+  animation: fade-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/*  Let's style our Hamburger Menu */
+.hamburger-menu span {
+  display: block;
+  margin: 6px auto;
+  width: 100%;
+  height: 2px;
+  transition: 0.3s;
+}
+
+.hamburger-menu {
+  cursor: pointer;
+  width: 30px;
+}
+
+/*  When this active class is applied to the Hamburger Menu button, it changes to X */
+.hamburger-menu.active span:nth-of-type(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger-menu.active span:nth-of-type(2) {
+  transform: rotate(-45deg);
+}
+
+.hamburger-menu.active span:nth-of-type(3) {
+  opacity: 0;
+}
+
+.options {
+  opacity: 0;
+}
+
+.opened button svg.caret {
+  transform: rotate(180deg);
+}
+
+.live-chat-wrapper {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+}
+
+.chat-box {
+  box-shadow: 0px 0px 6px 1px #35345540;
+  transform-origin: bottom right;
+  animation: show-chat-box 0.3s ease forwards;
+  display: none;
+}
+
+.chat-pane {
+  margin-bottom: 180px;
+}
+
+.chat {
+  border-radius: 10px;
+  border-top-right-radius: 30px;
+}
+
+.live-chat-btn {
+  box-shadow: 0px 2px 10px 3px #e5c77573;
+  cursor: pointer;
+  animation: show-chat-btn 0.3s ease forwards;
+}
+
+.live-chat-btn:hover > .icon {
+  transform: scale(1.1);
+}
+
+@keyframes show-chat-box {
+  from {
+    opacity: 0;
+    transform: scale(0%);
+  }
+  to {
+    opacity: 1;
+    transform: scale(100%);
+  }
+}
+
+@keyframes hide-chat-box {
+  from {
+    opacity: 1;
+    transform: scale(100%);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0%);
+  }
+}
+
+@keyframes hide-chat-btn {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+@keyframes show-chat-btn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.progress-indicator {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-indicator .progress-line {
+  width: 50px;
+  height: 4px;
+  border-radius: 3px;
+}
