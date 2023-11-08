@@ -16,7 +16,7 @@ export default function AccountValidation() {
       setIsLoading(true);
 
       const processFormData = await fetch(
-        "https://02nkfd0n-5174.uks1.devtunnels.ms/user/set_account_type",
+        "https://p0xq2gpd-5174.uks1.devtunnels.ms/user/set_account_type",
         {
           method: "POST",
           headers: {
@@ -34,7 +34,7 @@ export default function AccountValidation() {
         const response = await processFormData.json();
         console.log(response);
 
-        // Set these cookie in the User's browser
+        // Set this cookie in the User's browser
         document.cookie = "onboardingStage=VALIDATION_SUCCESS; path=/;";
 
         // Then reload the page

@@ -22,9 +22,9 @@ export default function SignUpSuccess() {
       </div>
       <div className="body mt-8 text-base mobile_lg:text-lg">
         <p>
-          Hi, {getCookie("userName", "John Doe")}. Your Benarbitrage <br />{" "}
-          account was created successfully. <br />
-          Proceed to account validation.
+          Hi, {getCookie("userName", "John Doe")}. <br />
+          Your Benarbitrage account was created successfully. Proceed to account
+          validation.
         </p>
         <button
           onClick={handleProceed}

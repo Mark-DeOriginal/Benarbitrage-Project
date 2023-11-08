@@ -59,7 +59,7 @@ export default function SignUpForm() {
 
       // Send form data to server for processing
       const processFormData = await fetch(
-        "https://02nkfd0n-5174.uks1.devtunnels.ms/user/create-user",
+        "https://p0xq2gpd-5174.uks1.devtunnels.ms/user/create-user",
         {
           method: "POST",
           headers: {
