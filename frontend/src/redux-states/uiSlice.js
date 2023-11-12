@@ -6,6 +6,11 @@ export const uiSlice = createSlice({
   initialState: {
     isDarkMode: false,
     userBoardingStage: getCookie("onboardingStage", "SIGN_UP"),
+    selectedAsset: {
+      name: "Bitcoin",
+      logo: "/src/assets/icons/cryptos/bitcoin.svg",
+      abbr: "BTC",
+    },
   },
   reducers: {
     toggleDarkMode(state) {
@@ -17,10 +22,17 @@ export const uiSlice = createSlice({
     setUserBoardingStage(state, action) {
       state.userBoardingStage = action.payload;
     },
+    setSelectedAsset(state, action) {
+      state.selectedAsset = action.payload;
+    },
   },
 });
 
-export const { toggleDarkMode, setDarkMode, setUserBoardingStage } =
-  uiSlice.actions;
+export const {
+  toggleDarkMode,
+  setDarkMode,
+  setUserBoardingStage,
+  setSelectedAsset,
+} = uiSlice.actions;
 
 export default uiSlice.reducer;

@@ -66,6 +66,7 @@ module.exports = {
     },
     boxShadow: {
       navShadow: "0 4px 11px -1px rgb(0 0 0 / 8%)",
+      cardShadow: "0px 4px 11px 1px #0000000a",
     },
     screens: {
       mobile: "500px",

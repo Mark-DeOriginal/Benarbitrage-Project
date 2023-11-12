@@ -36,6 +36,7 @@ export default function AccountValidation() {
 
         // Set this cookie in the User's browser
         document.cookie = "onboardingStage=VALIDATION_SUCCESS; path=/;";
+        document.cookie = "accountType=" + selectedAccType + "; path=/;";
 
         // Then reload the page
         location.reload();

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { exchanges } from "../../../constants";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedAsset } from "../../../redux-states/uiSlice";
 
 export const ExchangeTypeList = ({ type }) => {
   const [performance, setPerformance] = useState(type.performance);
@@ -56,8 +58,10 @@ export const ExchangeTypeList = ({ type }) => {
     return () => clearInterval(update);
   }, []);
 
+  const selectedAsset = useSelector((state) => state.ui.selectedAsset);
+
   return (
-    <div className="py-2 px-4 flex justify-between border border-benBlue-100 dark:border-benBlue-lightC2 bg-benWhite dark:bg-transparent rounded-2xl">
+    <>
       <div className="logo-and-name flex gap-3 items-center">
         {type.logo && (
           <img
@@ -84,21 +88,44 @@ export const ExchangeTypeList = ({ type }) => {
             +{performance}%
           </span>
           <br />
-          <span className="market-price text-base tablet:text-lg font-medium">
+          <span
+            className={`market-price text-base tablet:text-lg font-medium ${
+              selectedAsset.name === type.name && "dark:text-benOrange-300"
+            }`}
+          >
             {type.currency}
             {marketPrice}
           </span>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
 export function ExchangeTypeLists({ exchange }) {
+  const selectedAsset = useSelector((state) => state.ui.selectedAsset);
+  const dispatch = useDispatch();
+
   return (
     <div className="text-base text-benBlue-lightB dark:text-benBlue-100">
       {exchange.types.map((type, index) => (
-        <div className="mb-1" key={index}>
+        <div
+          className={`${
+            selectedAsset.name === type.name
+              ? "ring-2 ring-benBlue-lightD dark:ring-benOrange-300"
+              : "border border-benBlue-100 dark:border-benBlue-lightC2"
+          } active:scale-[0.95] select-none py-2 px-4 flex justify-between bg-benWhite dark:bg-transparent rounded-md cursor-pointer mb-1`}
+          key={index}
+          onClick={() =>
+            dispatch(
+              setSelectedAsset({
+                name: type.name,
+                logo: type.logo,
+                abbr: type.abbr || "",
+              })
+            )
+          }
+        >
           <ExchangeTypeList type={type} />
         </div>
       ))}
