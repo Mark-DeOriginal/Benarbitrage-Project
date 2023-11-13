@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -76,7 +75,6 @@ module.exports = {
       screen980: "980px",
       laptop: "1160px",
       screen1240: "1240px",
-      ...defaultTheme.screens,
     },
     marginBottom: {
       1: "0.8rem",

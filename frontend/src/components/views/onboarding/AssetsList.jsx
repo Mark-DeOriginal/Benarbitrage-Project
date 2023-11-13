@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { exchanges } from "../../../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedAsset } from "../../../redux-states/uiSlice";
+import insertDelimiters from "../../../utilities/insertDelimiters";
 
 export const ExchangeTypeList = ({ type }) => {
   const [performance, setPerformance] = useState(type.performance);
@@ -37,15 +38,6 @@ export const ExchangeTypeList = ({ type }) => {
       type.marketPrice
     ).toFixed(2);
     return insertDelimiters(price);
-  };
-
-  const insertDelimiters = (figure) => {
-    const parts = figure.split(".");
-    const integer = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    const decimal = parts[1];
-    const formatted = `${integer}.${decimal}`;
-
-    return formatted;
   };
 
   useEffect(() => {

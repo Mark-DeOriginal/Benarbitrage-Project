@@ -272,14 +272,3 @@ p + p {
   height: 4px;
   border-radius: 3px;
 }
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Remove number input arrows in Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}

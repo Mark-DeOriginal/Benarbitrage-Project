@@ -6,7 +6,7 @@ import { Review } from "../../ReviewsSection";
 export default function PersuadeSection() {
   return (
     <div className="column relative min-[980px]:w-[450px] shrink-0 border-b min-[980px]:border-b-0 min-[980px]:border-r border-navBarBorderLight dark:border-navBarBorderDark bg-[#e9e9ed] dark:bg-benDarkBlue">
-      <div className="blur-background absolute top-[180px] left-[32px] h-[200px] w-[91px] bg-[#646297] z-0 blur-[90px]"></div>
+      <div className="blur-background absolute top-[180px] left-[32px] h-[200px] w-[91px] bg-[#646297] z-0 blur-[100px]"></div>
       <div className="blur-background absolute top-[180px] right-[32px] h-[200px] w-[91px] bg-benOrange-400 z-0 blur-[90px]"></div>
 
       <div className="header bg-navBarLightBg dark:bg-navBarDarkBg border-b border-navBarBorderLight dark:border-navBarBorderDark tablet:px-10 px-6 py-4 fixed z-10 min-[980px]:relative w-full backdrop-blur-sm">

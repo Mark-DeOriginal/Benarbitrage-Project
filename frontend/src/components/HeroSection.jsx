@@ -4,8 +4,7 @@ import Caret from "./Caret";
 export default function HeroSection() {
   return (
     <section className="p-6 tablet:px-[50px] pt-[130px] tablet:pt-[150px] flex gap-5 items-start relative overflow-hidden">
-      <div className="blur-bg-effect absolute top-[180px] left-[32px] h-[200px] w-[91px] bg-[#646297] z-0 blur-[70px]"></div>
-      <div className="blur-bg-effect absolute top-[180px] left-[300px] h-[200px] w-[91px] bg-benOrange-400 z-0 blur-[80px]"></div>
+      <div className="blur-bg-effect absolute top-[180px] left-[32px] h-[200px] w-[91px] bg-[#646297] z-0 blur-[100px]"></div>
 
       <div className="hero-texts relative z-5">
         <div>
