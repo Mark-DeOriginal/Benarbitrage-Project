@@ -329,7 +329,7 @@ export const authenticateUser = async (req, res) => {
 };
 
 sequelize
-  .sync({ force: true })
+  .sync()
   .then(() => {
     console.log("Database synchronized successfully!");
   })

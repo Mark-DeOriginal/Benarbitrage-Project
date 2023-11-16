@@ -83,6 +83,7 @@ export default function LoginForm() {
           document.cookie = "isSignedIn=true; path=/;";
           document.cookie =
             "onboardingStage=" + interpretedOnboardingStage + "; path=/;";
+          document.cookie = "accountType=" + accountType + "; path=/;";
           document.cookie = "expires=Thu, 01 Jan 2099 00:00:00 UTC; path=/;";
 
           // Redirect to dashboard
@@ -163,9 +164,10 @@ export default function LoginForm() {
                 value={formData[input.name]}
                 onChange={handleChange}
                 placeholder={input.placeholder}
-                className={`focus:ring-2 ring-benBlue-lightD dark:ring-benBlue-200/40 bg-white dark:bg-transparent drop-shadow-sm rounded-2xl px-4 py-3 w-full border border-navBarBorderLight dark:border-benBlue-lightC2 ${
-                  inputFieldsInfo[input.name].isError &&
-                  "border-errorColor dark:border-errorColor"
+                className={`focus:ring-2 ring-benBlue-lightD dark:ring-benBlue-200/40 bg-white dark:bg-transparent drop-shadow-sm rounded-2xl px-4 py-3 w-full border ${
+                  inputFieldsInfo[input.name].isError
+                    ? "border-errorColor dark:border-errorColor"
+                    : "border-navBarBorderLight dark:border-benBlue-lightC2"
                 }`}
               />
               {input.name === "password" && (

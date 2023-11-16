@@ -52,10 +52,6 @@ export default function (sequelize, DataTypes) {
         type: DataTypes.STRING(60),
         allowNull: true,
       },
-      bonus: {
-        type: DataTypes.STRING(60),
-        allowNull: true,
-      },
       last_login_date: {
         type: DataTypes.STRING(60),
         allowNull: true,

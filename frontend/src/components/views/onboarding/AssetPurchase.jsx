@@ -2,19 +2,102 @@ import React, { useState } from "react";
 import AssetsList from "./AssetsList";
 import { useSelector } from "react-redux";
 import insertDelimiters from "../../../utilities/insertDelimiters";
+import getCookie from "../../../utilities/getCookie";
 
 export default function AssetPurchase() {
   const selectedAsset = useSelector((state) => state.ui.selectedAsset);
-  const [assetAmount, setAssetAmount] = useState("300");
+  const [assetAmount, setAssetAmount] = useState(() => {
+    let acctType = getCookie("accountType", "Basic");
+
+    return acctType === "Basic"
+      ? "100"
+      : acctType === "Standard"
+      ? "300"
+      : acctType === "Business"
+      ? "500"
+      : "100";
+  });
+
+  function getTradingSpeed(tradingAmount) {
+    let baseTradeAmount = 100;
+    let baseTradeSpeed = 25;
+    let tradeAmount = parseFloat((tradingAmount || "0").split(",").join(""));
+    let speed = (baseTradeSpeed * tradeAmount) / baseTradeAmount;
+
+    return speed;
+  }
+
+  function getTradingProfit(tradingAmount) {
+    let tradeAmount = parseFloat((tradingAmount || "0").split(",").join(""));
+    let percentage = 350;
+    return (percentage * tradeAmount) / 100;
+  }
+
+  function getTradingFee(tradingAmount) {
+    let tradeAmount = parseFloat((tradingAmount || "0").split(",").join(""));
+    let percentageFee = 2.5;
+    return (percentageFee * tradeAmount) / 100;
+  }
+
+  function getNetProfit(gross, fee) {
+    return gross - fee;
+  }
+
+  const [tradeSpeed, setTradeSpeed] = useState(
+    insertDelimiters(getTradingSpeed(assetAmount))
+  );
+
+  const [tradeProfit, setTradeProfit] = useState(
+    insertDelimiters(getTradingProfit(assetAmount))
+  );
+
+  const [tradeFee, setTradeFee] = useState(
+    insertDelimiters(getTradingFee(assetAmount))
+  );
+
+  const [tradeNetProfit, setTradeNetProfit] = useState(
+    insertDelimiters(
+      getNetProfit(getTradingProfit(assetAmount), getTradingFee(assetAmount))
+    )
+  );
 
   const handleChange = (e) => {
     let strippedValue = e.target.value.replace(/[^0-9]/g, "");
-    setAssetAmount(() => insertDelimiters(strippedValue));
+    // Return the strings except the last one
+    let prevValues = strippedValue.slice(0, strippedValue.length - 1);
+
+    let parsedValue =
+      parseFloat(prevValues) < 1 // If prevValues are less than 1,
+        ? strippedValue[strippedValue.length - 1] // Return the last string
+        : strippedValue;
+
+    setAssetAmount(insertDelimiters(parsedValue));
+    setTradeSpeed(insertDelimiters(Math.round(getTradingSpeed(strippedValue))));
+    setTradeProfit(insertDelimiters(getTradingProfit(strippedValue)));
+    setTradeFee(insertDelimiters(getTradingFee(strippedValue)));
+    setTradeNetProfit(
+      insertDelimiters(
+        getNetProfit(
+          getTradingProfit(strippedValue),
+          getTradingFee(strippedValue)
+        )
+      )
+    );
+
+    setIsAmountError(false);
   };
 
   const handleLoseFocus = () => {
-    if (assetAmount === "") {
-      setAssetAmount(() => "00.00");
+    if (assetAmount === "" || assetAmount === "0") {
+      setAssetAmount(() => "0.0");
+    }
+  };
+
+  const [isAmountError, setIsAmountError] = useState(false);
+
+  const handleTrade = () => {
+    if (parseFloat(assetAmount.split(",").join("")) < 100) {
+      setIsAmountError(true);
     }
   };
 
@@ -25,9 +108,8 @@ export default function AssetPurchase() {
           Place Trade
         </h2>
         <p>
-          Creating of multiple accounts to claim bonuses is highly prohibited.
-          <br />
-          Bonus only applies on your first trade with Benarbitrage.
+          Please note, trade durations are calculated based on current market
+          data and therefore, may vary slightly later.
         </p>
       </div>
       <div className="body mt-8">
@@ -82,31 +164,59 @@ export default function AssetPurchase() {
                       type="text"
                       inputMode="numeric"
                       onChange={handleChange}
+                      maxLength={11}
                       value={assetAmount}
                       onBlur={handleLoseFocus}
                       placeholder="Enter amount"
-                      className="text-xl focus:ring-2 ring-benBlue-lightD dark:ring-benBlue-200/40 bg-white dark:bg-transparent drop-shadow-sm rounded-lg pr-4 pl-7 py-2 w-full border border-navBarBorderLight dark:border-benBlue-lightC2"
+                      className={`text-xl focus:ring-2 ring-benBlue-lightD dark:ring-benBlue-200/40 bg-white dark:bg-transparent drop-shadow-sm rounded-lg pr-4 pl-7 py-2 w-full border ${
+                        isAmountError
+                          ? "border-errorColor dark:border-errorColor"
+                          : "border-navBarBorderLight dark:border-benBlue-lightC2"
+                      }`}
                     />
                     <span className="absolute top-[25%] bottom-[25%] left-4 text-xl flex items-center">
                       $
                     </span>
                   </div>
+                  {
+                    // If there's an error, render the <p> element with the error message
+                    isAmountError && (
+                      <p className="message text-left mt-[6px] mobile_lg:text-sm text-errorColor">
+                        Should not be less than $100
+                      </p>
+                    )
+                  }
                   <div className="trade-calc space-y-2">
                     <div className="row mt-4 flex justify-between items-center">
-                      <h4>Trade profit</h4>
-                      <p className="text-lg font-bold">$1,050</p>
-                    </div>
-                    <div className="row flex justify-between items-center">
                       <h4>Trade speed</h4>
-                      <p className="text-lg font-bold">147mkt/s</p>
+                      <p className="text-base font-bold">{tradeSpeed} mkt/s</p>
                     </div>
                     <div className="row flex justify-between items-center">
                       <h4>Trade duration</h4>
-                      <p className="text-lg font-bold">8hrs, 42mins</p>
+                      <p className="text-base font-bold">8hrs, 42mins</p>
+                    </div>
+                    <div className="group border-y border-benBlue-200 dark:border-benBlue-lightB py-2">
+                      <div className="row flex justify-between items-center">
+                        <h4>Gross profit</h4>
+                        <p className="text-base font-bold">${tradeProfit}</p>
+                      </div>
+                      <div className="row flex justify-between items-center">
+                        <h4>Gas fee [2.5%]</h4>
+                        <p className="text-base font-bold">${tradeFee}</p>
+                      </div>
+                    </div>
+                    <div className="row text-center pt-4">
+                      <h4>Net profit [gross - fee] </h4>
+                      <p className="text-xl tablet:text-2xl font-bold mt-2">
+                        ${tradeNetProfit}
+                      </p>
                     </div>
                   </div>
                 </div>
-                <button className="block bg-benBlue-lightE dark:bg-benOrange-300 text-benBlue-100 dark:text-benBlue-400 ring-offset-2 ring-2 active:scale-[0.9] ring-offset-benWhite dark:ring-offset-benBlue-400 ring-benBlue-lightD dark:ring-benOrange-300 drop-shadow-sm rounded-xl w-fit py-2 px-8 mx-auto text-center mt-8 font-medium text-base text-lg">
+                <button
+                  onClick={handleTrade}
+                  className="block bg-benBlue-lightE dark:bg-benOrange-300 text-benBlue-100 dark:text-benBlue-400 ring-offset-2 focus:ring-2 active:scale-[0.9] ring-offset-benWhite dark:ring-offset-benBlue-400 ring-benBlue-lightD dark:ring-benOrange-300 drop-shadow-sm rounded-xl w-fit py-2 px-8 mx-auto text-center mt-8 font-medium text-base tablet:text-lg duration-100"
+                >
                   Buy & Trade
                 </button>
               </div>

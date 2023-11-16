@@ -87,7 +87,7 @@ function App() {
         />
         <UserDashboard />
       </>
-    ) : (
+    ) : pageUrl === "/" ? (
       <>
         <MetaData
           title="Benarbitrage"
@@ -97,6 +97,15 @@ function App() {
         <RootLayout>
           <HomePage />
         </RootLayout>
+      </>
+    ) : (
+      <>
+        <MetaData
+          title="Login"
+          description="Login and continue with your account."
+          themeColor={themeColor}
+        />
+        <LoginSection />
       </>
     );
 

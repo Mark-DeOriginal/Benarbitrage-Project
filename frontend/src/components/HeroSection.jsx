@@ -37,7 +37,7 @@ export default function HeroSection() {
               <Caret
                 className={`fill-benBlueLight dark:fill-benBlue-300 -rotate-90`}
               />
-              Get 50% bonus on first trade
+              Crisp and Smooth User Interface
             </li>
           </ul>
           <div className="flex space-x-2 mt-6">

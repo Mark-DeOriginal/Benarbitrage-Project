@@ -94,7 +94,7 @@ export const statistics = [
   },
   {
     title: "Year of Launch",
-    figure: "Oct, 2021",
+    figure: "Oct, 2022",
   },
 ];
 
@@ -294,20 +294,17 @@ export const accountTypes = [
   {
     name: "Basic",
     least_trade: "$100",
-    trading_speed: "13 mkts/s",
-    trading_fee: "1.04%",
+    trading_speed: "25 mkts/s",
   },
   {
     name: "Standard",
     least_trade: "$300",
-    trading_speed: "22 mkts/s",
-    trading_fee: "1.82%",
+    trading_speed: "75 mkts/s",
     isMostPopular: true,
   },
   {
     name: "Business",
-    least_trade: "$1,000",
-    trading_speed: "85 mkts/s",
-    trading_fee: "6.05%",
+    least_trade: "$500",
+    trading_speed: "125 mkts/s",
   },
 ];
