@@ -3,6 +3,7 @@ import { exchanges } from "../../../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedAsset } from "../../../redux-states/uiSlice";
 import insertDelimiters from "../../../utilities/insertDelimiters";
+import { scroller as scroll } from "react-scroll";
 
 export const ExchangeTypeList = ({ type }) => {
   const [performance, setPerformance] = useState(type.performance);
@@ -98,6 +99,21 @@ export function ExchangeTypeLists({ exchange }) {
   const selectedAsset = useSelector((state) => state.ui.selectedAsset);
   const dispatch = useDispatch();
 
+  const handleAssetClick = (type) => {
+    dispatch(
+      setSelectedAsset({
+        name: type.name,
+        logo: type.logo,
+        abbr: type.abbr || "",
+      })
+    );
+    scroll.scrollTo("placeTrade", {
+      duration: 800,
+      smooth: "easeInOutQuart",
+      offset: 40,
+    });
+  };
+
   return (
     <div className="text-base text-benBlue-lightB dark:text-benBlue-100">
       {exchange.types.map((type, index) => (
@@ -108,15 +124,7 @@ export function ExchangeTypeLists({ exchange }) {
               : "border border-benBlue-100 dark:border-benBlue-lightC2"
           } active:scale-[0.95] select-none py-2 px-4 flex justify-between bg-benWhite dark:bg-transparent rounded-md cursor-pointer mb-1`}
           key={index}
-          onClick={() =>
-            dispatch(
-              setSelectedAsset({
-                name: type.name,
-                logo: type.logo,
-                abbr: type.abbr || "",
-              })
-            )
-          }
+          onClick={() => handleAssetClick(type)}
         >
           <ExchangeTypeList type={type} />
         </div>

@@ -73,29 +73,37 @@ export default function AssetPurchase() {
 
     setAssetAmount(insertDelimiters(parsedValue));
     setTradeSpeed(insertDelimiters(Math.round(getTradingSpeed(strippedValue))));
-    setTradeProfit(insertDelimiters(getTradingProfit(strippedValue)));
-    setTradeFee(insertDelimiters(getTradingFee(strippedValue)));
-    setTradeNetProfit(
-      insertDelimiters(
-        getNetProfit(
-          getTradingProfit(strippedValue),
-          getTradingFee(strippedValue)
-        )
-      )
-    );
+    setTradeProfit(() => {
+      const profit = getTradingProfit(strippedValue);
+      return profit == 0
+        ? "0.00"
+        : insertDelimiters(profit);
+    });
+    setTradeFee(() => {
+      const fee = getTradingFee(strippedValue);
+      return fee == 0 ? "0.00" : insertDelimiters(fee);
+    });
+    setTradeNetProfit(() => {
+      const netProfit = getNetProfit(
+        getTradingProfit(strippedValue),
+        getTradingFee(strippedValue)
+      ).toFixed(2);
+
+      return netProfit == 0 ? "0.00" : insertDelimiters(netProfit);
+    });
 
     setIsAmountError(false);
   };
 
   const handleLoseFocus = () => {
     if (assetAmount === "" || assetAmount === "0") {
-      setAssetAmount(() => "0.0");
+      setAssetAmount(() => "0.00");
     }
   };
 
   const [isAmountError, setIsAmountError] = useState(false);
 
-  const handleTrade = () => {
+  const handleBuyAndTrade = () => {
     if (parseFloat(assetAmount.split(",").join("")) < 100) {
       setIsAmountError(true);
     }
@@ -104,7 +112,10 @@ export default function AssetPurchase() {
   return (
     <div className="sign-up">
       <div className="header font-medium text-center max-w-[600px] mx-auto">
-        <h2 className="text-2xl mb-2 font-bold text-benBlue-400 dark:text-benOrange-400">
+        <h2
+          name="placeTrade"
+          className="text-2xl mb-2 font-bold text-benBlue-400 dark:text-benOrange-400"
+        >
           Place Trade
         </h2>
         <p>
@@ -197,7 +208,7 @@ export default function AssetPurchase() {
                     </div>
                     <div className="group border-y border-benBlue-200 dark:border-benBlue-lightB py-2">
                       <div className="row flex justify-between items-center">
-                        <h4>Gross profit</h4>
+                        <h4>Trade profit [350%]</h4>
                         <p className="text-base font-bold">${tradeProfit}</p>
                       </div>
                       <div className="row flex justify-between items-center">
@@ -206,7 +217,7 @@ export default function AssetPurchase() {
                       </div>
                     </div>
                     <div className="row text-center pt-4">
-                      <h4>Net profit [gross - fee] </h4>
+                      <h4>Net profit [profit - fee] </h4>
                       <p className="text-xl tablet:text-2xl font-bold mt-2">
                         ${tradeNetProfit}
                       </p>
@@ -214,7 +225,7 @@ export default function AssetPurchase() {
                   </div>
                 </div>
                 <button
-                  onClick={handleTrade}
+                  onClick={handleBuyAndTrade}
                   className="block bg-benBlue-lightE dark:bg-benOrange-300 text-benBlue-100 dark:text-benBlue-400 ring-offset-2 focus:ring-2 active:scale-[0.9] ring-offset-benWhite dark:ring-offset-benBlue-400 ring-benBlue-lightD dark:ring-benOrange-300 drop-shadow-sm rounded-xl w-fit py-2 px-8 mx-auto text-center mt-8 font-medium text-base tablet:text-lg duration-100"
                 >
                   Buy & Trade
