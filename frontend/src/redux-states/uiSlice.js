@@ -5,6 +5,7 @@ export const uiSlice = createSlice({
   name: "ui",
   initialState: {
     isDarkMode: false,
+    isBuyAssetModalOpen: false,
     userBoardingStage: getCookie("onboardingStage", "SIGN_UP"),
     selectedAsset: {
       name: "Bitcoin",
@@ -25,6 +26,9 @@ export const uiSlice = createSlice({
     setSelectedAsset(state, action) {
       state.selectedAsset = action.payload;
     },
+    setIsBuyAssetModalOpen(state, action) {
+      state.isBuyAssetModalOpen = action.payload;
+    },
   },
 });
 
@@ -33,6 +37,7 @@ export const {
   setDarkMode,
   setUserBoardingStage,
   setSelectedAsset,
+  setIsBuyAssetModalOpen,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

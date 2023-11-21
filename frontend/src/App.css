@@ -27,6 +27,18 @@ body {
   font-family: poppins, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 8px; /* width of the entire scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #dbdbe1; /* color of the tracking area */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #63618b; /* color of the scroll thumb */
+}
+
 .performance,
 .market-price {
   font-family: montserrat, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -38,6 +50,12 @@ p {
 
 p + p {
   margin-top: 16px;
+}
+
+button,
+label {
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .top-nav-bar::-webkit-scrollbar,
@@ -271,4 +289,54 @@ p + p {
   width: 50px;
   height: 4px;
   border-radius: 3px;
+}
+
+.modal-bg {
+  animation: 0.3s ease forwards show-modal-bg;
+  display: none;
+}
+
+@keyframes show-modal-bg {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hide-modal-bg {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.modal-content {
+  animation: 0.3s ease both show-modal-content;
+  display: none;
+}
+
+@keyframes show-modal-content {
+  from {
+    transform: translateY(-90px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes hide-modal-content {
+  from {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-90px);
+    opacity: 0;
+  }
 }

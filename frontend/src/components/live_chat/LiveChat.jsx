@@ -65,7 +65,7 @@ export default function LiveChat() {
 
   return (
     <>
-      <div className="live-chat-wrapper p-[20px]">
+      <div className="live-chat-wrapper p-[20px] z-[11]">
         <div className="live-chat relative">
           <div className="chat-box rounded-xl overflow-hidden w-full mobile_lg:w-[400px] bg-benBlue-lightC border border-benBlue-lightC2 mb-16 mobile:mb-0">
             <div className="header flex justify-between items-center p-5 pb-0 mobile_lg:px-7 text-base mobile_lg:text-lg text-benOrange-200 font-medium">

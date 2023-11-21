@@ -6,6 +6,7 @@ export default function LoginForm() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    staySignedInOnDevice: false,
   });
 
   const [inputFieldsInfo, setInputFieldsInfo] = useState({

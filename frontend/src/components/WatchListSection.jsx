@@ -1,7 +1,9 @@
 import React from "react";
-import { exchanges } from "../constants";
+import { initializeExchanges } from "../constants";
 
 import ExchangeTypeLists from "./TradingExchangeTypeList";
+
+const getExchanges = initializeExchanges();
 
 export default function WatchListSection() {
   return (
@@ -14,7 +16,7 @@ export default function WatchListSection() {
         </span>
       </h2>
       <div className="mt-10 text-benBlue-lightC2 dark:text-benBlue-200 max-w-[600px] mx-auto flex flex-col gap-10">
-        {exchanges.map((exchange, index) => (
+        {getExchanges.map((exchange, index) => (
           <div className="exchange mb-4" key={index}>
             <div className="flex justify-between mx-4 items-center mb-4">
               <h3 className="font-medium text-lg tablet:text-xl">

@@ -2,7 +2,7 @@ import React from "react";
 
 export default function HiringSection() {
   return (
-    <section className="px-6 py-[60px] tablet:p-[60px] bg-[#dfd0bb] flex flex-row max-lg:flex-col max-lg:items-center max-lg:text-center gap-10">
+    <section className="px-6 py-[60px] tablet:p-[60px] bg-[#dfd0bb] flex flex-col laptop:flex-row laptop:items-center gap-10">
       <img
         src="/src/assets/happy-coder.jpg"
         className="w-full mobile_lg:w-[400px] h-[200px] tablet:h-[300px] rounded-2xl object-cover"
