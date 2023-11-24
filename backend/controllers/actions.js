@@ -1,6 +1,7 @@
 import db from "../config/database.js";
 import initModels from "../models/init-models.js";
 import checkIsExists from "../models/utilities/checkIsExists.js";
+import generateId from "../models/utilities/generateId.js";
 
 const sequelize = db;
 
@@ -139,6 +140,7 @@ export const createUser = async (req, res) => {
 
     const date_registered = `${registration_date} ${registration_time}`;
     const reg_completed = false;
+    const account_id = await generateId(12);
     const account_validated = false;
     const account_type = "Not yet chosen.";
     const onboarding_stage = "2";
@@ -149,6 +151,7 @@ export const createUser = async (req, res) => {
           name,
           email,
           password,
+          account_id,
           account_validated,
           account_type,
           date_registered,
@@ -160,6 +163,7 @@ export const createUser = async (req, res) => {
             "name",
             "email",
             "password",
+            "account_id",
             "account_validated",
             "account_type",
             "date_registered",
@@ -170,6 +174,7 @@ export const createUser = async (req, res) => {
       );
       res.status(201).json({
         message: "User created successfully",
+        accountId: user.account_id,
         messageType: "SERVER_SUCCESS",
       });
     } catch (error) {
@@ -316,6 +321,7 @@ export const authenticateUser = async (req, res) => {
     const userDetails = {
       name: user.name,
       email: user.email,
+      accountId: user.account_id,
       accountType: user.account_type,
       onboardingStage: user.onboarding_stage,
     };

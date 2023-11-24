@@ -20,6 +20,10 @@ export default function (sequelize, DataTypes) {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
+      account_id: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+      },
       account_validated: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
