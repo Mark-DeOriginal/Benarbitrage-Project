@@ -12,6 +12,12 @@ export const uiSlice = createSlice({
       logo: "/src/assets/icons/cryptos/bitcoin.svg",
       abbr: "BTC",
     },
+    assetPurchaseDetails: {
+      assetName: "",
+      purchaseAmount: "",
+      transactionFee: "",
+      totalAmount: "",
+    },
   },
   reducers: {
     toggleDarkMode(state) {
@@ -29,6 +35,9 @@ export const uiSlice = createSlice({
     setIsBuyAssetModalOpen(state, action) {
       state.isBuyAssetModalOpen = action.payload;
     },
+    setAssetPurchaseDetails(state, action) {
+      state.assetPurchaseDetails = action.payload;
+    },
   },
 });
 
@@ -38,6 +47,7 @@ export const {
   setUserBoardingStage,
   setSelectedAsset,
   setIsBuyAssetModalOpen,
+  setAssetPurchaseDetails,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

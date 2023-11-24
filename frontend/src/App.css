@@ -59,7 +59,8 @@ label {
 }
 
 .top-nav-bar::-webkit-scrollbar,
-.mobile-menu::-webkit-scrollbar {
+.mobile-menu::-webkit-scrollbar,
+.modal-bg::-webkit-scrollbar {
   display: none;
 }
 
@@ -315,7 +316,6 @@ label {
 }
 
 .modal-content {
-  animation: 0.3s ease both show-modal-content;
   display: none;
 }
 

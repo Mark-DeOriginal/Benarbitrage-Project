@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import insertDelimiters from "../../../utilities/insertDelimiters";
 import getCookie from "../../../utilities/getCookie";
 import AssetPurchaseModal from "./AssetPurchaseModal";
-import { setIsBuyAssetModalOpen } from "../../../redux-states/uiSlice";
+import {
+  setAssetPurchaseDetails,
+  setIsBuyAssetModalOpen,
+} from "../../../redux-states/uiSlice";
 
 export default function AssetPurchase() {
   const selectedAsset = useSelector((state) => state.ui.selectedAsset);
@@ -37,8 +40,8 @@ export default function AssetPurchase() {
 
   function getTradingFee(tradingAmount) {
     let tradeAmount = parseFloat((tradingAmount || "0").split(",").join(""));
-    let percentageFee = 6.5;
-    return (percentageFee * tradeAmount) / 100;
+    let percentageFee = 12.3;
+    return ((percentageFee * tradeAmount) / 100).toFixed(2);
   }
 
   function getNetProfit(gross, fee) {
@@ -109,6 +112,16 @@ export default function AssetPurchase() {
     if (parseFloat(assetAmount.split(",").join("")) < 100) {
       setIsAmountError(true);
     } else {
+      dispatch(
+        setAssetPurchaseDetails({
+          assetName: `${selectedAsset.name} ${
+            selectedAsset.abbr.trim() !== "" ? " - " + selectedAsset.abbr : ""
+          }`,
+          purchaseAmount: assetAmount,
+          transactionFee: "0.00",
+          totalAmount: assetAmount,
+        })
+      );
       dispatch(setIsBuyAssetModalOpen(true));
     }
   };
@@ -197,7 +210,7 @@ export default function AssetPurchase() {
                     {
                       // If there's an error, render the <p> element with the error message
                       isAmountError && (
-                        <p className="message text-left mt-[6px] mobile_lg:text-sm text-errorColor">
+                        <p className="message text-left mt-[6px] text-sm text-errorColor">
                           Should not be less than $100
                         </p>
                       )
@@ -219,7 +232,7 @@ export default function AssetPurchase() {
                           <p className="text-base font-bold">${tradeProfit}</p>
                         </div>
                         <div className="row flex justify-between items-center">
-                          <h4>Gas fee [6.5%]</h4>
+                          <h4>Fee + Tax [12.3%]</h4>
                           <p className="text-base font-bold">${tradeFee}</p>
                         </div>
                       </div>

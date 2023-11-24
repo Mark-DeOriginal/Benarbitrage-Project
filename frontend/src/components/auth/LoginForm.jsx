@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { HidePasswordIcon, ShowPasswordIcon } from "../icons";
 import { inputFields } from "./constants/inputFields";
+import setCookie, { setCookiesExpiration } from "../../utilities/setCookie";
 
 export default function LoginForm() {
   const [formData, setFormData] = useState({
@@ -62,16 +63,30 @@ export default function LoginForm() {
       // If the form was processed successfully,
       if (processFormData.ok) {
         const response = await processFormData.json();
-        const { name, email, accountType, onboardingStage } =
+        const { name, email, accountId, accountType, onboardingStage } =
           response.userDetails;
 
         if (onboardingStage === "Completed") {
           // Set these cookies in the User's browser
-          document.cookie = "userName=" + name.trim() + "; path=/;";
-          document.cookie = "userEmail=" + email.trim() + "; path=/;";
-          document.cookie = "accountType=" + accountType + "; path=/;";
-          document.cookie = "isSignedIn=true; path=/;";
-          document.cookie = "expires=Thu, 01 Jan 2099 00:00:00 UTC; path=/;";
+          setCookie("userName", name.trim());
+          setCookie("userEmail", email.trim());
+          setCookie("accountId", accountId);
+          setCookie("accountType", accountType);
+          setCookie("isSignedIn", "true");
+          setCookiesExpiration(7);
+
+          if (formData.staySignedInOnDevice) {
+            localStorage.setItem(
+              "sign-in-details",
+              JSON.stringify({
+                userName: name.trim(),
+                userEmail: email.trim(),
+                accountId: accountId,
+                accountType: accountType,
+                isSignedIn: true,
+              })
+            );
+          }
 
           // Redirect to dashboard
           window.location.href = "/dashboard";
@@ -79,13 +94,27 @@ export default function LoginForm() {
           const interpretedOnboardingStage =
             onboardingStage === "2" ? "VALIDATION" : "ASSET_PURCHASE";
           // Set these cookies in the User's browser
-          document.cookie = "userName=" + name.trim() + "; path=/;";
-          document.cookie = "userEmail=" + email.trim() + "; path=/;";
-          document.cookie = "isSignedIn=true; path=/;";
-          document.cookie =
-            "onboardingStage=" + interpretedOnboardingStage + "; path=/;";
-          document.cookie = "accountType=" + accountType + "; path=/;";
-          document.cookie = "expires=Thu, 01 Jan 2099 00:00:00 UTC; path=/;";
+          setCookie("userName", name.trim());
+          setCookie("userEmail", email.trim());
+          setCookie("accountId", accountId);
+          setCookie("accountType", accountType);
+          setCookie("onboardingStage", interpretedOnboardingStage);
+          setCookie("isSignedIn", "true");
+          setCookiesExpiration(7);
+
+          if (formData.staySignedInOnDevice) {
+            localStorage.setItem(
+              "sign-in-details",
+              JSON.stringify({
+                userName: name.trim(),
+                userEmail: email.trim(),
+                accountId: accountId,
+                accountType: accountType,
+                onboardingStage: interpretedOnboardingStage,
+                isSignedIn: true,
+              })
+            );
+          }
 
           // Redirect to dashboard
           window.location.href = "/get-started";
@@ -121,7 +150,7 @@ export default function LoginForm() {
           throw new Error(response.messageType);
         } else if (messageType === "SERVER_ERROR") {
           console.log(response.messageType + ": " + response.error);
-          document.cookie = "onboardingStage=SIGN_UP_FAILED; path=/;";
+          setCookie("onboardingStage", "SIGN_UP_FAILED");
           location.reload();
         }
       }

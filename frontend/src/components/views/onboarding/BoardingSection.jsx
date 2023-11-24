@@ -17,6 +17,7 @@ export default function BoardingSection({ view }) {
 
   // We'll call this function whenever we want to delete our cookies from the User's browser
   // deleteAllCookies();
+  // localStorage.clear();
 
   return (
     <div className="boarding-section column flex flex-col justify-between basis-2/3 p-6 tablet:px-[50px] dark:bg-benDarkBlueLight text-benBlue-lightB dark:text-benBlue-200">

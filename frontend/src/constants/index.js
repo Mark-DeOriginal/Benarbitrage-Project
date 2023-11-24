@@ -1,5 +1,3 @@
-import getCryptoMarketPrice from "../utilities/getCryptoMarketPrice";
-
 export const navLinks = [
   {
     url: "/",
@@ -146,12 +144,12 @@ export function initializeExchanges() {
           performance: 1.27,
         },
         {
-          name: "Binance USD",
-          abbr: "BUSD",
-          logo: "/src/assets/icons/cryptos/binance-usd.svg",
-          marketPrice: 200.68,
+          name: "TRON",
+          abbr: "TRX",
+          logo: "/src/assets/icons/cryptos/tron-trx.svg",
+          marketPrice: 1.13,
           currency: "$",
-          performance: 0.87,
+          performance: 1.3,
         },
       ],
     },

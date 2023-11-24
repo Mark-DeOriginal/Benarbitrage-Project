@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { HidePasswordIcon, ShowPasswordIcon } from "../icons";
 import { inputFields } from "./constants/inputFields";
+import setCookie, { setCookiesExpiration } from "../../utilities/setCookie";
 
 export default function SignUpForm() {
   const [formData, setFormData] = useState({
@@ -75,11 +76,25 @@ export default function SignUpForm() {
         console.log(response);
 
         // Set these cookies in the User's browser
-        document.cookie = "userName=" + formData.name.trim() + "; path=/;";
-        document.cookie = "userEmail=" + formData.email.trim() + "; path=/;";
-        document.cookie = "isSignedIn=true; path=/;";
-        document.cookie = "onboardingStage=SIGN_UP_SUCCESS; path=/;";
-        document.cookie = "expires=Thu, 01 Jan 2099 00:00:00 UTC; path=/;";
+        setCookie("userName", formData.name.trim());
+        setCookie("userEmail", formData.email.trim());
+        setCookie("accountId", response.accountId);
+        setCookie("isSignedIn", "true");
+        setCookie("onboardingStage", "SIGN_UP_SUCCESS");
+        setCookiesExpiration(7);
+
+        if (formData.staySignedInOnDevice) {
+          localStorage.setItem(
+            "sign-in-details",
+            JSON.stringify({
+              userName: formData.name.trim(),
+              userEmail: formData.email.trim(),
+              accountId: response.accountId,
+              isSignedIn: true,
+              onboardingStage: "SIGN_UP_SUCCESS",
+            })
+          );
+        }
 
         // Then reload the page
         location.reload();
@@ -124,7 +139,7 @@ export default function SignUpForm() {
           throw new Error(response.messageType);
         } else if (messageType === "SERVER_ERROR") {
           console.log(response.messageType + ": " + response.error);
-          document.cookie = "onboardingStage=SIGN_UP_FAILED; path=/;";
+          setCookie("onboardingStage", "SIGN_UP_FAILED");
           location.reload();
         }
       }
