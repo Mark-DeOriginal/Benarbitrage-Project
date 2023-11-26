@@ -1,6 +1,5 @@
 import React from "react";
 import { SuccessIcon } from "../../../icons";
-import getCookie from "../../../../utilities/getCookie";
 import setCookie from "../../../../utilities/setCookie";
 
 export default function SignUpSuccess() {

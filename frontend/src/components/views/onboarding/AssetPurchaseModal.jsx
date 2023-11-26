@@ -302,7 +302,7 @@ export default function AssetPurchaseModal() {
             style={{ display: "none" }}
             className={`loader-wrapper fixed top-[200px] left-[50%] translate-x-[-50%] z-[15]`}
           >
-            <LoadingSpinner color={`#8585af`} />
+            <LoadingSpinner />
           </div>,
           document.body
         )}

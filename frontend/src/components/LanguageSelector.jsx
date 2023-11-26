@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-const LanguageSelector = ({ extraStyle }) => {
+const LanguageSelector = ({ className }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("en-UK");
+  const [selectedLanguage, setSelectedLanguage] = useState("en-US");
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -32,7 +32,7 @@ const LanguageSelector = ({ extraStyle }) => {
   return (
     <div className="relative language-selector">
       <button
-        className="py-1 px-1 border border-benBlue-200 dark:bg-benBlue-100 dark:border-benBlue-100 rounded-full flex items-center"
+        className="py-1 px-1 border border-benBlue-200 dark:border-benBlue-lightB rounded-full flex items-center"
         onClick={toggleDropdown}
       >
         <img
@@ -59,7 +59,7 @@ const LanguageSelector = ({ extraStyle }) => {
       <div
         className={`${
           isOpen ? "flex" : "hidden"
-        } p-1 w-[150px] absolute mt-2 bg-[#f7f7f8] border rounded-md drop-shadow-lg flex-col gap-[2px] right-0 ${extraStyle}`}
+        } p-1 w-[150px] absolute mt-2 bg-[#f7f7f8] border rounded-md drop-shadow-lg flex-col gap-[2px] ${className}`}
       >
         {languages.map((language, index) => (
           <button

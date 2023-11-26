@@ -25,13 +25,12 @@ const DarkModeToggle = () => {
     } else {
       localStorage.setItem("isDarkMode", "false");
     }
-    console.log(localStorage.getItem("isDarkMode"));
   };
 
   return (
     <button
       onClick={toggleDark}
-      className="border border-benBlue-200 dark:border-navBarBorderDark p-2 rounded-full w-[37px] h-[37px] flex items-center justify-center text-lg"
+      className="border border-benBlue-200 dark:border-benBlue-lightB p-2 rounded-full w-[37px] h-[37px] flex items-center justify-center text-lg"
     >
       {darkMode ? "🌙" : "☀️"}
     </button>

@@ -5,7 +5,7 @@ import BoardingSection from "../components/views/onboarding/BoardingSection";
 export default function LoginSection() {
   return (
     <>
-      <section className="get-started-section">
+      <section className="log-in-section">
         <div className="row relative flex flex-col min-[980px]:flex-row min-h-screen text-benBlue-400 dark:text-benBlue-200 text-base mobile_lg:text-lg">
           <PersuadeSection />
           <BoardingSection view={"LOGIN"} />

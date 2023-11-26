@@ -3,11 +3,6 @@ import AssetsList from "./AssetsList";
 import { useDispatch, useSelector } from "react-redux";
 import insertDelimiters from "../../../utilities/insertDelimiters";
 import getCookie from "../../../utilities/getCookie";
-import AssetPurchaseModal from "./AssetPurchaseModal";
-import {
-  setAssetPurchaseDetails,
-  setIsBuyAssetModalOpen,
-} from "../../../redux-states/uiSlice";
 
 export default function AssetPurchase() {
   const selectedAsset = useSelector((state) => state.ui.selectedAsset);
@@ -106,23 +101,24 @@ export default function AssetPurchase() {
 
   const [isAmountError, setIsAmountError] = useState(false);
 
-  const dispatch = useDispatch();
-
   const handleBuyAndTrade = () => {
     if (parseFloat(assetAmount.split(",").join("")) < 100) {
       setIsAmountError(true);
     } else {
-      dispatch(
-        setAssetPurchaseDetails({
-          assetName: `${selectedAsset.name} ${
-            selectedAsset.abbr.trim() !== "" ? " - " + selectedAsset.abbr : ""
-          }`,
-          purchaseAmount: assetAmount,
-          transactionFee: "0.00",
-          totalAmount: assetAmount,
-        })
-      );
-      dispatch(setIsBuyAssetModalOpen(true));
+      const navigateToBuyAndTrade = () => {
+        const userName = getCookie("userName", "welcome")
+          .toLowerCase()
+          .split(" ")
+          .join("-");
+        const formattedAssetName = selectedAsset.name
+          .toLowerCase()
+          .split(" ")
+          .join("-");
+        const assetPurchaseAmount = assetAmount;
+        window.location.href = `/buy-and-trade/${formattedAssetName}/${assetPurchaseAmount}/${userName}`;
+      };
+
+      navigateToBuyAndTrade();
     }
   };
 
@@ -256,8 +252,6 @@ export default function AssetPurchase() {
           </div>
         </div>
       </div>
-
-      <AssetPurchaseModal />
     </>
   );
 }

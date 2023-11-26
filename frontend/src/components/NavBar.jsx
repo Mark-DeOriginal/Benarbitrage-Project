@@ -67,7 +67,7 @@ const NavBar = () => {
 
             <div className="hidden mobile:flex items-center space-x-2">
               <DarkModeToggle />
-              <LanguageSelector extraStyle={`-right-[70%] tablet:right-0`} />
+              <LanguageSelector className={`-right-[70%] tablet:right-0`} />
             </div>
             <div className="flex laptop:hidden pl-4" onClick={toggleMenu}>
               <div
@@ -112,7 +112,7 @@ const NavBar = () => {
             </a>
             <div className="mobile:hidden flex space-x-2 pt-4 justify-center">
               <DarkModeToggle />
-              <LanguageSelector extraStyle={`-right-[70%] tablet:right-0`} />
+              <LanguageSelector className={`-right-[70%] tablet:right-0`} />
             </div>
           </div>
         </div>

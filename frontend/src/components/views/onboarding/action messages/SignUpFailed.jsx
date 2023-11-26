@@ -1,11 +1,9 @@
 import React from "react";
-import { ErrorIcon, SuccessIcon } from "../../../icons";
-import setCookie from "../../../../utilities/setCookie";
+import { ErrorIcon } from "../../../icons";
 
 export default function SignUpFailed() {
   function handleBackToSignUp() {
-    setCookie("onboardingStage", "SIGN_UP");
-    location.reload();
+    window.location.href = "/sign-up";
   }
 
   return (

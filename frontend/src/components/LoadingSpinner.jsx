@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/loading-spinner.css";
 
-export default function LoadingSpinner({ color }) {
+export default function LoadingSpinner() {
   return (
     <svg
       className={`spinner`}
@@ -15,7 +15,6 @@ export default function LoadingSpinner({ color }) {
         fill="none"
         strokeWidth="6"
         strokeLinecap="round"
-        stroke={color || "#63618b"}
         cx="33"
         cy="33"
         r="30"

@@ -12,6 +12,9 @@ import RootLayout from "./layout";
 import GetStartedSection from "./pages/get-started.jsx";
 import LoginSection from "./pages/login.jsx";
 import UserDashboard from "./pages/dashboard.jsx";
+import LoadingSpinner from "./components/LoadingSpinner.jsx";
+import BuyAndTradeSection from "./pages/buy-and-trade.jsx";
+import SignUpSection from "./pages/sign-up.jsx";
 
 function App() {
   const pageUrl = window.location.pathname;
@@ -69,6 +72,15 @@ function App() {
         />
         <GetStartedSection />
       </>
+    ) : pageUrl.startsWith("/buy-and-trade") ? (
+      <>
+        <MetaData
+          title="Buy and Trade"
+          description="Buy and trade asset with AI."
+          themeColor={themeColor}
+        />
+        <BuyAndTradeSection />
+      </>
     ) : pageUrl === "/login" ? (
       <>
         <MetaData
@@ -77,6 +89,15 @@ function App() {
           themeColor={themeColor}
         />
         <LoginSection />
+      </>
+    ) : pageUrl === "/sign-up" ? (
+      <>
+        <MetaData
+          title="Get Started"
+          description="Sign up and start trading with AI."
+          themeColor={themeColor}
+        />
+        <SignUpSection />
       </>
     ) : pageUrl === "/dashboard" ? (
       <>
@@ -87,7 +108,7 @@ function App() {
         />
         <UserDashboard />
       </>
-    ) : pageUrl === "/" ? (
+    ) : (
       <>
         <MetaData
           title="Benarbitrage"
@@ -97,15 +118,6 @@ function App() {
         <RootLayout>
           <HomePage />
         </RootLayout>
-      </>
-    ) : (
-      <>
-        <MetaData
-          title="Login"
-          description="Login and continue with your account."
-          themeColor={themeColor}
-        />
-        <LoginSection />
       </>
     );
 
