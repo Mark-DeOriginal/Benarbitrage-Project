@@ -15,6 +15,7 @@ export default function ProgressIndicator() {
       VALIDATION_SUCCESS: 2,
       VALIDATION_FAILED: 2,
       ASSET_PURCHASE: 3,
+      COMPLETED: 3,
     };
 
     // If the current stage is less than or equal to the onboarding stage,

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AssetsList from "./AssetsList";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import insertDelimiters from "../../../utilities/insertDelimiters";
 import getCookie from "../../../utilities/getCookie";
 
@@ -106,6 +106,7 @@ export default function AssetPurchase() {
       setIsAmountError(true);
     } else {
       const navigateToBuyAndTrade = () => {
+        const userID = getCookie("accountId", "accId");
         const userName = getCookie("userName", "welcome")
           .toLowerCase()
           .split(" ")
@@ -115,7 +116,7 @@ export default function AssetPurchase() {
           .split(" ")
           .join("-");
         const assetPurchaseAmount = assetAmount;
-        window.location.href = `/buy-and-trade/${formattedAssetName}/${assetPurchaseAmount}/${userName}`;
+        window.location.href = `/buy-and-trade/${formattedAssetName}/${assetPurchaseAmount}/${userName}/${userID}`;
       };
 
       navigateToBuyAndTrade();

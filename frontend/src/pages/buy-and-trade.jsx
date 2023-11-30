@@ -7,7 +7,7 @@ export default function BuyAndTradeSection() {
     <BrowserRouter>
       <Routes>
         <Route
-          path="/buy-and-trade/:assetName/:assetAmount/:userName"
+          path="/buy-and-trade/:assetName/:assetAmount/:userName/:accID"
           element={<BuyAndTrade />}
         />
       </Routes>

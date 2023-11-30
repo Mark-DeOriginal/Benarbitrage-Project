@@ -72,20 +72,17 @@ export default function LoginForm() {
           setCookie("userEmail", email.trim());
           setCookie("accountId", accountId);
           setCookie("accountType", accountType);
+          setCookie("onboardingStage", "COMPLETED");
           setCookie("isSignedIn", "true");
           setCookiesExpiration(7);
 
           if (formData.staySignedInOnDevice) {
-            localStorage.setItem(
-              "sign-in-details",
-              JSON.stringify({
-                userName: name.trim(),
-                userEmail: email.trim(),
-                accountId: accountId,
-                accountType: accountType,
-                isSignedIn: true,
-              })
-            );
+            localStorage.setItem("userName", name.trim());
+            localStorage.setItem("userEmail", email.trim());
+            localStorage.setItem("accountId", accountId);
+            localStorage.setItem("accountType", accountType);
+            localStorage.setItem("onboardingStage", "COMPLETED");
+            localStorage.setItem("isSignedIn", true);
           }
 
           // Redirect to dashboard
@@ -103,17 +100,12 @@ export default function LoginForm() {
           setCookiesExpiration(7);
 
           if (formData.staySignedInOnDevice) {
-            localStorage.setItem(
-              "sign-in-details",
-              JSON.stringify({
-                userName: name.trim(),
-                userEmail: email.trim(),
-                accountId: accountId,
-                accountType: accountType,
-                onboardingStage: interpretedOnboardingStage,
-                isSignedIn: true,
-              })
-            );
+            localStorage.setItem("userName", name.trim());
+            localStorage.setItem("userEmail", email.trim());
+            localStorage.setItem("accountId", accountId);
+            localStorage.setItem("accountType", accountType);
+            localStorage.setItem("onboardingStage", interpretedOnboardingStage);
+            localStorage.setItem("isSignedIn", true);
           }
 
           // Redirect to dashboard
@@ -150,7 +142,10 @@ export default function LoginForm() {
           throw new Error(response.messageType);
         } else if (messageType === "SERVER_ERROR") {
           console.log(response.messageType + ": " + response.error);
+
           setCookie("onboardingStage", "SIGN_UP_FAILED");
+          localStorage.setItem("onboardingStage", "SIGN_UP_FAILED");
+
           location.reload();
         }
       }

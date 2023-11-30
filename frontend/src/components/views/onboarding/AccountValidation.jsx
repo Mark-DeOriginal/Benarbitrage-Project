@@ -34,9 +34,11 @@ export default function AccountValidation() {
         const response = await processFormData.json();
         console.log(response);
 
-        // Set this cookie in the User's browser
         document.cookie = "onboardingStage=VALIDATION_SUCCESS; path=/;";
         document.cookie = "accountType=" + selectedAccType + "; path=/;";
+
+        localStorage.setItem("onboardingStage", "VALIDATION_SUCCESS");
+        localStorage.setItem("accountType", selectedAccType);
 
         // Then reload the page
         location.reload();
@@ -44,7 +46,9 @@ export default function AccountValidation() {
         setIsLoading(false);
         const response = await processFormData.json();
         console.log(response.messageType + ": " + response.error);
+
         document.cookie = "onboardingStage=VALIDATION_FAILED; path=/;";
+        localStorage.setItem("onboardingStage", "VALIDATION_FAILED");
 
         location.reload();
         throw new Error(response.messageType);

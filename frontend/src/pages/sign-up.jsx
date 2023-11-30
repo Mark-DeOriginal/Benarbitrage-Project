@@ -7,7 +7,7 @@ export default function SignUpSection() {
   localStorage.clear();
 
   // Then redirect browser to the Get Started page
-  window.location.href = "/get-started";
+  window.location.replace("/get-started");
 
   return (
     <>

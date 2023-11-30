@@ -40,7 +40,8 @@ export default function BoardingSection({ view }) {
                 <ValidationSuccess />
               ) : onboardingStage === "VALIDATION_FAILED" ? (
                 <ValidationFailed />
-              ) : onboardingStage === "ASSET_PURCHASE" ? (
+              ) : onboardingStage === "ASSET_PURCHASE" ||
+                onboardingStage === "COMPLETED" ? (
                 <AssetPurchase />
               ) : (
                 <SignUp />

@@ -84,16 +84,11 @@ export default function SignUpForm() {
         setCookiesExpiration(7);
 
         if (formData.staySignedInOnDevice) {
-          localStorage.setItem(
-            "sign-in-details",
-            JSON.stringify({
-              userName: formData.name.trim(),
-              userEmail: formData.email.trim(),
-              accountId: response.accountId,
-              isSignedIn: true,
-              onboardingStage: "SIGN_UP_SUCCESS",
-            })
-          );
+          localStorage.setItem("userName", formData.name.trim());
+          localStorage.setItem("userEmail", formData.email.trim());
+          localStorage.setItem("accountId", response.accountId);
+          localStorage.setItem("isSignedIn", true);
+          localStorage.setItem("onboardingStage", "SIGN_UP_SUCCESS");
         }
 
         // Then reload the page
@@ -140,6 +135,7 @@ export default function SignUpForm() {
         } else if (messageType === "SERVER_ERROR") {
           console.log(response.messageType + ": " + response.error);
           setCookie("onboardingStage", "SIGN_UP_FAILED");
+          localStorage.setItem("onboardingStage", "SIGN_UP_FAILED");
           location.reload();
         }
       }

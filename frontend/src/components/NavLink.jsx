@@ -110,7 +110,6 @@ export const MobileNavLink = ({ link }) => {
             className={`caret fill-benBlueLight dark:fill-benBlue-200 transition-transform duration-300`}
           >
             <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z" />
-            <path d="M0-.75h48v48h-48z" fill="none" />
           </svg>
         </button>
         <div className={`options pl-4 overflow-hidden max-h-0 duration-300`}>

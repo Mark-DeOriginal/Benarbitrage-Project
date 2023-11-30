@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import LoadingSpinner from "../../LoadingSpinner";
-import { CopyIcon } from "../../icons";
+import { CopyIcon, SuccessIcon } from "../../icons";
 import {
   BTCIcon,
   BUSDIcon,
@@ -13,28 +13,32 @@ import CopyRight from "../../Copyright";
 import Logo from "../../BenarbitrageLogo";
 import DarkModeToggle from "../../DarkModeToggle";
 import LanguageSelector from "../../LanguageSelector";
+import confirmCryptoPmt from "../../../utilities/confirmCryptoPmt";
+import setCookie from "../../../utilities/setCookie";
 
 export default function BuyAndTrade() {
   const [showloader, setShowLoader] = useState(true);
   const [showBuyAndTrade, setShowBuyAndTrade] = useState(false);
 
-  const delay = 4000;
+  const delay = 3000;
 
   useEffect(() => {
-    const timeOut = setTimeout(() => {
-      setShowLoader(false);
-      setShowBuyAndTrade(true);
-    }, delay);
-
-    return () => clearTimeout(timeOut);
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        setShowLoader(false);
+        resolve();
+      }, delay);
+    }).then(() => {
+      setTimeout(() => {
+        setShowBuyAndTrade(true);
+      }, 500);
+    });
   }, []);
-
-  const [transactionId, setTransactionId] = useState("");
-  const [isTxIdError, setIsTxIdError] = useState(false);
 
   const handleTxIdChange = (e) => {
     setTransactionId(e.target.value);
     setIsTxIdError(false);
+    setTxConfirmStatus("uninitialized");
   };
 
   const parsedUrlParams = () => {
@@ -48,16 +52,36 @@ export default function BuyAndTrade() {
 
     return {
       assetName: parseString(useParams().assetName),
-      assetAmount: parseString(useParams().assetAmount),
+      assetAmount: useParams().assetAmount,
       userName: parseString(useParams().userName),
+      userID: useParams().accID,
     };
   };
-  const { assetName, assetAmount, userName } = parsedUrlParams();
+  const { assetName, assetAmount, userName, userID } = parsedUrlParams();
+
+  const [transactionId, setTransactionId] = useState("");
+  const [isTxIdError, setIsTxIdError] = useState(false);
+  const [txIdErrorMessage, setTxIdErrorMessage] = useState("");
+
+  const [txConfirmStatus, setTxConfirmStatus] = useState("uninitialized");
+
+  const [disableControls, setDisableControls] = useState(false);
+
+  useEffect(() => {
+    if (
+      txConfirmStatus === "uninitialized" ||
+      txConfirmStatus === "try-again"
+    ) {
+      setDisableControls(false);
+    } else {
+      setDisableControls(true);
+    }
+  }, [txConfirmStatus]);
 
   const processPayment = (event) => {
     event.preventDefault();
 
-    const paymentDetails = {
+    const purchaseDetails = {
       assetPurchased: assetName,
       purchaseAmount: assetAmount,
       transactionId: transactionId,
@@ -65,8 +89,75 @@ export default function BuyAndTrade() {
 
     if (transactionId.trim() === "") {
       setIsTxIdError(true);
+      setTxIdErrorMessage("Please enter the TxID to confirm");
+    } else if (transactionId.length < 50) {
+      setIsTxIdError(true);
+      setTxIdErrorMessage("Input does not match a valid TxID");
     } else {
-      alert(paymentDetails.transactionId);
+      setTxConfirmStatus("confirming");
+
+      confirmCryptoPmt(
+        purchaseDetails.transactionId,
+        paymentMethod[pMtdIndex].supportedNetwork,
+        paymentMethod[pMtdIndex].paymentAddress
+      )
+        .then(() => {
+          const purchaseData = {
+            assetName: assetName,
+            assetAmount: assetAmount,
+            purchaseDate: new Date(),
+            paymentWalletAddress: paymentMethod[pMtdIndex].paymentAddress,
+            cryptoName: paymentMethod[pMtdIndex].name,
+            transactionID: purchaseDetails.transactionId,
+            userID: userID,
+          };
+          // Make a POST request with the purchaseDetails to our /store-asset api endpoint
+          fetch("https://p0xq2gpd-5174.uks1.devtunnels.ms/user/store-asset", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(purchaseData),
+          })
+            .then((response) => {
+              return response.json();
+            })
+            .then((response) => {
+              if (response.message === "Already Confirmed") {
+                setTxConfirmStatus("already-confirmed");
+                setCookie("onboardingStage", "COMPLETED");
+                localStorage.setItem("onboardingStage", "COMPLETED");
+                console.log(response);
+              } else if (response.message === "SERVER_SUCCESS") {
+                setTxConfirmStatus("confirmed");
+
+                // If the payment was confirmed successfully...
+                setCookie("onboardingStage", "COMPLETED");
+                localStorage.setItem("onboardingStage", "COMPLETED");
+                console.log("Asset saved successfully.");
+                console.log(response.json());
+              } else {
+                console.log(response);
+                throw new Error("HTTP error! Status: " + response.status);
+              }
+            })
+            .catch((error) => {
+              console.log("Couldn't save asset.");
+              console.log(error);
+            });
+        })
+        .catch(() => {
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              setTxConfirmStatus("error");
+              resolve();
+            }, 2000);
+          }).then(() => {
+            setTimeout(() => {
+              setTxConfirmStatus("try-again");
+            }, 2000);
+          });
+        });
     }
   };
 
@@ -88,36 +179,39 @@ export default function BuyAndTrade() {
       name: "TetherUS - USDT",
       logo: <USDTIcon />,
       popularName: "USDT",
-      paymentAddress: "0xb329Abdd1B2639bbeC601e379DFcC3f68FEfbF31",
+      paymentAddress: "TAiTqyYFav1y1tJLWKYnVqFwgapEVtBYJw",
+      supportedNetwork: "TRON (TRC20)",
       recommended: true,
     },
     {
       name: "USD Coin - USDC",
       logo: <USDCIcon />,
       popularName: "USD Coin",
-      paymentAddress: "0xb329Abdd1B2639bbeC601e379DFcC3f68FEfbF31",
+      paymentAddress: "TAiTqyYFav1y1tJLWKYnVqFwgapEVtBYJw",
+      supportedNetwork: "TRON (TRC20)",
     },
     {
       name: "Binance USD",
       logo: <BUSDIcon />,
       popularName: "Binance USD",
-      paymentAddress: "0xb329Abdd1B2639bbeC601e379DFcC3f68FEfbF31",
+      paymentAddress: "TAiTqyYFav1y1tJLWKYnVqFwgapEVtBYJw",
+      supportedNetwork: "TRON (TRC20)",
     },
     {
       name: "Bitcoin - BTC",
       logo: <BTCIcon />,
       popularName: "Bitcoin",
       paymentAddress: "0xa435905664601dbba3fbe00431de7169a85dba55",
+      supportedNetwork: "Ethereum (ERC20)",
     },
     {
       name: "Ethereum - ETH",
       logo: <ETHIcon />,
       popularName: "Ethereum",
       paymentAddress: "0xa435905664601dbba3fbe00431de7169a85dba55",
+      supportedNetwork: "Ethereum (ERC20)",
     },
   ]);
-
-  const paymentNetwork = "Ethereum (ERC20)";
 
   const [pMtdIndex, setPMtdIndex] = useState(0);
 
@@ -127,6 +221,10 @@ export default function BuyAndTrade() {
     } else {
       setPMtdIndex((prev) => prev + 1);
     }
+  };
+
+  const goToDashBoard = () => {
+    window.location.href = "/dashboard";
   };
 
   return (
@@ -156,14 +254,16 @@ export default function BuyAndTrade() {
             <p>
               Benarbitrage recommends using stable cryptos like USDT, BUSD and
               USDC for asset purchases, to eliminate risks associated with
-              market instabilities.
+              market volatility.
             </p>
           </div>
         </div>
-        <div className="wrapper px-4">
+        <div className="wrapper px-2">
           <div className="body-wrapper bg-benWhite dark:bg-benBlue-400 border border-navBarBorderLight dark:border-navBarBorderDark drop-shadow-sm rounded-xl overflow-hidden">
             <div className="header px-4 py-5 bg-[#f1f1f4] dark:bg-[#413f6e] border-b border-navBarBorderLight dark:border-navBarBorderDark">
-              <h2 className="font-bold text-lg tablet:text-xl">Buy & Trade</h2>
+              <h2 className="font-bold text-lg tablet:text-xl">
+                Asset Purchase
+              </h2>
             </div>
             <div className="body px-4 py-5">
               <div className="purchase-details">
@@ -222,6 +322,7 @@ export default function BuyAndTrade() {
                     <div className="change-payment-type text-errorColor">
                       <button
                         onClick={changePMtd}
+                        disabled={disableControls ? true : false}
                         className="cursor-pointer text-xs font-medium tablet:text-sm active:scale-[0.95]"
                       >
                         Change &gt;
@@ -233,7 +334,7 @@ export default function BuyAndTrade() {
                       <label className="text-sm">Supported Network</label>
                       <input
                         type="text"
-                        value={paymentNetwork}
+                        value={paymentMethod[pMtdIndex].supportedNetwork}
                         className="payment-network font-medium w-full drop-shadow-sm rounded-lg py-2 px-3 mt-1 bg-transparent border border-navBarBorderLight dark:border-benBlue-lightC2"
                         readOnly={true}
                       />
@@ -266,13 +367,14 @@ export default function BuyAndTrade() {
                     <div className="tx-id">
                       <form onSubmit={processPayment}>
                         <label htmlFor="txId" className="text-sm">
-                          Transaction ID
+                          Transaction ID (TxID)
                         </label>
                         <input
                           type="text"
                           id="txId"
                           value={transactionId}
                           onChange={handleTxIdChange}
+                          readOnly={disableControls ? true : false}
                           placeholder="Enter transaction ID"
                           className={`crypto-address font-medium w-full drop-shadow-sm rounded-lg py-2 px-3 mt-1 bg-transparent border ${
                             isTxIdError
@@ -284,15 +386,38 @@ export default function BuyAndTrade() {
                           // If there's an error, render the <p> element with the error message
                           isTxIdError && (
                             <p className="message text-left mt-[6px] text-sm text-errorColor">
-                              Transaction ID is required to confirm payment
+                              {txIdErrorMessage}
                             </p>
                           )
                         }
                         <button
                           type="submit"
-                          className="bg-benBlue-100 dark:bg-benBlue-lightE text-benBlue-lightC2 dark:text-benBlue-100 active:scale-[0.95] rounded-xl w-full py-2 px-4 text-center font-medium text-base tablet:text-lg mt-4"
+                          disabled={disableControls ? true : false}
+                          className={`${
+                            txConfirmStatus === "error" ||
+                            txConfirmStatus === "try-again"
+                              ? "bg-[#fdc4a2] text-benBlue-lightC2"
+                              : txConfirmStatus === "confirmed" ||
+                                txConfirmStatus === "already-confirmed"
+                              ? "bg-[#bce1b5] text-[#547455]"
+                              : "bg-benBlue-100 dark:bg-benBlue-lightE text-benBlue-lightC2 dark:text-benBlue-100"
+                          } flex justify-center items-center gap-2 transition-colors duration-300 active:scale-[0.95] rounded-xl w-full py-2 px-4 text-center font-medium text-base tablet:text-lg mt-4`}
                         >
-                          Confirm Payment
+                          {txConfirmStatus === "confirming"
+                            ? "Confirming"
+                            : txConfirmStatus === "confirmed"
+                            ? "Confirmed"
+                            : txConfirmStatus === "already-confirmed"
+                            ? "Already Confirmed"
+                            : txConfirmStatus === "error"
+                            ? "Confirmation error"
+                            : txConfirmStatus === "try-again"
+                            ? "Try again"
+                            : "Confirm purchase"}
+                          {txConfirmStatus === "confirmed" ||
+                            (txConfirmStatus === "already-confirmed" && (
+                              <SuccessIcon className={`fill-[#547455]`} />
+                            ))}
                         </button>
                       </form>
                     </div>
@@ -307,8 +432,43 @@ export default function BuyAndTrade() {
               </div>
 
               <div className="action-btns mt-8 flex justify-center gap-2">
-                <button className="bg-benBlue-lightE text-benBlue-100 ring-offset-2 focus:ring-2 active:scale-[0.9] ring-offset-benWhite dark:ring-offset-benBlue-400 ring-benBlue-lightD drop-shadow-sm rounded-xl w-fit py-2 px-4 text-center font-medium text-base tablet:text-lg">
-                  Trade with AI
+                <button
+                  onClick={goToDashBoard}
+                  disabled={
+                    txConfirmStatus === "confirmed" ||
+                    txConfirmStatus === "already-confirmed"
+                      ? false
+                      : true
+                  }
+                  className={`${
+                    txConfirmStatus === "confirmed" ||
+                    txConfirmStatus === "already-confirmed"
+                      ? ""
+                      : "cursor-not-allowed"
+                  } flex gap-4 justify-between items-center bg-benBlue-lightE ${
+                    txConfirmStatus === "confirmed" ||
+                    txConfirmStatus === "already-confirmed"
+                      ? "text-benOrange-300 w-[160px] mobile_lg:w-[175px]"
+                      : "text-benBlue-100 w-[150px]"
+                  } ring-offset-2 focus:ring-2 active:scale-[0.9] ring-offset-benWhite dark:ring-offset-benBlue-400 ring-benBlue-lightD drop-shadow-sm rounded-xl py-2 px-4 text-center font-medium text-base tablet:text-lg duration-300`}
+                >
+                  <span className="flex-none">Trade with AI </span>
+                  <svg
+                    viewBox="304.979 286.906 14.83 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={`trade-with-ai-arrow flex-none h-auto w-3 fill-benOrange-300 ${
+                      txConfirmStatus === "confirmed" ||
+                      txConfirmStatus === "already-confirmed"
+                        ? ""
+                        : "hidden"
+                    }`}
+                  >
+                    <path
+                      d="M 303.224 291.491 L 312.394 300.661 L 321.564 291.491 L 324.394 294.321 L 312.394 306.321 L 300.394 294.321 L 303.224 291.491 Z"
+                      style={{ transformOrigin: "312.394px 298.906px" }}
+                      transform="matrix(0, -1, 1, 0, -0.000018119812, 0)"
+                    />
+                  </svg>
                 </button>
                 <button className="bg-benBlue-100 dark:bg-benBlueLight/70 text-benBlue-lightC2 dark:text-benBlue-200 ring-offset-2 focus:ring-2 active:scale-[0.9] ring-offset-benWhite dark:ring-offset-benBlue-400 ring-benBlue-lightD drop-shadow-sm rounded-xl w-fit py-2 px-4 text-center font-medium text-base tablet:text-lg">
                   Trade later

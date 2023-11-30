@@ -15,9 +15,9 @@
   stroke-dasharray: 187;
   stroke-dashoffset: 0;
   transform-origin: center;
-  -webkit-animation: dash 2s ease-in-out infinite,
+  -webkit-animation: dash 1.8s ease-in-out infinite,
     colors 2s ease-in-out infinite;
-  animation: dash 2s ease-in-out infinite, colors 2s ease-in-out infinite;
+  animation: dash 1.8s ease-in-out infinite, colors 2s ease-in-out infinite;
 }
 
 @keyframes colors {

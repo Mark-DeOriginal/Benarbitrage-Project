@@ -1,8 +1,6 @@
 export default function getCookie(value, fallbackValue) {
-  const fromLocalStorage = JSON.parse(localStorage.getItem("sign-in-details"));
-
-  return fromLocalStorage // Check if the browser local storage contains the value
-    ? fromLocalStorage[value] // If local storage contains it, return the value
+  return localStorage.getItem(value) // Check if the browser local storage contains the value
+    ? localStorage.getItem(value) // If local storage contains it, return the value
     : document.cookie.includes(`${value}=`) // If it does, check if the value exists in the browser cookie
     ? document.cookie // If the cookie exists,
         .split(`${value}=`) // Split the cookie strings between cookie name and an equal sign
