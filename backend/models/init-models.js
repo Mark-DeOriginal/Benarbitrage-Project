@@ -1,10 +1,9 @@
-import { DataTypes } from "sequelize";
-import _assets from "./assets.js";
-import _users from "./users.js";
+import Assets from "./assets.js";
+import Users from "./users.js";
 
-export default function initModels(sequelize) {
-  var assets = _assets(sequelize, DataTypes);
-  var users = _users(sequelize, DataTypes);
+export default function initModels() {
+  var assets = Assets;
+  var users = Users;
 
   return {
     assets,

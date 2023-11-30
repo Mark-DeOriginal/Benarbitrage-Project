@@ -1,32 +1,59 @@
-export default function (sequelize, DataTypes) {
-  return sequelize.define(
-    "assets",
-    {
-      owner_id: {
-        type: DataTypes.STRING(60),
-        allowNull: false,
-      },
-      asset_name: {
-        type: DataTypes.STRING(60),
-        allowNull: false,
-      },
-      asset_worth: {
-        type: DataTypes.STRING(60),
-        allowNull: false,
-      },
-      asset_type: {
-        type: DataTypes.STRING(60),
-        allowNull: false,
-      },
-      date_purchased: {
-        type: DataTypes.STRING(60),
-        allowNull: false,
-      },
+import { DataTypes } from "sequelize";
+import db from "../config/database.js";
+
+const sequelize = db;
+
+const Assets = sequelize.define(
+  "assets",
+  {
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
     },
-    {
-      sequelize,
-      tableName: "assets",
-      timestamps: false,
-    }
-  );
-}
+    asset_name: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    asset_owner: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    asset_amount: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    purchase_date: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    payment_wallet_address: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    crypto_name: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    transaction_id: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+  },
+  {
+    sequelize,
+    tableName: "assets",
+    timestamps: false,
+    indexes: [
+      {
+        name: "PRIMARY",
+        unique: true,
+        using: "BTREE",
+        fields: [{ name: "id" }],
+      },
+    ],
+  }
+);
+
+export default Assets;

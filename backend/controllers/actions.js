@@ -1,7 +1,6 @@
 import db from "../config/database.js";
 import initModels from "../models/init-models.js";
-import checkIsExists from "../models/utilities/checkIsExists.js";
-import generateId from "../models/utilities/generateId.js";
+import generateId from "../utilities/generateId.js";
 
 const sequelize = db;
 
@@ -15,7 +14,7 @@ sequelize
   });
 
 // Our User Model
-const { users } = initModels(sequelize);
+const { users } = initModels();
 
 // Checks if the email already exists
 const isEmailExist = async (email) => {
@@ -289,7 +288,7 @@ export const authenticateUser = async (req, res) => {
     inputsInfo.inputs.email.isError = true;
     isInputError = true;
 
-    res.status(400).json(inputsInfo);
+    res.status(404).json(inputsInfo);
     return;
   } else if ((await isPasswordCorrect(email, password)) == false) {
     inputsInfo.inputs.password.errMsg = "Password entered is incorrect.";
