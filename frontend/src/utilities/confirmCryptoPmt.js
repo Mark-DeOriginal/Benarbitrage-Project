@@ -6,6 +6,7 @@ export default function confirmCryptoPmt(txID, network, toAddress) {
       confirmTronTx(txID, toAddress);
     }
 
+    // TRON (TRC20)
     function confirmTronTx(txID, toAddress) {
       const apiKey = "b9753574-67e1-4d22-8550-bca65c7b615d";
       const endpoint = `https://apilist.tronscanapi.com/api/transaction-info?hash=${txID}`;
@@ -21,13 +22,12 @@ export default function confirmCryptoPmt(txID, network, toAddress) {
           }
           return response.json();
         })
-        .then((transaction) => {
+        .then((transactionDetails) => {
           const tronNetwkAddress = toAddress;
           const testAddress = "TQA2Z63x5rN561gCZSEnNPK5A5HK4W813s";
 
-          if (transaction.toAddress === testAddress) {
-            const confirmed = true;
-            resolve(confirmed);
+          if (transactionDetails.toAddress === testAddress) {
+            resolve(transactionDetails);
           } else {
             const isError = true;
             reject(isError);
@@ -36,6 +36,7 @@ export default function confirmCryptoPmt(txID, network, toAddress) {
         .catch(() => reject(true));
     }
 
+    // ETHEREUM (ERC20)
     function confirmEthTx(txID, toAddress) {
       const apiToken = "6626474d4a78404d9d629808ea7c444e";
       const endpoint = `https://api.blockcypher.com/v1/eth/main/txs/${txID}?token=${apiToken}`;
@@ -47,12 +48,11 @@ export default function confirmCryptoPmt(txID, network, toAddress) {
           }
           return response.json();
         })
-        .then((transaction) => {
+        .then((transactionDetails) => {
           const ethNetwkAddress = toAddress;
 
-          if (transaction.outputs[0].addresses[0] === ethNetwkAddress) {
-            const confirmed = true;
-            resolve(confirmed);
+          if (transactionDetails.outputs[0].addresses[0] === ethNetwkAddress) {
+            resolve(transactionDetails);
           } else {
             const isError = true;
             reject(isError);

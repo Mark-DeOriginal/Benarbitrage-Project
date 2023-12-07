@@ -30,7 +30,7 @@ const DarkModeToggle = () => {
   return (
     <button
       onClick={toggleDark}
-      className="border border-benBlue-200 dark:border-benBlue-lightB p-2 rounded-full w-[37px] h-[37px] flex items-center justify-center text-lg"
+      className="border border-benBlue-200 dark:border-benBlue-lightB p-2 rounded-full w-[37px] h-[37px] flex items-center justify-center text-lg active:scale-[0.95]"
     >
       {darkMode ? "🌙" : "☀️"}
     </button>

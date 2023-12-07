@@ -56,7 +56,7 @@ export const USDCIcon = ({ className }) => {
   );
 };
 
-export const BUSDIcon = ({ className }) => {
+export const TUSDIcon = ({ className }) => {
   return (
     <svg
       version="1.1"
@@ -66,30 +66,17 @@ export const BUSDIcon = ({ className }) => {
       height={40}
       xmlSpace="preserve"
       shapeRendering="geometricPrecision"
-      viewBox="0 0 336.41 337.42"
+      viewBox="0 0 40 40"
     >
-      <defs>
-        <style>{`.cls-1{fill:#f0b90b;stroke:#f0b90b;}`}</style>
-      </defs>
-      <g id="Layer_2" data-name="Layer 2">
-        <g id="Layer_1-2" data-name="Layer 1">
-          <path
-            className="cls-1"
-            d="M168.2.71l41.5,42.5L105.2,147.71l-41.5-41.5Z"
-          />
-          <path
-            className="cls-1"
-            d="M231.2,63.71l41.5,42.5L105.2,273.71l-41.5-41.5Z"
-          />
-          <path
-            className="cls-1"
-            d="M42.2,126.71l41.5,42.5-41.5,41.5L.7,169.21Z"
-          />
-          <path
-            className="cls-1"
-            d="M294.2,126.71l41.5,42.5L168.2,336.71l-41.5-41.5Z"
-          />
-        </g>
+      <g id="tusd logo">
+        <rect width="40" height="40" rx="20" fill="#1A5AFF" />
+        <path
+          id="Union"
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M10 11.002H16.6667C16.6667 14.6839 13.6819 17.6686 10 17.6686V11.002ZM16.6667 17.6686C16.6667 13.9867 19.6514 11.002 23.3333 11.002H30V17.6686H23.3333V24.3353V31.002H16.6667V24.3353V17.6686Z"
+          fill="white"
+        />
       </g>
     </svg>
   );

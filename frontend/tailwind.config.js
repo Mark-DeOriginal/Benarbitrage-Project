@@ -86,6 +86,13 @@ module.exports = {
     fontFamily: {
       poppins: "poppins",
     },
+    listStyleType: {
+      none: "none",
+      disc: "disc",
+      decimal: "decimal",
+      square: "square",
+      roman: "upper-roman",
+    },
   },
   darkMode: "class",
 };

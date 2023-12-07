@@ -12,9 +12,14 @@ import RootLayout from "./layout";
 import GetStartedSection from "./pages/get-started.jsx";
 import LoginSection from "./pages/login.jsx";
 import UserDashboard from "./pages/dashboard.jsx";
-import LoadingSpinner from "./components/LoadingSpinner.jsx";
 import BuyAndTradeSection from "./pages/buy-and-trade.jsx";
 import SignUpSection from "./pages/sign-up.jsx";
+import isLoggedIn from "./utilities/isLoggedIn.js";
+import TermsAndConditions from "./pages/terms-of-use.jsx";
+
+export function redirectTo(location) {
+  window.location.href = location;
+}
 
 function App() {
   const pageUrl = window.location.pathname;
@@ -73,14 +78,7 @@ function App() {
         <GetStartedSection />
       </>
     ) : pageUrl.startsWith("/buy-and-trade") ? (
-      <>
-        <MetaData
-          title="Buy and Trade"
-          description="Buy and trade asset with AI."
-          themeColor={themeColor}
-        />
-        <BuyAndTradeSection />
-      </>
+      <BuyAndTradeSection />
     ) : pageUrl === "/login" ? (
       <>
         <MetaData
@@ -99,6 +97,8 @@ function App() {
         />
         <SignUpSection />
       </>
+    ) : pageUrl === "/dashboard" && isLoggedIn() == false ? (
+      redirectTo("/sign-up")
     ) : pageUrl === "/dashboard" ? (
       <>
         <MetaData
@@ -108,7 +108,16 @@ function App() {
         />
         <UserDashboard />
       </>
-    ) : (
+    ) : pageUrl === "/terms-of-use" ? (
+      <>
+        <MetaData
+          title="Terms of Use"
+          description="Read our terms and conditions, privacy and refund policy here."
+          themeColor={themeColor}
+        />
+        <TermsAndConditions />
+      </>
+    ) : pageUrl === "/" ? (
       <>
         <MetaData
           title="Benarbitrage"
@@ -119,6 +128,8 @@ function App() {
           <HomePage />
         </RootLayout>
       </>
+    ) : (
+      redirectTo("/sign-up")
     );
 
   return <HelmetProvider>{pageContent}</HelmetProvider>;

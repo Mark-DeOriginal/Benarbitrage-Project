@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { CaretIcon } from "./icons";
 
 const LanguageSelector = ({ className }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +33,7 @@ const LanguageSelector = ({ className }) => {
   return (
     <div className="relative language-selector">
       <button
-        className="py-1 px-1 border border-benBlue-200 dark:border-benBlue-lightB rounded-full flex items-center"
+        className="py-1 px-1 border border-benBlue-200 dark:border-benBlue-lightB rounded-full flex items-center active:scale-[0.95]"
         onClick={toggleDropdown}
       >
         <img
@@ -43,18 +44,7 @@ const LanguageSelector = ({ className }) => {
           width={27}
           height={27}
         />
-        <svg
-          height="23"
-          viewBox="0 0 48 48"
-          width="23"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"
-            className="fill-benBlue-300"
-          />
-          <path d="M0-.75h48v48h-48z" fill="none" />
-        </svg>
+        <CaretIcon className={`fill-benBlue-300`} />
       </button>
       <div
         className={`${

@@ -125,7 +125,7 @@ export default function AssetPurchase() {
 
   return (
     <>
-      <div className="sign-up">
+      <div className="place-trade">
         <div className="header font-medium text-center max-w-[600px] mx-auto">
           <h2
             name="placeTrade"

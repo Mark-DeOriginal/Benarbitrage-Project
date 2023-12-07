@@ -233,15 +233,15 @@ export default function SignUpForm() {
       )}
       <p className="agreement text-xs mt-4 text-benBlue-300">
         By signing up for an account, I agree to the <br />
-        <a href="/terms" className="font-medium">
+        <a href="/terms-of-use" className="font-medium">
           Terms of Use
         </a>
         ,{" "}
-        <a href="/privacy-policy" className="font-medium">
+        <a href="/terms-of-use" className="font-medium">
           Privacy Policy
         </a>{" "}
         and{" "}
-        <a href="/refund-policy" className="font-medium">
+        <a href="/terms-of-use" className="font-medium">
           Refund Policy
         </a>
         .

@@ -38,8 +38,8 @@ export const navLinks = [
     ],
   },
   {
-    url: "/support-center",
-    title: "Support Center",
+    url: "/dashboard",
+    title: "Dashboard",
     hasOption: false,
   },
 ];

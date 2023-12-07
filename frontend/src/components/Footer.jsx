@@ -15,15 +15,15 @@ export default function Footer() {
         </p>
         <p className="text-xs tablet:text-sm">
           <br /> For more information, check out our <br />
-          <a href="/terms" className="font-bold">
+          <a href="/terms-of-use" className="font-bold">
             Terms and Conditions
           </a>
           ,{" "}
-          <a href="/privacy-policy" className="font-bold">
+          <a href="/terms-of-use" className="font-bold">
             Privacy Policy
           </a>
           , and{" "}
-          <a href="/refund-policy" className="font-bold">
+          <a href="/terms-of-use" className="font-bold">
             <br className="block tablet:hidden" />
             Refund Policy
           </a>

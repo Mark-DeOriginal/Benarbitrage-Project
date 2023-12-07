@@ -292,13 +292,14 @@ label {
   border-radius: 3px;
 }
 
-.buy-and-trade-section {
-  animation: 0.3s cubic-bezier(0.17, 1.14, 1, 1) forwards
-    show-buy-and-trade-section;
+.buy-and-trade-section,
+.dashboard,
+.terms-of-use {
+  animation: 0.3s cubic-bezier(0.17, 1.14, 1, 1) forwards show-animation;
   will-change: transform;
 }
 
-@keyframes show-buy-and-trade-section {
+@keyframes show-animation {
   from {
     transform: translateY(60px);
     opacity: 0;
@@ -320,4 +321,10 @@ label {
   to {
     opacity: 1;
   }
+}
+
+.terms-of-use h2 {
+  font-weight: bold;
+  margin-bottom: 16px;
+  font-size: 18px;
 }

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import getCookie from "../utilities/getCookie";
+import getAccountBalance from "../utilities/getAccountBalance";
 
 export const uiSlice = createSlice({
   name: "ui",
@@ -17,6 +18,10 @@ export const uiSlice = createSlice({
       purchaseAmount: "",
       transactionFee: "",
       totalAmount: "",
+    },
+    accountBalance: {
+      balance: "...",
+      interest: "...",
     },
   },
   reducers: {
@@ -38,6 +43,9 @@ export const uiSlice = createSlice({
     setAssetPurchaseDetails(state, action) {
       state.assetPurchaseDetails = action.payload;
     },
+    setAccountBalance(state, action) {
+      state.accountBalance = action.payload;
+    },
   },
 });
 
@@ -48,6 +56,7 @@ export const {
   setSelectedAsset,
   setIsBuyAssetModalOpen,
   setAssetPurchaseDetails,
+  setAccountBalance,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

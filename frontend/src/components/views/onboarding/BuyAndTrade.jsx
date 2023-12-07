@@ -4,7 +4,7 @@ import LoadingSpinner from "../../LoadingSpinner";
 import { CopyIcon, SuccessIcon } from "../../icons";
 import {
   BTCIcon,
-  BUSDIcon,
+  TUSDIcon,
   ETHIcon,
   USDCIcon,
   USDTIcon,
@@ -20,7 +20,7 @@ export default function BuyAndTrade() {
   const [showloader, setShowLoader] = useState(true);
   const [showBuyAndTrade, setShowBuyAndTrade] = useState(false);
 
-  const delay = 3000;
+  const delay = 2000;
 
   useEffect(() => {
     new Promise((resolve, reject) => {
@@ -81,12 +81,6 @@ export default function BuyAndTrade() {
   const processPayment = (event) => {
     event.preventDefault();
 
-    const purchaseDetails = {
-      assetPurchased: assetName,
-      purchaseAmount: assetAmount,
-      transactionId: transactionId,
-    };
-
     if (transactionId.trim() === "") {
       setIsTxIdError(true);
       setTxIdErrorMessage("Please enter the TxID to confirm");
@@ -97,18 +91,18 @@ export default function BuyAndTrade() {
       setTxConfirmStatus("confirming");
 
       confirmCryptoPmt(
-        purchaseDetails.transactionId,
+        transactionId,
         paymentMethod[pMtdIndex].supportedNetwork,
         paymentMethod[pMtdIndex].paymentAddress
       )
         .then(() => {
           const purchaseData = {
             assetName: assetName,
-            assetAmount: assetAmount,
+            assetAmount: parseFloat(assetAmount.split(",").join("")),
             purchaseDate: new Date(),
             paymentWalletAddress: paymentMethod[pMtdIndex].paymentAddress,
             cryptoName: paymentMethod[pMtdIndex].name,
-            transactionID: purchaseDetails.transactionId,
+            transactionID: transactionId,
             userID: userID,
           };
           // Make a POST request with the purchaseDetails to our /store-asset api endpoint
@@ -135,13 +129,23 @@ export default function BuyAndTrade() {
                 setCookie("onboardingStage", "COMPLETED");
                 localStorage.setItem("onboardingStage", "COMPLETED");
                 console.log("Asset saved successfully.");
-                console.log(response.json());
+                console.log(response);
               } else {
                 console.log(response);
                 throw new Error("HTTP error! Status: " + response.status);
               }
             })
             .catch((error) => {
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  setTxConfirmStatus("error");
+                  resolve();
+                }, 2000);
+              }).then(() => {
+                setTimeout(() => {
+                  setTxConfirmStatus("try-again");
+                }, 2000);
+              });
               console.log("Couldn't save asset.");
               console.log(error);
             });
@@ -191,11 +195,11 @@ export default function BuyAndTrade() {
       supportedNetwork: "TRON (TRC20)",
     },
     {
-      name: "Binance USD",
-      logo: <BUSDIcon />,
-      popularName: "Binance USD",
-      paymentAddress: "TAiTqyYFav1y1tJLWKYnVqFwgapEVtBYJw",
-      supportedNetwork: "TRON (TRC20)",
+      name: "TrueUSD - TUSD",
+      logo: <TUSDIcon />,
+      popularName: "TrueUSD",
+      paymentAddress: "0xb329Abdd1B2639bbeC601e379DFcC3f68FEfbF31",
+      supportedNetwork: "Ethereum (ERC20)",
     },
     {
       name: "Bitcoin - BTC",
@@ -229,7 +233,7 @@ export default function BuyAndTrade() {
 
   return (
     <>
-      <div className="bg-navBarLightBg dark:bg-navBarDarkBg border-b border-navBarBorderLight dark:border-navBarBorderDark tablet:px-10 px-6 py-4 fixed top-0 left-0 z-10 w-full backdrop-blur-sm">
+      <nav className="bg-navBarLightBg dark:bg-navBarDarkBg border-b border-navBarBorderLight dark:border-navBarBorderDark tablet:px-10 px-6 py-4 fixed top-0 left-0 z-10 w-full backdrop-blur-sm">
         <div className="wrapper relative flex space-x-2 justify-between mobile_lg:justify-center items-center h-[50px]">
           <Logo />
           <div className="left hidden mobile_lg:block absolute left-0">
@@ -239,7 +243,7 @@ export default function BuyAndTrade() {
             <DarkModeToggle />
           </div>
         </div>
-      </div>
+      </nav>
       <div
         style={{
           display: showBuyAndTrade ? "block" : "none",
@@ -252,7 +256,7 @@ export default function BuyAndTrade() {
           </h2>
           <div className="info mt-4">
             <p>
-              Benarbitrage recommends using stable cryptos like USDT, BUSD and
+              Benarbitrage recommends using stable cryptos like USDT, TUSD and
               USDC for asset purchases, to eliminate risks associated with
               market volatility.
             </p>
@@ -415,9 +419,11 @@ export default function BuyAndTrade() {
                             ? "Try again"
                             : "Confirm purchase"}
                           {txConfirmStatus === "confirmed" ||
-                            (txConfirmStatus === "already-confirmed" && (
-                              <SuccessIcon className={`fill-[#547455]`} />
-                            ))}
+                          txConfirmStatus === "already-confirmed" ? (
+                            <SuccessIcon className={`fill-[#547455]`} />
+                          ) : (
+                            ""
+                          )}
                         </button>
                       </form>
                     </div>
@@ -445,12 +451,12 @@ export default function BuyAndTrade() {
                     txConfirmStatus === "already-confirmed"
                       ? ""
                       : "cursor-not-allowed"
-                  } flex gap-4 justify-between items-center bg-benBlue-lightE ${
+                  } flex gap-4 justify-between items-center bg-benBlue-lightC ${
                     txConfirmStatus === "confirmed" ||
                     txConfirmStatus === "already-confirmed"
                       ? "text-benOrange-300 w-[160px] mobile_lg:w-[175px]"
                       : "text-benBlue-100 w-[150px]"
-                  } ring-offset-2 focus:ring-2 active:scale-[0.9] ring-offset-benWhite dark:ring-offset-benBlue-400 ring-benBlue-lightD drop-shadow-sm rounded-xl py-2 px-4 text-center font-medium text-base tablet:text-lg duration-300`}
+                  } ring-offset-2 focus:ring-2 active:scale-[0.9] ring-offset-benWhite dark:ring-offset-benBlue-400 ring-benBlue-lightD drop-shadow-sm rounded-xl py-2 px-4 text-center font-medium text-base tablet:text-lg`}
                 >
                   <span className="flex-none">Trade with AI </span>
                   <svg
