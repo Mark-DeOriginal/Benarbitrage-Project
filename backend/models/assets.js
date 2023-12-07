@@ -21,7 +21,7 @@ const Assets = sequelize.define(
       allowNull: false,
     },
     asset_amount: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.BIGINT,
       allowNull: false,
     },
     purchase_date: {

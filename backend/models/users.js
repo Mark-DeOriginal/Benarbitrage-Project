@@ -54,15 +54,15 @@ const Users = sequelize.define(
       allowNull: true,
     },
     portfolio_balance: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: true,
     },
     accumulated_interest: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: true,
     },
     total_balance: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: true,
     },
     last_login_date: {

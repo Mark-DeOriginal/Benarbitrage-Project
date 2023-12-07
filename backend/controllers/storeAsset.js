@@ -1,16 +1,4 @@
-import db from "../config/database.js";
 import initModels from "../models/init-models.js";
-
-const sequelize = db;
-
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Connection to database was successful!");
-  })
-  .catch((error) => {
-    console.error("Unable to connect to the database.", error);
-  });
 
 // Our User and Asset Models
 const { users, assets } = initModels();
@@ -38,17 +26,22 @@ export const storeAsset = async (req, res) => {
       return;
     }
 
-    const userAssets = await user.getAssets();
-
-    const assetExists = userAssets.map((prevAssetTxID) => {
-      if (transactionID === prevAssetTxID) {
-        return true;
+    const assetExists = async () => {
+      const userAssets = await user.getAssets();
+      if (user.has_asset) {
+        userAssets.map((asset) => {
+          if (transactionID === asset.transaction_id) {
+            return true;
+          } else {
+            return false;
+          }
+        });
       } else {
         return false;
       }
-    });
+    };
 
-    if (!assetExists) {
+    if (!assetExists()) {
       const asset = await assets.create({
         asset_name: assetName,
         asset_owner: user.name,
@@ -61,25 +54,38 @@ export const storeAsset = async (req, res) => {
 
       await user.addAsset(asset);
 
-      const newPortfolioBalance =
-        user.portfolio_balance + parseFloat(assetAmount.split(",").join(""));
+      const newPortfolioBalance = async () => {
+        const userAssets = await user.getAssets();
+        let balance = 0;
+        userAssets.map((asset) => {
+          balance += asset.asset_amount;
+        });
+
+        return balance;
+      };
 
       user.update({
         onboarding_stage: "Completed",
         reg_completed: true,
         has_asset: true,
-        portfolio_balance: newPortfolioBalance,
+        portfolio_balance: await newPortfolioBalance(),
+        accumulated_interest: Math.round(
+          (6.2 * (await newPortfolioBalance())) / 100
+        ),
       });
 
       res.status(201).json({
         message: "Asset stored successfully",
-        assetDetails: userAssets,
+        walletBalance: user.portfolio_balance,
+        accumulatedInterest: user.accumulated_interest,
         message: "SERVER_SUCCESS",
       });
     } else {
       console.error("Asset already confirmed");
       res.status(409).json({
         message: "Already Confirmed",
+        walletBalance: user.portfolio_balance,
+        accumulatedInterest: user.accumulated_interest,
       });
     }
   } catch (error) {

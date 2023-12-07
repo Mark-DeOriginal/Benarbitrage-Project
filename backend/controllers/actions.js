@@ -204,6 +204,7 @@ export const setUserAccType = async (req, res) => {
             account_type: account_type,
             onboarding_stage: nextOnboardingStage,
             account_validated: true,
+            accumulated_interest: 0,
           })
           .then((updatedUser) => {
             console.log("Account type updated successfully.", updatedUser);
