@@ -1,5 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { CaretIcon } from "./icons";
+import frenchFlag from "../assets/france-flag.svg";
+import usFlag from "../assets/us-flag.svg";
+import ukFlag from "../assets/uk-flag.svg";
+
+export const Flag = ({ flagName }) => {
+  return (
+    <img
+      src={
+        flagName === "us"
+          ? usFlag
+          : flagName === "uk"
+          ? ukFlag
+          : flagName === "france"
+          ? frenchFlag
+          : usFlag
+      }
+      alt={flagName}
+      width={25}
+      height={25}
+    />
+  );
+};
 
 const LanguageSelector = ({ className }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,14 +58,7 @@ const LanguageSelector = ({ className }) => {
         className="py-1 px-1 border border-benBlue-200 dark:border-benBlue-lightB rounded-full flex items-center active:scale-[0.95]"
         onClick={toggleDropdown}
       >
-        <img
-          src={`/src/assets/${selectedLanguage
-            .split("-")[1]
-            .toLowerCase()}-flag.svg`}
-          alt={selectedLanguage}
-          width={27}
-          height={27}
-        />
+        <Flag flagName={selectedLanguage.split("-")[1].toLowerCase()} />
         <CaretIcon className={`fill-benBlue-300`} />
       </button>
       <div
@@ -61,14 +76,7 @@ const LanguageSelector = ({ className }) => {
             } duration-300`}
             onClick={() => handleLanguageChange(language)}
           >
-            <img
-              src={`/src/assets/${language
-                .split("-")[1]
-                .toLowerCase()}-flag.svg`}
-              alt={language}
-              width={25}
-              height={25}
-            />
+            <Flag flagName={language.split("-")[1].toLowerCase()} />
             {language}
           </button>
         ))}
