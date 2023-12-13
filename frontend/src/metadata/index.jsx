@@ -13,7 +13,7 @@ export const MetaData = ({ title, description, themeColor }) => {
       <meta property="og:image:type" content="image/png" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image" content="opengraph-image.png" />
+      <meta property="og:image" content="/public/opengraph-image.png" />
       <meta property="og:type" content="website" />
 
       <meta name="twitter:title" content={title} />
@@ -22,17 +22,27 @@ export const MetaData = ({ title, description, themeColor }) => {
       <meta name="twitter:image:type" content="image/png" />
       <meta name="twitter:image:width" content="1200" />
       <meta name="twitter:image:height" content="630" />
-      <meta name="twitter:image" content="twitter-image.png" />
+      <meta name="twitter:image" content="/public/twitter-image.png" />
       <meta name="theme-color" content={themeColor} />
 
       <meta name="robots" content="index, follow, nocache" />
       <meta name="googlebot" content="index, follow" />
 
-      <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="32x32" />
-      <link rel="icon" href="/icon.svg" type="image/svg+xml" sizes="any" />
+      <link
+        rel="icon"
+        href="/public/favicon.ico"
+        type="image/x-icon"
+        sizes="32x32"
+      />
+      <link
+        rel="icon"
+        href="/public/icon.svg"
+        type="image/svg+xml"
+        sizes="any"
+      />
       <link
         rel="apple-touch-icon"
-        href="/apple-icon.png"
+        href="/public/apple-icon.png"
         type="image/png"
         sizes="180x180"
       />

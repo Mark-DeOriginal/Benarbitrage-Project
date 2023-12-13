@@ -10,7 +10,7 @@ export default function StatisticsSection() {
             {stat.figure}
           </p>
 
-          <h3 className="text-lg mobile_lg:text-2xl text-benBlue-lightD font-medium">
+          <h3 className="text-lg mobile_lg:text-2xl text-benBlue-200 font-medium">
             {stat.title}
           </h3>
         </div>

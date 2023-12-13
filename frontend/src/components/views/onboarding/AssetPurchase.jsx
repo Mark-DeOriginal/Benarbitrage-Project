@@ -135,7 +135,7 @@ export default function AssetPurchase() {
           </h2>
           <p>
             Please note, trade durations are calculated based on current market
-            data and therefore, may vary slightly later.
+            data and therefore, may vary slightly afterwards.
           </p>
         </div>
         <div className="body mt-8">
