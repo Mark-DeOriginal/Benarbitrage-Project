@@ -294,7 +294,8 @@ label {
 
 .buy-and-trade-section,
 .dashboard,
-.terms-of-use {
+.terms-of-use,
+.profile-info {
   animation: 0.3s cubic-bezier(0.17, 1.14, 1, 1) forwards show-animation;
   will-change: transform;
 }

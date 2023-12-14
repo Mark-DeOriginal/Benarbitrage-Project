@@ -180,7 +180,7 @@ export default function BuyAndTrade() {
                   <CaretIcon className={`fill-benBlue-300`} />
                 </button>
                 {showLogout && (
-                  <div className="absolute overflow-hidden top-[45px] w-60 right-0 rounded-xl shadow-cardShadow border border-navBarBorderLight dark:border-navBarBorderDark bg-benWhitishBlue dark:bg-[#4b4a73]">
+                  <div className="profile-info absolute overflow-hidden top-[45px] w-60 right-0 rounded-xl shadow-cardShadow border border-navBarBorderLight dark:border-navBarBorderDark bg-benWhitishBlue dark:bg-[#4b4a73]">
                     <div className="login-details py-2 px-4">
                       <p className="user-name font-bold text-sm mobile:text-base">
                         {getCookie("userName", "User")}

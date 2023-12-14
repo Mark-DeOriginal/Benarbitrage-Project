@@ -102,7 +102,7 @@ function App() {
       redirectTo("/sign-up")
     ) : pageUrl === "/dashboard" &&
       isLoggedIn() &&
-      getCookie("onboardingStage", "") !== "Completed" ? (
+      getCookie("onboardingStage", "") !== "COMPLETED" ? (
       redirectTo("/get-started")
     ) : pageUrl === "/dashboard" ? (
       <>
