@@ -16,6 +16,7 @@ import BuyAndTradeSection from "./pages/buy-and-trade.jsx";
 import SignUpSection from "./pages/sign-up.jsx";
 import isLoggedIn from "./utilities/isLoggedIn.js";
 import TermsAndConditions from "./pages/terms-of-use.jsx";
+import getCookie from "./utilities/getCookie.js";
 
 export function redirectTo(location) {
   window.location.href = location;
@@ -99,6 +100,10 @@ function App() {
       </>
     ) : pageUrl === "/dashboard" && isLoggedIn() == false ? (
       redirectTo("/sign-up")
+    ) : pageUrl === "/dashboard" &&
+      isLoggedIn() &&
+      getCookie("onboardingStage", "") !== "Completed" ? (
+      redirectTo("/get-started")
     ) : pageUrl === "/dashboard" ? (
       <>
         <MetaData
@@ -129,7 +134,7 @@ function App() {
         </RootLayout>
       </>
     ) : (
-      redirectTo("/sign-up")
+      redirectTo("/dashboard")
     );
 
   return <HelmetProvider>{pageContent}</HelmetProvider>;

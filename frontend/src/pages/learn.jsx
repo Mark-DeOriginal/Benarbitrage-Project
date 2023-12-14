@@ -1,10 +1,11 @@
 import React from "react";
+import tradingChart from "../assets/trading-chart-img-2.png";
 
 export default function LearnPage() {
   return (
     <section className="p-6 pt-[130px] tablet:pt-[150px] tablet:pb-12 tablet:px-[50px] max-w-[900px] mx-auto">
       <img
-        src="/src/assets/trading-chart-img-2.png"
+        src={tradingChart}
         className="w-full h-[200px] rounded-2xl object-cover saturate-[70%]"
         alt="image"
       />

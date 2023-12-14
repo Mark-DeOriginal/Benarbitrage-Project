@@ -1,3 +1,24 @@
+import openAIImg from "../assets/brands/open-ai.svg";
+import coinbaseImg from "../assets/brands/coinbase.svg";
+import binanceImg from "../assets/brands/binance.svg";
+import stripeImg from "../assets/brands/stripe.svg";
+import paypalImg from "../assets/brands/paypal.svg";
+import cashappImg from "../assets/brands/cashapp.svg";
+import masterCardImg from "../assets/brands/master-card.svg";
+import visaImg from "../assets/brands/visa.svg";
+import bitcoinLogo from "../assets/icons/cryptos/bitcoin.svg";
+import ethereumLogo from "../assets/icons/cryptos/ethereum.svg";
+import bnbLogo from "../assets/icons/cryptos/bnb.svg";
+import avalancheLogo from "../assets/icons/cryptos/avalanche.svg";
+import litecoinLogo from "../assets/icons/cryptos/litecoin.svg";
+import tronTrxLogo from "../assets/icons/cryptos/tron-trx.svg";
+import appleLogo from "../assets/brands/apple.svg";
+import teslaLogo from "../assets/brands/tesla.svg";
+import netflixLogo from "../assets/brands/netflix.svg";
+import amazonLogo from "../assets/brands/amazon.svg";
+import microsoftLogo from "../assets/brands/microsoft.svg";
+import metaPlatformsLogo from "../assets/brands/meta-platforms.svg";
+
 export const navLinks = [
   {
     url: "/",
@@ -47,35 +68,35 @@ export const navLinks = [
 export const brands = [
   {
     name: "open-ai",
-    logo: "/src/assets/brands/open-ai.svg",
+    logo: openAIImg,
   },
   {
     name: "coinbase",
-    logo: "/src/assets/brands/coinbase.svg",
+    logo: coinbaseImg,
   },
   {
     name: "binance",
-    logo: "/src/assets/brands/binance.svg",
+    logo: binanceImg,
   },
   {
     name: "stripe",
-    logo: "/src/assets/brands/stripe.svg",
+    logo: stripeImg,
   },
   {
     name: "paypal",
-    logo: "/src/assets/brands/paypal.svg",
+    logo: paypalImg,
   },
   {
     name: "cashapp",
-    logo: "/src/assets/brands/cashapp.svg",
+    logo: cashappImg,
   },
   {
     name: "master-card",
-    logo: "/src/assets/brands/master-card.svg",
+    logo: masterCardImg,
   },
   {
     name: "visa",
-    logo: "/src/assets/brands/visa.svg",
+    logo: visaImg,
   },
 ];
 
@@ -106,7 +127,7 @@ export function initializeExchanges() {
         {
           name: "Bitcoin",
           abbr: "BTC",
-          logo: "/src/assets/icons/cryptos/bitcoin.svg",
+          logo: bitcoinLogo,
           marketPrice: 37113.3,
           currency: "$",
           performance: 0.17,
@@ -114,7 +135,7 @@ export function initializeExchanges() {
         {
           name: "Ethereum",
           abbr: "ETH",
-          logo: "/src/assets/icons/cryptos/ethereum.svg",
+          logo: ethereumLogo,
           marketPrice: 2639.55,
           currency: "$",
           performance: 0.21,
@@ -122,7 +143,7 @@ export function initializeExchanges() {
         {
           name: "BNB",
           abbr: "BNB",
-          logo: "/src/assets/icons/cryptos/bnb.svg",
+          logo: bnbLogo,
           marketPrice: 413.5,
           currency: "$",
           performance: 0.52,
@@ -130,7 +151,7 @@ export function initializeExchanges() {
         {
           name: "Avalanche",
           abbr: "AVAX",
-          logo: "/src/assets/icons/cryptos/avalanche.svg",
+          logo: avalancheLogo,
           marketPrice: 160.76,
           currency: "$",
           performance: 1.62,
@@ -138,7 +159,7 @@ export function initializeExchanges() {
         {
           name: "Litecoin",
           abbr: "LTC",
-          logo: "/src/assets/icons/cryptos/litecoin.svg",
+          logo: litecoinLogo,
           marketPrice: 150.94,
           currency: "$",
           performance: 1.27,
@@ -146,7 +167,7 @@ export function initializeExchanges() {
         {
           name: "TRON",
           abbr: "TRX",
-          logo: "/src/assets/icons/cryptos/tron-trx.svg",
+          logo: tronTrxLogo,
           marketPrice: 1.13,
           currency: "$",
           performance: 1.3,
@@ -158,42 +179,42 @@ export function initializeExchanges() {
       types: [
         {
           name: "Apple",
-          logo: "/src/assets/brands/apple.svg",
+          logo: appleLogo,
           marketPrice: 177.49,
           currency: "$",
           performance: 2.58,
         },
         {
           name: "Tesla",
-          logo: "/src/assets/brands/tesla.svg",
+          logo: teslaLogo,
           marketPrice: 260.53,
           currency: "$",
           performance: 0.48,
         },
         {
           name: "Netflix",
-          logo: "/src/assets/brands/netflix.svg",
+          logo: netflixLogo,
           marketPrice: 381.51,
           currency: "$",
           performance: 8.92,
         },
         {
           name: "Amazon.com",
-          logo: "/src/assets/brands/amazon.svg",
+          logo: amazonLogo,
           marketPrice: 127.96,
           currency: "$",
           performance: 2.0,
         },
         {
           name: "Microsoft",
-          logo: "/src/assets/brands/microsoft.svg",
+          logo: microsoftLogo,
           marketPrice: 327.26,
           currency: "$",
           performance: 7.9,
         },
         {
           name: "Meta Platforms",
-          logo: "/src/assets/brands/meta-platforms.svg",
+          logo: metaPlatformsLogo,
           marketPrice: 315.42,
           currency: "$",
           performance: 10.63,

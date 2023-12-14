@@ -1,10 +1,11 @@
 import React from "react";
+import chartImg from "../assets/trading-chart-img-5.png";
 
 export default function TradingMadeEasier() {
   return (
     <section className="p-6 pt-20 tablet:pt-28 tablet:pb-12 tablet:px-[50px] max-w-[900px] mx-auto">
       <img
-        src="/src/assets/trading-chart-img-5.png"
+        src={chartImg}
         className="w-full h-[200px] tablet:h-[300px] rounded-2xl object-cover brightness-150"
         alt="image"
       />

@@ -1,5 +1,6 @@
 import React from "react";
 import { TwitterIcon } from "./icons";
+import avatar from "../assets/testimonial-img.jpg";
 
 export const Review = ({ alignment, twitterUsername, children }) => {
   return (
@@ -21,7 +22,7 @@ export default function ReviewsSection() {
       <div className="text-benBlue-lightC2 dark:text-benBlue-200 bg-benWhite dark:bg-benBlue-lightC rounded-2xl p-6">
         <div className="testimonial-header flex flex-col gap-2">
           <img
-            src="/src/assets/testimonial-img.jpg"
+            src={avatar}
             height={70}
             width={70}
             className="rounded-full inline-block"

@@ -1,5 +1,6 @@
 import React from "react";
 import Caret from "./Caret";
+import chartImg from "../assets/trading-chart-img-1.jpg";
 
 export default function HeroSection() {
   return (
@@ -58,7 +59,7 @@ export default function HeroSection() {
       </div>
       <img
         className="hero-img h-auto w-[440px] rounded-3xl hidden screen940:block relative z-5"
-        src="/src/assets/trading-chart-img-1.JPG"
+        src={chartImg}
         alt="Effortless trading"
       />
     </section>
