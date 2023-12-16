@@ -28,14 +28,11 @@ export const storeAsset = async (req, res) => {
 
     const assetExists = async () => {
       const userAssets = await user.getAssets();
+
       if (user.has_asset) {
-        userAssets.map((asset) => {
-          if (transactionID === asset.transaction_id) {
-            return true;
-          } else {
-            return false;
-          }
-        });
+        return userAssets.some(
+          (asset) => transactionID === asset.transaction_id
+        );
       } else {
         return false;
       }
@@ -45,7 +42,7 @@ export const storeAsset = async (req, res) => {
       const asset = await assets.create({
         asset_name: assetName,
         asset_owner: user.name,
-        asset_amount: assetAmount,
+        asset_amount: Math.round(assetAmount),
         purchase_date: purchaseDate,
         payment_wallet_address: paymentWalletAddress,
         crypto_name: cryptoName,
