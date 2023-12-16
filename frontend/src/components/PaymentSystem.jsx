@@ -177,8 +177,8 @@ const PaymentSystem = () => {
       name: "TrueUSD - TUSD",
       logo: <TUSDIcon />,
       popularName: "TrueUSD",
-      paymentAddress: "0xb329Abdd1B2639bbeC601e379DFcC3f68FEfbF31",
-      supportedNetwork: "Ethereum (ERC20)",
+      paymentAddress: "TAiTqyYFav1y1tJLWKYnVqFwgapEVtBYJw",
+      supportedNetwork: "TRON (TRC20)",
     },
   ]);
 
