@@ -1,9 +1,0 @@
-POST http://localhost:5174/user/create-user
-Content-Type: application/json
-
-{
-    "name" : "Mark Friday",
-    "email" : "davidmarkfriday16@gmail.com",
-    "password": "deoriginal.me",
-    "confirm_password": "deoriginal.me",
-}
