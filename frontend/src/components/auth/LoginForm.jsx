@@ -139,7 +139,6 @@ export default function LoginForm() {
           });
 
           setIsLoading(false);
-          throw new Error(response.messageType);
         } else if (messageType === "SERVER_ERROR") {
           console.log(response.messageType + ": " + response.error);
 
