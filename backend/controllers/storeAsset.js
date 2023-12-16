@@ -41,7 +41,7 @@ export const storeAsset = async (req, res) => {
       }
     };
 
-    if (!assetExists()) {
+    if ((await assetExists()) == false) {
       const asset = await assets.create({
         asset_name: assetName,
         asset_owner: user.name,
