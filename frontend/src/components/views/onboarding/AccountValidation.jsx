@@ -16,7 +16,7 @@ export default function AccountValidation() {
       setIsLoading(true);
 
       const processFormData = await fetch(
-        "https://p0xq2gpd-5174.uks1.devtunnels.ms/user/set_account_type",
+        "https://benarbitrage-server.up.railway.app/user/set_account_type",
         {
           method: "POST",
           headers: {
