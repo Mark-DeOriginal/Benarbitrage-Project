@@ -83,7 +83,7 @@ export const ExchangeTypeList = ({ type }) => {
           <br />
           <span
             className={`market-price text-base tablet:text-lg font-medium ${
-              selectedAsset.name === type.name && "dark:text-benOrange-300"
+              selectedAsset.name === type.name ? "dark:text-benOrange-300" : ""
             }`}
           >
             {type.currency}

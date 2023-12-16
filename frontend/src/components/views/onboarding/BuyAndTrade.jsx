@@ -476,7 +476,10 @@ export default function BuyAndTrade() {
                     />
                   </svg>
                 </button>
-                <button className="bg-benBlue-100 dark:bg-benBlueLight/70 text-benBlue-lightC2 dark:text-benBlue-200 ring-offset-2 focus:ring-2 active:scale-[0.9] ring-offset-benWhite dark:ring-offset-benBlue-400 ring-benBlue-lightD drop-shadow-sm rounded-xl w-fit py-2 px-4 text-center font-medium text-base tablet:text-lg">
+                <button
+                  onClick={goToDashBoard}
+                  className="bg-benBlue-100 dark:bg-benBlueLight/70 text-benBlue-lightC2 dark:text-benBlue-200 ring-offset-2 focus:ring-2 active:scale-[0.9] ring-offset-benWhite dark:ring-offset-benBlue-400 ring-benBlue-lightD drop-shadow-sm rounded-xl w-fit py-2 px-4 text-center font-medium text-base tablet:text-lg"
+                >
                   Trade later
                 </button>
               </div>

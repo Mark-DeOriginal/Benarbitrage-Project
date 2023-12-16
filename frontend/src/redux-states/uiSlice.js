@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import getCookie from "../utilities/getCookie";
-import getAccountBalance from "../utilities/getAccountBalance";
+import bitcoinLogo from "../assets/icons/cryptos/bitcoin.svg";
 
 export const uiSlice = createSlice({
   name: "ui",
@@ -10,7 +10,7 @@ export const uiSlice = createSlice({
     userBoardingStage: getCookie("onboardingStage", "SIGN_UP"),
     selectedAsset: {
       name: "Bitcoin",
-      logo: "/src/assets/icons/cryptos/bitcoin.svg",
+      logo: bitcoinLogo,
       abbr: "BTC",
     },
     assetPurchaseDetails: {
