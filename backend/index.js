@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 
 const corsOptions = {
-  origin: process.env.SITE_URL,
+  origin: process.env.SERVICE_URL,
 };
 
 app.use(cors());
@@ -22,8 +22,8 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to Benarbitrage!" });
 });
 
-const PORT = process.env.SERVER_PORT || 5174;
+const PORT = process.env.PORT || 5174;
 
 app.listen(PORT, () => {
-  console.log(`The Server is running at ${process.env.SITE_HOST}:${PORT}`);
+  console.log(`The Server is running at ${process.env.HOST}:${PORT}`);
 });
