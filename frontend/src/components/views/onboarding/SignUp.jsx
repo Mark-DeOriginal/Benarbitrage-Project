@@ -3,7 +3,7 @@ import SignUpForm from "../../auth/SignUpForm";
 
 export default function SignUp() {
   return (
-    <div className="sign-up text-center">
+    <div className="signup text-center">
       <div className="header font-medium">
         <h2 className="text-2xl mb-2 font-bold text-benBlue-400 dark:text-benOrange-400">
           Sign Up

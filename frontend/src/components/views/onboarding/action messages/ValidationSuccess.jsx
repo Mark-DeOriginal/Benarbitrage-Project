@@ -10,7 +10,7 @@ export default function ValidationSuccess() {
   }
 
   return (
-    <div className="sign-up-success max-w-[500px] text-center mx-auto">
+    <div className="signup-success max-w-[500px] text-center mx-auto">
       <div className="header flex flex-col gap-4 items-center">
         <div className="p-6 bg-successBgColor dark:bg-successBgColorDark rounded-full">
           <SuccessIcon className="h-auto w-8 fill-successColor dark:fill-successColorDark" />

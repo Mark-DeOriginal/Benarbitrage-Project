@@ -11,6 +11,7 @@ import ValidationFailed from "./action messages/ValidationFailed";
 import ValidationSuccess from "./action messages/ValidationSuccess";
 import AssetPurchase from "./AssetPurchase";
 import Login from "./Login";
+import LoginFailed from "./action messages/LoginFailed";
 
 export default function BoardingSection({ view }) {
   const onboardingStage = useSelector((state) => state.ui.userBoardingStage);
@@ -23,7 +24,11 @@ export default function BoardingSection({ view }) {
     <div className="boarding-section column flex flex-col justify-between basis-2/3 p-6 tablet:px-[50px] dark:bg-benDarkBlueLight text-benBlue-lightB dark:text-benBlue-200">
       <div className="body-wrapper text-sm mobile:text-base">
         {view === "LOGIN" ? (
-          <Login />
+          onboardingStage === "LOGIN_FAILED" ? (
+            <LoginFailed />
+          ) : (
+            <Login />
+          )
         ) : (
           <>
             <div className="progress-indicator-wrapper">

@@ -13,7 +13,7 @@ import GetStartedSection from "./pages/get-started.jsx";
 import LoginSection from "./pages/login.jsx";
 import UserDashboard from "./pages/dashboard.jsx";
 import BuyAndTradeSection from "./pages/buy-and-trade.jsx";
-import SignUpSection from "./pages/sign-up.jsx";
+import SignUpSection from "./pages/signup.jsx";
 import isLoggedIn from "./utilities/isLoggedIn.js";
 import TermsAndConditions from "./pages/terms-of-use.jsx";
 import getCookie from "./utilities/getCookie.js";
@@ -89,7 +89,7 @@ function App() {
         />
         <LoginSection />
       </>
-    ) : pageUrl === "/sign-up" ? (
+    ) : pageUrl === "/signup" ? (
       <>
         <MetaData
           title="Get Started"
@@ -99,7 +99,7 @@ function App() {
         <SignUpSection />
       </>
     ) : pageUrl === "/dashboard" && isLoggedIn() == false ? (
-      redirectTo("/sign-up")
+      redirectTo("/signup")
     ) : pageUrl === "/dashboard" &&
       isLoggedIn() &&
       getCookie("onboardingStage", "") !== "COMPLETED" ? (

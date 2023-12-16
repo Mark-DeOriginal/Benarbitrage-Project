@@ -1,19 +1,21 @@
 import React from "react";
 import { ErrorIcon } from "../../../icons";
+import deleteAllCookies from "../../../../utilities/deleteCookies";
 
 export default function SignUpFailed() {
   function handleBackToSignUp() {
-    window.location.href = "/sign-up";
+    deleteAllCookies();
+    window.location.href = "/get-started";
   }
 
   return (
-    <div className="sign-up-success max-w-[500px] text-center mx-auto">
+    <div className="signup-success max-w-[500px] text-center mx-auto">
       <div className="header flex flex-col gap-4 items-center">
         <div className="p-6 bg-failedBgColor dark:bg-failedBgColorDark rounded-full">
           <ErrorIcon className="h-auto w-8 fill-failedColor dark:fill-failedColorDark" />
         </div>
         <h2 className="text-2xl mb-2 font-bold text-failedColor dark:text-failedColorDark">
-          Internal <br />
+          Network or <br />
           Server Error!
         </h2>
       </div>

@@ -143,14 +143,19 @@ export default function LoginForm() {
         } else if (messageType === "SERVER_ERROR") {
           console.log(response.messageType + ": " + response.error);
 
-          setCookie("onboardingStage", "SIGN_UP_FAILED");
-          localStorage.setItem("onboardingStage", "SIGN_UP_FAILED");
+          setCookie("onboardingStage", "LOGIN_FAILED");
+          localStorage.setItem("onboardingStage", "LOGIN_FAILED");
 
           location.reload();
         }
       }
     } catch (error) {
       console.error(error);
+
+      setCookie("onboardingStage", "LOGIN_FAILED");
+      localStorage.setItem("onboardingStage", "LOGIN_FAILED");
+
+      location.reload();
     }
   };
 

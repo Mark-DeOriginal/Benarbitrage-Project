@@ -11,7 +11,7 @@ export default function Login() {
         <p>
           Don't have an account?{" "}
           <a
-            href="/sign-up"
+            href="/signup"
             className="border-b border-dotted border-benBlue-200"
           >
             Sign up
