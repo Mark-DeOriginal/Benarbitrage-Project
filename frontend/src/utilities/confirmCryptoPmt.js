@@ -22,15 +22,12 @@ export default function confirmCryptoPmt(txID, network, toAddress) {
           }
           return response.json();
         })
-        .then((txDetails) => {
+        .then((transactionDetails) => {
           const tronNetwkAddress = toAddress;
           const testAddress = "TQA2Z63x5rN561gCZSEnNPK5A5HK4W813s";
 
-          if (
-            txDetails.toAddress === tronNetwkAddress ||
-            txDetails.toAddress === testAddress
-          ) {
-            resolve(txDetails);
+          if (transactionDetails.toAddress === tronNetwkAddress) {
+            resolve(transactionDetails);
           } else {
             const isError = true;
             reject(isError);
