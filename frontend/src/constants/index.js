@@ -115,7 +115,7 @@ export const statistics = [
   },
   {
     title: "Year of Launch",
-    figure: "Oct, 2022",
+    figure: "Sept, 2023",
   },
 ];
 
