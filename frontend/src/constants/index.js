@@ -103,18 +103,18 @@ export const brands = [
 export const statistics = [
   {
     title: "Active Traders",
-    figure: "14M+",
+    figure: "4.6M+",
   },
   {
     title: "Trading Volume",
-    figure: "$2.5B",
+    figure: "$1.2B",
   },
   {
     title: "Bullrun Trade",
-    figure: "$4.3B",
+    figure: "$2.7B",
   },
   {
-    title: "Year of Launch",
+    title: "Launch Date",
     figure: "Sept, 2023",
   },
 ];
