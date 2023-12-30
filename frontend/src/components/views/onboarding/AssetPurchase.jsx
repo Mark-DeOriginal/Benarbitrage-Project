@@ -147,8 +147,9 @@ export default function AssetPurchase() {
                 </h3>
                 <div className="info text-sm mt-2">
                   <p>
-                    Note: Asset prices and metrics are updated based on their
-                    differential values in several other exchanges.
+                    Prices and metrics are updated based on their trailing
+                    differential values in several other exchanges and should
+                    not be taken as current values.
                   </p>
                   <p>Click an asset below to select it.</p>
                 </div>
