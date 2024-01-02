@@ -73,11 +73,6 @@ export const addCryptoCommunitySubscriber = async (req, res) => {
                     "Couldn't update subscriber payment amount.",
                     error
                   );
-
-                  res.status(500).json({
-                    error: "Internal Server Error",
-                    messageType: "SERVER_ERROR",
-                  });
                 });
             } else {
               console.error("Subscriber not found.");
@@ -85,20 +80,10 @@ export const addCryptoCommunitySubscriber = async (req, res) => {
           })
           .catch((error) => {
             console.error("Error finding subscriber.", error);
-
-            res.status(500).json({
-              error: "Internal Server Error",
-              messageType: "SERVER_ERROR",
-            });
           });
       })
       .catch(() => {
         console.log("Could not get payment amount.");
-
-        res.status(500).json({
-          error: "Internal Server Error",
-          messageType: "SERVER_ERROR",
-        });
       });
 
     // Return this response if the Subscriber was added successfully
