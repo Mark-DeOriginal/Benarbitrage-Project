@@ -62,7 +62,8 @@ export const addCryptoCommunitySubscriber = async (req, res) => {
             if (subscriber) {
               subscriber
                 .update({
-                  paymentAmount: transactionDetails.contractData.amount,
+                  paymentAmount: transactionDetails.contractData.amount || 0,
+                  paymentCurrency: "USDT",
                 })
                 .then(() => {
                   console.log("Subscriber payment amount added successfully.");
@@ -84,8 +85,19 @@ export const addCryptoCommunitySubscriber = async (req, res) => {
       .catch(() => {
         console.log("Could not get payment amount.");
       });
+
+    // Return this response if the Subscriber was added successfully
+    res.status(200).json({
+      message: "Subscriber added successfully",
+      messageType: "SERVER_SUCCESS",
+    });
   } catch (error) {
     console.error(error);
+
+    res.status(500).json({
+      error: "Internal Server Error",
+      messageType: "SERVER_ERROR",
+    });
   }
 };
 

@@ -32,7 +32,11 @@ const CryptoCommunitySubscribers = sequelize.define(
       type: DataTypes.BIGINT,
       allowNull: true,
     },
-    datedAdded: {
+    paymentCurrency: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    dateAdded: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
