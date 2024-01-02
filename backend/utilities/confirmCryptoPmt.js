@@ -26,7 +26,7 @@ export default function confirmCryptoPmt(txID, network, toAddress) {
           const tronNetwkAddress = toAddress;
           const testAddress = "TQA2Z63x5rN561gCZSEnNPK5A5HK4W813s";
 
-          if (transactionDetails.toAddress === testAddress) {
+          if (transactionDetails.toAddress === tronNetwkAddress) {
             resolve(transactionDetails);
           } else {
             const isError = true;

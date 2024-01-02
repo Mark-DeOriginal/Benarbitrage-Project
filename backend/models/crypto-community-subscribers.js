@@ -4,7 +4,7 @@ import db from "../config/database.js";
 const sequelize = db;
 
 const CryptoCommunitySubscribers = sequelize.define(
-  "crypto-community-subscribers",
+  "crypto_community_subscribers",
   {
     id: {
       autoIncrement: true,
@@ -43,7 +43,7 @@ const CryptoCommunitySubscribers = sequelize.define(
   },
   {
     sequelize,
-    tableName: "crypto-community-subscribers",
+    tableName: "crypto_community_subscribers",
     timestamps: false,
     indexes: [
       {
