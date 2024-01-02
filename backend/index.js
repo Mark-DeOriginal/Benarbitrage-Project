@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import userRoutes from "./routes/userRoutes.js";
+import cryptoCommunityRoutes from "./routes/cryptoCommunityRoutes.js";
 
 dotenv.config();
 
@@ -17,6 +18,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware to handle requests to the /user route
 app.use("/user", userRoutes);
+
+// Middleware to handle requests to the /crypto-community route
+app.use("/crypto-community", cryptoCommunityRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Benarbitrage!" });

@@ -1,6 +1,5 @@
 import initModels from "../models/init-models.js";
 
-// Our User and Asset Models
 const { users } = initModels();
 
 export const getAccountBalance = async (req, res) => {
