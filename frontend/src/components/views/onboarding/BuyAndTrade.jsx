@@ -16,6 +16,9 @@ import LanguageSelector from "../../LanguageSelector";
 import confirmCryptoPmt from "../../../utilities/confirmCryptoPmt";
 import setCookie from "../../../utilities/setCookie";
 
+import ReactGA from "react-ga";
+ReactGA.initialize("G-S8XRE42QPV");
+
 export default function BuyAndTrade() {
   const [showloader, setShowLoader] = useState(true);
   const [showBuyAndTrade, setShowBuyAndTrade] = useState(false);
@@ -89,6 +92,11 @@ export default function BuyAndTrade() {
       setTxIdErrorMessage("Input does not match a valid TxID");
     } else {
       setTxConfirmStatus("confirming");
+
+      ReactGA.event({
+        category: "Asset Purchase",
+        action: "Clicked the Confirm Purchase button",
+      });
 
       confirmCryptoPmt(
         transactionId,

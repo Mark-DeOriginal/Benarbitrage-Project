@@ -18,6 +18,10 @@ import isLoggedIn from "./utilities/isLoggedIn.js";
 import TermsAndConditions from "./pages/terms-of-use.jsx";
 import getCookie from "./utilities/getCookie.js";
 
+import ReactGA from "react-ga";
+
+ReactGA.initialize("G-S8XRE42QPV");
+
 export function redirectTo(location) {
   window.location.href = location;
 }
@@ -25,7 +29,9 @@ export function redirectTo(location) {
 function App() {
   const pageUrl = window.location.pathname;
 
-  console.log(pageUrl);
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname);
+  }, []);
 
   // Codes here run once this NavBar Component is mounted, which is on page load
 
@@ -122,7 +128,7 @@ function App() {
         />
         <TermsAndConditions />
       </>
-    ) : pageUrl === "/" ? (
+    ) : (
       <>
         <MetaData
           title="Benarbitrage"
@@ -133,8 +139,6 @@ function App() {
           <HomePage />
         </RootLayout>
       </>
-    ) : (
-      redirectTo("/dashboard")
     );
 
   return <HelmetProvider>{pageContent}</HelmetProvider>;
