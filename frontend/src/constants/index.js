@@ -65,6 +65,72 @@ export const navLinks = [
   },
 ];
 
+export const footerLinks = [
+  {
+    category: "Useful Links",
+    links: [
+      {
+        content: "Home",
+        type: "link",
+        url: "/",
+      },
+      {
+        content: "Learn",
+        type: "link",
+        url: "/learn",
+      },
+      {
+        type: "link",
+        content: "AI Trading",
+        url: "/ai-trading",
+      },
+      {
+        type: "link",
+        content: "Become an affiliate",
+        url: "/affiliate/register",
+      },
+    ],
+  },
+  {
+    category: "Company",
+    links: [
+      {
+        content: "About",
+        type: "link",
+        url: "/about",
+      },
+      {
+        content: "Terms and Conditions",
+        type: "link",
+        url: "/terms-of-use",
+      },
+      {
+        content: "Privacy Policy",
+        type: "link",
+        url: "/terms-of-use",
+      },
+      {
+        content: "Refund Policy",
+        type: "link",
+        url: "/terms-of-use",
+      },
+    ],
+  },
+  {
+    category: "Contact",
+    info: [
+      {
+        content: "23b Cheraton Block 1401, West Street, DC 98064, USA",
+        type: "address",
+      },
+      {
+        content: "info@benarbitrage.com",
+        type: "email",
+      },
+    ],
+  },
+];
+
 export const brands = [
   {
     name: "open-ai",
