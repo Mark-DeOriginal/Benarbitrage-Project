@@ -159,7 +159,7 @@ const PaymentSystem = () => {
 
   const [paymentMethod] = useState([
     {
-      name: "TetherUS - USDT",
+      name: "USDT",
       logo: <USDTIcon />,
       popularName: "USDT",
       paymentAddress: "TAiTqyYFav1y1tJLWKYnVqFwgapEVtBYJw",
@@ -167,14 +167,14 @@ const PaymentSystem = () => {
       recommended: true,
     },
     {
-      name: "USD Coin - USDC",
+      name: "USDC - USD Coin",
       logo: <USDCIcon />,
       popularName: "USD Coin",
       paymentAddress: "TAiTqyYFav1y1tJLWKYnVqFwgapEVtBYJw",
       supportedNetwork: "TRON (TRC20)",
     },
     {
-      name: "TrueUSD - TUSD",
+      name: "TUSD - TrueUSD",
       logo: <TUSDIcon />,
       popularName: "TrueUSD",
       paymentAddress: "TAiTqyYFav1y1tJLWKYnVqFwgapEVtBYJw",

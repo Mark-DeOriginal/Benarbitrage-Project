@@ -17,6 +17,7 @@ import confirmCryptoPmt from "../../../utilities/confirmCryptoPmt";
 import setCookie from "../../../utilities/setCookie";
 
 import ReactGA from "react-ga";
+import PaymentGuide from "../../PaymentGuide";
 ReactGA.initialize("G-S8XRE42QPV");
 
 export default function BuyAndTrade() {
@@ -188,7 +189,7 @@ export default function BuyAndTrade() {
 
   const [paymentMethod] = useState([
     {
-      name: "TetherUS - USDT",
+      name: "USDT",
       logo: <USDTIcon />,
       popularName: "USDT",
       paymentAddress: "TAiTqyYFav1y1tJLWKYnVqFwgapEVtBYJw",
@@ -196,28 +197,28 @@ export default function BuyAndTrade() {
       recommended: true,
     },
     {
-      name: "USD Coin - USDC",
+      name: "USDC - USD Coin",
       logo: <USDCIcon />,
       popularName: "USD Coin",
       paymentAddress: "TAiTqyYFav1y1tJLWKYnVqFwgapEVtBYJw",
       supportedNetwork: "TRON (TRC20)",
     },
     {
-      name: "TrueUSD - TUSD",
+      name: "TUSD - TrueUSD",
       logo: <TUSDIcon />,
       popularName: "TrueUSD",
       paymentAddress: "TAiTqyYFav1y1tJLWKYnVqFwgapEVtBYJw",
       supportedNetwork: "TRON (TRC20)",
     },
     {
-      name: "Bitcoin - BTC",
+      name: "BTC - Bitcoin",
       logo: <BTCIcon />,
       popularName: "Bitcoin",
       paymentAddress: "0xa435905664601dbba3fbe00431de7169a85dba55",
       supportedNetwork: "Ethereum (ERC20)",
     },
     {
-      name: "Ethereum - ETH",
+      name: "ETH - Ethereum",
       logo: <ETHIcon />,
       popularName: "Ethereum",
       paymentAddress: "0xa435905664601dbba3fbe00431de7169a85dba55",
@@ -317,7 +318,8 @@ export default function BuyAndTrade() {
               </div>
 
               <div className="payment-wrapper max-w-[400px] mx-auto">
-                <div className="payment-container my-8 bg-white dark:bg-benBlue-lightC drop-shadow-sm rounded-2xl">
+                <PaymentGuide />
+                <div className="payment-container mt-4 mb-8 bg-white dark:bg-benBlue-lightC drop-shadow-sm rounded-2xl">
                   <div className="header flex justify-between p-4">
                     <div className="payment-method flex gap-3 items-center">
                       <div className="payment-logo-wrapper w-[52px] h-[52px] flex justify-center items-center p-1 rounded-xl border-2 border-navBarBorderLight dark:border-benBlue-lightC2">

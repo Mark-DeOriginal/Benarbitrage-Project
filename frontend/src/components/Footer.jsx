@@ -13,7 +13,7 @@ export const Logo = () => {
 export default function Footer() {
   return (
     <footer className="p-6 pt-8 tablet:p-[60px] tablet:pb-8 bg-[#373659] text-benBlue-200 text-base tablet:text-lg">
-      <div className="row mb-12 flex flex-col mobile_lg:flex-row gap-8 mobile_lg:gap-12">
+      <div className="row mb-12 flex flex-row gap-8 mobile_lg:gap-12 text-base flex-wrap">
         <div className="column disclaimer space-y-6 max-w-[460px]">
           <Logo />
           <p className="text-xs tablet:text-sm">
@@ -24,48 +24,50 @@ export default function Footer() {
             profits, price of assets and duration of trades.
           </p>
         </div>
-        <div className="column text-base flex-1">
-          <div className="row flex flex-col mobile_lg:flex-row gap-8 justify-between ">
-            {footerLinks.map((categories, index) => (
-              <div
-                key={index}
-                className={`column space-y-2 mobile_lg:space-y-6 ${
-                  categories.category === "Contact"
-                    ? "mobile_lg:max-w-[250px]"
-                    : ""
-                }`}
-              >
-                <h2 className="header font-bold">{categories.category}</h2>
-                <div className="content flex flex-col gap-2 ">
-                  {categories.links?.map((link, index) => (
-                    <a href={link.url} key={index} className="hover:underline">
-                      {link.content}
-                    </a>
-                  ))}
-                  {categories.info?.map((info, index) =>
-                    info.type === "address" ? (
-                      <div key={index} className="flex gap-3 items-start">
-                        <HomeIcon
-                          className={`fill-benBlue-200 w-[20px] flex-none mt-1`}
-                        />
-                        <p>{info.content}</p>
-                      </div>
-                    ) : info.type === "email" ? (
-                      <div key={index} className="flex gap-3 items-center">
-                        <EmailIcon
-                          className={`fill-benBlue-200 w-[18px] flex-none`}
-                        />
-                        <p>{info.content}</p>
-                      </div>
-                    ) : (
-                      ""
-                    )
-                  )}
-                </div>
-              </div>
-            ))}
+        {/* <div className="column flex-1">
+          <div className="row flex flex-col mobile_lg:flex-row gap-8 justify-between "> */}
+        {footerLinks.map((categories, index) => (
+          <div
+            key={index}
+            className={`column space-y-2 mobile_lg:space-y-6 ${
+              categories.category === "Contact" ? "mobile_lg:max-w-[250px]" : ""
+            }`}
+          >
+            <h2 className="header font-bold">{categories.category}</h2>
+            <div className="content space-y-2">
+              {categories.links?.map((link, index) => (
+                <a
+                  href={link.url}
+                  key={index}
+                  className="hover:underline block"
+                >
+                  {link.content}
+                </a>
+              ))}
+              {categories.info?.map((info, index) =>
+                info.type === "address" ? (
+                  <div key={index} className="flex gap-3 items-start">
+                    <HomeIcon
+                      className={`fill-benBlue-200 w-[20px] flex-none mt-1`}
+                    />
+                    <p>{info.content}</p>
+                  </div>
+                ) : info.type === "email" ? (
+                  <div key={index} className="flex gap-3 items-center">
+                    <EmailIcon
+                      className={`fill-benBlue-200 w-[18px] flex-none`}
+                    />
+                    <p>{info.content}</p>
+                  </div>
+                ) : (
+                  ""
+                )
+              )}
+            </div>
           </div>
-        </div>
+        ))}
+        {/* </div>
+        </div> */}
       </div>
 
       <CopyRight />

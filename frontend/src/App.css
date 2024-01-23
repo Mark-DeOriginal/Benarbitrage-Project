@@ -329,3 +329,23 @@ label {
   margin-bottom: 16px;
   font-size: 18px;
 }
+
+/*Popup arrow */
+.popup-wrapper::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 30%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #dadae7f0 transparent;
+}
+
+.popup::-webkit-scrollbar {
+  width: 6px;
+}
+
+.popup::-webkit-scrollbar-thumb {
+  border-radius: 25px;
+}
