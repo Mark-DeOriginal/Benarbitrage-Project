@@ -349,3 +349,25 @@ label {
 .popup::-webkit-scrollbar-thumb {
   border-radius: 25px;
 }
+
+.initializing-text::after {
+  content: "Initializing";
+  animation-name: text-loading-effect;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes text-loading-effect {
+  0% {
+    content: "Initializing";
+  }
+  25% {
+    content: "Initializing.";
+  }
+  50% {
+    content: "Initializing..";
+  }
+  75% {
+    content: "Initializing...";
+  }
+}

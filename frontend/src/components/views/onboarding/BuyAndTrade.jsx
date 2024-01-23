@@ -236,8 +236,8 @@ export default function BuyAndTrade() {
     }
   };
 
-  const goToDashBoard = () => {
-    window.location.href = "/dashboard";
+  const goToTradingArea = () => {
+    window.location.href = "/trading-area";
   };
 
   return (
@@ -449,7 +449,7 @@ export default function BuyAndTrade() {
 
               <div className="action-btns mt-8 flex justify-center gap-2">
                 <button
-                  onClick={goToDashBoard}
+                  onClick={goToTradingArea}
                   disabled={
                     txConfirmStatus === "confirmed" ||
                     txConfirmStatus === "already-confirmed"

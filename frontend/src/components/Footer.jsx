@@ -24,8 +24,6 @@ export default function Footer() {
             profits, price of assets and duration of trades.
           </p>
         </div>
-        {/* <div className="column flex-1">
-          <div className="row flex flex-col mobile_lg:flex-row gap-8 justify-between "> */}
         {footerLinks.map((categories, index) => (
           <div
             key={index}
@@ -66,8 +64,6 @@ export default function Footer() {
             </div>
           </div>
         ))}
-        {/* </div>
-        </div> */}
       </div>
 
       <CopyRight />

@@ -19,6 +19,7 @@ import TermsAndConditions from "./pages/terms-of-use.jsx";
 import getCookie from "./utilities/getCookie.js";
 
 import ReactGA from "react-ga";
+import TradingPage from "./pages/trade-area.jsx";
 
 ReactGA.initialize("G-S8XRE42QPV");
 
@@ -127,6 +128,15 @@ function App() {
           themeColor={themeColor}
         />
         <TermsAndConditions />
+      </>
+    ) : pageUrl === "/trading-area" ? (
+      <>
+        <MetaData
+          title="Trading Area"
+          description="AI Trading Area."
+          themeColor={themeColor}
+        />
+        <TradingPage />
       </>
     ) : (
       <>
