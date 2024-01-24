@@ -371,3 +371,40 @@ label {
     content: "Initializing...";
   }
 }
+
+.loading-text::after {
+  content: "Loading";
+  animation-name: loading-effect;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes loading-effect {
+  0% {
+    content: "Loading";
+  }
+  25% {
+    content: "Loading.";
+  }
+  50% {
+    content: "Loading..";
+  }
+  75% {
+    content: "Loading...";
+  }
+}
+
+.show-second-loader {
+  animation: 0.8s forwards show-second-loader;
+}
+
+@keyframes show-second-loader {
+  from {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
