@@ -240,6 +240,10 @@ export default function BuyAndTrade() {
     window.location.href = "/trading-area";
   };
 
+  const goToDashBoard = () => {
+    window.location.href = "/dashboard";
+  };
+
   return (
     <>
       <nav className="bg-navBarLightBg dark:bg-navBarDarkBg border-b border-navBarBorderLight dark:border-navBarBorderDark tablet:px-10 px-6 py-4 fixed top-0 left-0 z-10 w-full backdrop-blur-sm">

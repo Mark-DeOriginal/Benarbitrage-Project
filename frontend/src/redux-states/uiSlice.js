@@ -23,6 +23,8 @@ export const uiSlice = createSlice({
       balance: "...",
       interest: "...",
     },
+    circleLoaderInstance: 1,
+    isLoadingError: false,
   },
   reducers: {
     toggleDarkMode(state) {
@@ -46,6 +48,12 @@ export const uiSlice = createSlice({
     setAccountBalance(state, action) {
       state.accountBalance = action.payload;
     },
+    incrementCircleLoaderInstance(state) {
+      state.circleLoaderInstance = state + 1;
+    },
+    setIsLoadingError(state, action) {
+      state.isLoadingError = action.payload;
+    },
   },
 });
 
@@ -57,6 +65,8 @@ export const {
   setIsBuyAssetModalOpen,
   setAssetPurchaseDetails,
   setAccountBalance,
+  incrementCircleLoaderInstance,
+  setIsLoadingError,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

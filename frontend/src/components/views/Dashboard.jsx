@@ -254,8 +254,7 @@ export default function BuyAndTrade() {
               <p>
                 Benarbitrage is working to reactivate the Funds Withdrawal and
                 Fund Transfer feature across all User accounts. Be assured that
-                your funds are secured by our Cryptographic Lock System (CLS).
-                They're safe and cannot be tampered with.
+                your funds are safe and cannot be tampered with.
               </p>
             </div>
           </div>
@@ -283,23 +282,22 @@ export default function BuyAndTrade() {
           <div className="general-info-block bg-benWhite dark:bg-[#4b4a73] rounded-xl">
             <div className="block-content px-4 tablet:px-6 py-4">
               <p>
-                It's painful to announce that Benarbitrage lost it's case to
-                continue using AI for Crypto Arbitrage Trading. The trading
-                industry has always been about making profits and losing, but
-                Benarbitrage brought a new dimension by leveraging the power of
-                its AI System. This caused quite a stir, leading to constant
-                cyber and legal attacks. Despite our success in countering cyber
-                threats, the legal battles have prompted us to temporarily shut
-                down our AI Trading System. We're always committed to the
-                interest of our Users, and therefore came up with the
-                Benarbitrage Savings Feature. Users will get 6.2% interest on
-                any fund they deposit in their wallet (higher than any other
-                savings platform). During this period of temporary shut down of
-                our AI Trading System, it'll will be an alternative way for
-                Users to grow the money in their wallet. Once we're able to get
-                our AI Trading System back up, trading operations will resume
-                and all Benarbitrage Users will be notified. Please keep an eye
-                on your email.
+                Benarbitrage lost it's case to continue using AI for Crypto
+                Arbitrage Trading. The trading industry has always been about
+                making profits and losing, but Benarbitrage brought a new
+                dimension by leveraging the power of its AI System. This caused
+                quite a stir, leading to constant cyber and legal attacks.
+                Despite our success in countering cyber threats, the legal
+                battles have prompted us to temporarily shut down our AI Trading
+                System. We're always committed to the interest of our Users, and
+                therefore came up with the Benarbitrage Savings Feature. Users
+                will get 6.2% interest on any fund they deposit in their wallet
+                (higher than any other savings platform). During this period of
+                temporary shut down of our AI Trading System, it'll will be an
+                alternative way for Users to grow the money in their wallet.
+                Once we're able to get our AI Trading System back up, trading
+                operations will resume and all Benarbitrage Users will be
+                notified. Please keep an eye on your email.
               </p>
               <p>
                 <b>Steve Henry Schwartz</b>

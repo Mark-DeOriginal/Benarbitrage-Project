@@ -138,6 +138,8 @@ function App() {
         />
         <TradingPage />
       </>
+    ) : pageUrl !== "/" ? (
+      redirectTo("/get-started")
     ) : (
       <>
         <MetaData

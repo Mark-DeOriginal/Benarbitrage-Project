@@ -3,6 +3,9 @@ import CopyRight from "./Copyright";
 import logoWhite from "../assets/logo-white.svg";
 import getCookie from "../utilities/getCookie";
 import LoadingGridCube from "./LoadingGridCube";
+import { redirectTo } from "../App";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsLoadingError } from "../redux-states/uiSlice";
 
 export const Logo = () => {
   return (
@@ -17,23 +20,24 @@ const randomPick = (arrayValues) => {
 const CircularProgress = () => {
   const [progress, setProgress] = useState(1);
 
-  const randomProgressStop = [80, 85, 90, 95];
+  const randomProgressStop = [80, 82, 84, 86, 88];
   const stopPoint = randomPick(randomProgressStop);
 
-  useEffect(() => {
-    const randomDuration = [1000, 2000, 3000, 4000, 5000];
-    const incrementValues = [
-      3, 7, 5, 10, 9, 7, 12, 10, 8, 6, 4, 12, 2, 6, 4, 3,
-    ];
+  const dispatch = useDispatch();
 
-    let incrementIndex = 0;
+  useEffect(() => {
+    const randomDuration = [2000, 4000, 6000, 8000];
+    const incrementValues = [8, 4, 5, 6, 4, 6, 8, 4, 8, 6, 4, 8, 2, 6, 4, 8];
 
     const interval = setInterval(() => {
       if (progress < stopPoint) {
         setProgress(
-          (prevProgress) => prevProgress + incrementValues[incrementIndex]
+          (prevProgress) => prevProgress + randomPick(incrementValues)
         );
-        incrementIndex += 1;
+      } else {
+        setTimeout(() => {
+          dispatch(setIsLoadingError(true));
+        }, 20000);
       }
     }, randomPick(randomDuration));
 
@@ -45,7 +49,7 @@ const CircularProgress = () => {
   const dashOffset = dashArray - (dashArray * progress) / 100;
 
   return (
-    <svg viewBox="0 0 100 100" width={200} height={200}>
+    <svg viewBox="0 0 100 100" width={200} height={200} className="mx-auto">
       <circle
         style={{
           fill: "none",
@@ -85,6 +89,85 @@ const CircularProgress = () => {
   );
 };
 
+export const LoadingMessage = () => {
+  const [fadeOutLoadingInfo, setFadeOutLoadingInfo] = useState(null);
+  const [hideLoadingInfo, setHideLoadingInfo] = useState(false);
+
+  const [fadeOutLoadingError, setFadeOutLoadingError] = useState(false);
+  const [showLoadingError, setShowLoadingError] = useState(false);
+
+  const isLoadingError = useSelector((state) => state.ui.isLoadingError);
+
+  useEffect(() => {
+    if (isLoadingError) {
+      setFadeOutLoadingInfo(true);
+
+      setTimeout(() => {
+        setHideLoadingInfo(true);
+      }, 500);
+
+      setFadeOutLoadingError(false);
+      setShowLoadingError(true);
+    }
+  }, [isLoadingError]);
+
+  const goToDashBoard = () => {
+    redirectTo("/dashboard");
+  };
+
+  const reloadBot = () => {
+    location.reload();
+  };
+
+  return (
+    <div className="loading-message relative flex justify-center w-[400px]">
+      <div
+        className={`loading-info absolute ${
+          fadeOutLoadingInfo == true
+            ? "fade-out-loading-info"
+            : fadeOutLoadingInfo == false
+            ? "fade-in-loading-info"
+            : ""
+        } ${hideLoadingInfo ? "hidden" : ""}`}
+      >
+        <h1 className="text-2xl my-4 loading-text"></h1>
+        <p>Please wait.</p>
+      </div>
+
+      {showLoadingError && (
+        <div
+          className={`loading-error absolute ${
+            fadeOutLoadingError
+              ? "fade-out-loading-error"
+              : "fade-in-loading-error"
+          }`}
+        >
+          <h1 className="text-2xl my-4">Something's not right!</h1>
+          <p>This is taking longer than usual.</p>
+
+          <div className="action-btns my-4 flex gap-2 justify-center">
+            <button
+              onClick={reloadBot}
+              className={`bg-benBlue-lightC
+                text-benBlue-100 w-[150px]
+            active:scale-[0.9] drop-shadow-sm rounded-xl py-2 px-4 text-center font-medium text-base tablet:text-lg`}
+            >
+              Reload
+            </button>
+            <button
+              onClick={goToDashBoard}
+              className="dark:bg-benBlueLight/70 dark:text-benBlue-200 active:scale-[0.9] drop-shadow-sm rounded-xl w-fit py-2 px-4 text-center font-medium text-base tablet:text-lg"
+            >
+              Abort
+            </button>
+          </div>
+          <p className="text-xs tablet:text-sm">Abort to end the operation</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default function TradeArea() {
   const [fadeOutFirstLoader, setFadeOutFirstLoader] = useState(false);
   const [hideFirstLoader, setHideFirstLoader] = useState(false);
@@ -97,7 +180,7 @@ export default function TradeArea() {
 
       setTimeout(() => {
         setHideFirstLoader(true);
-      }, 510);
+      }, 500);
 
       setFadeInSecondLoader(true);
     }, 6000);
@@ -107,7 +190,7 @@ export default function TradeArea() {
     redirectTo("/get-started")
   ) : (
     <div className="p-6 pt-8 tablet:p-[60px] tablet:pb-8 min-h-screen bg-[#373659] text-benBlue-200 text-base tablet:text-lg">
-      <div className="loading-wrapper relative max-w-[600px] h-[400px] mx-auto text-center pt-10 flex justify-center">
+      <div className="loading-wrapper relative max-w-[600px] h-[500px] mx-auto text-center pt-10 flex justify-center">
         <div
           className={`loading-1 absolute duration-500 ${
             fadeOutFirstLoader ? "-translate-x-[100px] opacity-0" : ""
@@ -119,19 +202,17 @@ export default function TradeArea() {
             Please wait while we set up your <br />
             Trading Bot for first time use.
           </p>
-          <p>This should take a few minutes.</p>
+          <p>This should take a few seconds.</p>
         </div>
-        <div
-          className={`loading-2 absolute duration-300 ease-out transition-transform ${
-            fadeInSecondLoader ? "show-second-loader" : "hidden"
-          }`}
-        >
-          <CircularProgress />
-          <h1 className="text-2xl my-4 loading-text"></h1>
-          <p>Please wait.</p>
-        </div>
+
+        {fadeInSecondLoader && (
+          <div className={`loading-2 absolute`}>
+            <CircularProgress />
+            <LoadingMessage />
+          </div>
+        )}
       </div>
-      <div className="footer-wrapper  text-center flex flex-col gap-8 items-center text-sm mobile_lg:text-base">
+      <div className="footer-wrapper text-center flex flex-col gap-8 items-center text-sm mobile_lg:text-base">
         <Logo />
         <CopyRight />
       </div>

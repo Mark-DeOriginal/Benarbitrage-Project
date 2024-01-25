@@ -394,11 +394,13 @@ label {
   }
 }
 
-.show-second-loader {
-  animation: 0.8s forwards show-second-loader;
+.loading-2,
+.fade-in-loading-info,
+.fade-in-loading-error {
+  animation: 0.8s forwards slide-fade-in;
 }
 
-@keyframes show-second-loader {
+@keyframes slide-fade-in {
   from {
     transform: translateX(100px);
     opacity: 0;
@@ -406,5 +408,21 @@ label {
   to {
     transform: translateX(0);
     opacity: 1;
+  }
+}
+
+.fade-out-loading-info,
+.fade-out-loading-error {
+  animation: 0.8s forwards slide-fade-out;
+}
+
+@keyframes slide-fade-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100px);
+    opacity: 0;
   }
 }
