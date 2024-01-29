@@ -18,10 +18,7 @@ import isLoggedIn from "./utilities/isLoggedIn.js";
 import TermsAndConditions from "./pages/terms-of-use.jsx";
 import getCookie from "./utilities/getCookie.js";
 
-import ReactGA from "react-ga";
 import TradingPage from "./pages/trade-area.jsx";
-
-ReactGA.initialize("G-S8XRE42QPV");
 
 export function redirectTo(location) {
   window.location.href = location;
@@ -29,10 +26,6 @@ export function redirectTo(location) {
 
 function App() {
   const pageUrl = window.location.pathname;
-
-  useEffect(() => {
-    ReactGA.pageview(window.location.pathname);
-  }, []);
 
   // Codes here run once this NavBar Component is mounted, which is on page load
 
@@ -137,6 +130,17 @@ function App() {
           themeColor={themeColor}
         />
         <TradingPage />
+      </>
+    ) : pageUrl.startsWith("/ref") ? (
+      <>
+        <MetaData
+          title="Benarbitrage"
+          description="Benarbitrage is an arbitrage trading platform that uses Artificial Intelligence to trade the financial market."
+          themeColor={themeColor}
+        />
+        <RootLayout>
+          <HomePage />
+        </RootLayout>
       </>
     ) : pageUrl !== "/" ? (
       redirectTo("/get-started")

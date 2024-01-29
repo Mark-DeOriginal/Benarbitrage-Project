@@ -152,7 +152,7 @@ export const LoadingMessage = () => {
                 text-benBlue-100 w-[150px]
             active:scale-[0.9] drop-shadow-sm rounded-xl py-2 px-4 text-center font-medium text-base tablet:text-lg`}
             >
-              Reload
+              Try again
             </button>
             <button
               onClick={goToDashBoard}
@@ -161,7 +161,7 @@ export const LoadingMessage = () => {
               Abort
             </button>
           </div>
-          <p className="text-xs tablet:text-sm">Abort to end the operation</p>
+          <p className="text-xs tablet:text-sm">Abort to visit dashboard</p>
         </div>
       )}
     </div>
