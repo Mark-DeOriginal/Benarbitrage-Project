@@ -19,6 +19,9 @@ app.use(express.urlencoded({ extended: true }));
 // Middleware to handle requests to the /user route
 app.use("/user", userRoutes);
 
+// Middleware to handle requests to the /referrer route
+app.use("/referrer", userRoutes);
+
 // Middleware to handle requests to the /crypto-community route
 app.use("/crypto-community", cryptoCommunityRoutes);
 

@@ -1,7 +1,7 @@
 import initModels from "../models/init-models.js";
 
-// Our User and Asset Models
-const { users, assets } = initModels();
+// Our Users, Assets and Payouts Models
+const { users, assets, referrers, payouts } = initModels();
 
 export const storeAsset = async (req, res) => {
   const {
@@ -70,6 +70,38 @@ export const storeAsset = async (req, res) => {
           (6.2 * (await newPortfolioBalance())) / 100
         ),
       });
+
+      const ref_date = new Date().toISOString().split("T")[0];
+
+      const ref_time = new Date().toLocaleTimeString({
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      });
+
+      const refDate = `${ref_date} ${ref_time}`;
+
+      // Get the Referral
+      const referrer = await referrers
+        .findOne({
+          where: { account_id: user.ref_id },
+        })
+        .then((referrer) => {
+          if (referrer) {
+            // Update the Referrer's total_successful_refers
+            referrer.update({
+              total_successful_refers: referrer.total_successful_refers + 1,
+              last_successful_refer: refDate,
+            });
+
+            // Add a payout record to our payouts table
+            payouts.create({
+              payee_name: referrer.name,
+              payee_id: referrer.account_id,
+              paid_out: false,
+            });
+          }
+        });
 
       res.status(201).json({
         message: "Asset stored successfully",

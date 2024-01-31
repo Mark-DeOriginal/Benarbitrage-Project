@@ -31,7 +31,7 @@ export const addCryptoCommunitySubscriber = async (req, res) => {
   const dateAdded = `${registration_date} ${registration_time}`;
 
   try {
-    await subscriber.create(
+    const subscriber = await subscriber.create(
       {
         fullName,
         email,

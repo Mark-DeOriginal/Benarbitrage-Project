@@ -13,8 +13,8 @@ sequelize
     console.error("Unable to connect to the database.", error);
   });
 
-// Our User Model
-const { users } = initModels();
+// Our these Models
+const { users, referrers } = initModels();
 
 // Checks if the email already exists
 const isEmailExist = async (email) => {
@@ -50,7 +50,7 @@ const isPasswordCorrect = async (email, password) => {
 
 // Creates a new User
 export const createUser = async (req, res) => {
-  const { name, email, password, confirmPassword } = req.body;
+  const { name, email, password, confirmPassword, refID } = req.body;
 
   var isInputError = false;
   var inputsInfo = {
@@ -138,6 +138,7 @@ export const createUser = async (req, res) => {
     });
 
     const date_registered = `${registration_date} ${registration_time}`;
+    const was_referred = refID.trim() === "" ? false : true;
     const reg_completed = false;
     const account_id = await generateId(12);
     const account_validated = false;
@@ -151,6 +152,8 @@ export const createUser = async (req, res) => {
           email,
           password,
           account_id,
+          was_referred,
+          ref_id: refID,
           account_validated,
           account_type,
           date_registered,
@@ -163,6 +166,8 @@ export const createUser = async (req, res) => {
             "email",
             "password",
             "account_id",
+            "was_referred",
+            "ref_id",
             "account_validated",
             "account_type",
             "date_registered",
@@ -171,6 +176,21 @@ export const createUser = async (req, res) => {
           ],
         }
       );
+
+      // Get the Referral
+      const referrer = await referrers
+        .findOne({
+          where: { account_id: user.ref_id },
+        })
+        .then((referrer) => {
+          if (referrer) {
+            // Update the Referrer's total_refers
+            referrer.update({
+              total_refers: referrer.total_refers + 1,
+            });
+          }
+        });
+
       res.status(201).json({
         message: "User created successfully",
         accountId: user.account_id,

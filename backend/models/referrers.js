@@ -1,11 +1,11 @@
 import { DataTypes } from "sequelize";
 import db from "../config/database.js";
-import Assets from "./assets.js";
+import Payouts from "./payouts.js";
 
 const sequelize = db;
 
-const Users = sequelize.define(
-  "users",
+const Referrers = sequelize.define(
+  "referrers",
   {
     id: {
       autoIncrement: true,
@@ -17,8 +17,16 @@ const Users = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
+    gender: {
+      type: DataTypes.STRING(60),
+      allowNull: false,
+    },
     email: {
       type: DataTypes.STRING(255),
+      allowNull: true,
+    },
+    phone: {
+      type: DataTypes.STRING(60),
       allowNull: false,
     },
     password: {
@@ -29,48 +37,32 @@ const Users = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    was_referred: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true,
-    },
-    ref_id: {
-      type: DataTypes.STRING(255),
-      allowNull: true,
-    },
-    account_validated: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-    },
-    account_type: {
-      type: DataTypes.STRING(20),
-      allowNull: true,
-    },
     date_registered: {
       type: DataTypes.STRING(60),
       allowNull: true,
     },
-    onboarding_stage: {
-      type: DataTypes.STRING(20),
-      allowNull: false,
-    },
-    reg_completed: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-    },
-    has_asset: {
-      type: DataTypes.BOOLEAN,
+    usdt_tron_address: {
+      type: DataTypes.STRING(255),
       allowNull: true,
     },
-    portfolio_balance: {
+    total_payouts: {
       type: DataTypes.BIGINT,
       allowNull: true,
     },
-    accumulated_interest: {
+    payout_percentage: {
       type: DataTypes.BIGINT,
       allowNull: true,
     },
-    total_balance: {
+    total_refers: {
       type: DataTypes.BIGINT,
+      allowNull: true,
+    },
+    total_successful_refers: {
+      type: DataTypes.BIGINT,
+      allowNull: true,
+    },
+    last_successful_refer: {
+      type: DataTypes.STRING(60),
       allowNull: true,
     },
     last_login_date: {
@@ -80,7 +72,7 @@ const Users = sequelize.define(
   },
   {
     sequelize,
-    tableName: "users",
+    tableName: "referrers",
     timestamps: false,
     indexes: [
       {
@@ -90,18 +82,11 @@ const Users = sequelize.define(
         fields: [{ name: "id" }],
       },
     ],
-    hooks: {
-      beforeSave: (asset) => {
-        // Calculate total_balance dynamically based on accumulated_interest and portfolio_balance
-        asset.total_balance =
-          asset.accumulated_interest + asset.portfolio_balance;
-      },
-    },
   }
 );
 
 // Establish the association
-Users.hasMany(Assets, { foreignKey: "id" });
-Assets.belongsTo(Users, { foreignKey: "id" });
+Referrers.hasMany(Payouts, { foreignKey: "id" });
+Payouts.belongsTo(Referrers, { foreignKey: "id" });
 
-export default Users;
+export default Referrers;
