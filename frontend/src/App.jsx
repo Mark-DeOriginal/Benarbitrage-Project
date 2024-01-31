@@ -19,6 +19,7 @@ import TermsAndConditions from "./pages/terms-of-use.jsx";
 import getCookie from "./utilities/getCookie.js";
 
 import TradingPage from "./pages/trade-area.jsx";
+import setCookie from "./utilities/setCookie.js";
 
 export function redirectTo(location) {
   window.location.href = location;
@@ -56,6 +57,12 @@ function App() {
   useEffect(() => {
     dispatch(setDarkMode(isDark));
   }, [isDark]);
+
+  // Set the Referral ID in the cookie if user was referred
+  if (pageUrl.startsWith("/ref/")) {
+    const refID = pageUrl.slice(5, pageUrl.length);
+    setCookie("refID", refID);
+  }
 
   const pageContent =
     pageUrl === "/learn" ? (

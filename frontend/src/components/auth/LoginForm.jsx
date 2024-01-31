@@ -50,7 +50,7 @@ export default function LoginForm() {
 
       // Send form data to server for processing
       const processFormData = await fetch(
-        "https://benarbitrage-server.up.railway.app/user/authenticate",
+        "http://localhost:5174/user/authenticate",
         {
           method: "POST",
           headers: {

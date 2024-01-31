@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { HidePasswordIcon, ShowPasswordIcon } from "../icons";
 import { inputFields } from "./constants/inputFields";
 import setCookie, { setCookiesExpiration } from "../../utilities/setCookie";
+import getCookie from "../../utilities/getCookie";
 
 export default function SignUpForm() {
   const [formData, setFormData] = useState({
@@ -58,15 +59,17 @@ export default function SignUpForm() {
     try {
       setIsLoading(true);
 
+      const refID = getCookie("refID", "");
+
       // Send form data to server for processing
       const processFormData = await fetch(
-        "https://benarbitrage-server.up.railway.app/user/create-user",
+        "http://localhost:5174/user/create-user",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify({ ...formData, refID: refID }),
         }
       );
 
