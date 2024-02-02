@@ -82,26 +82,33 @@ export const storeAsset = async (req, res) => {
       const refDate = `${ref_date} ${ref_time}`;
 
       // Get the Referral
-      const referrer = await referrers
-        .findOne({
-          where: { account_id: user.ref_id },
-        })
-        .then((referrer) => {
-          if (referrer) {
-            // Update the Referrer's total_successful_refers
-            referrer.update({
-              total_successful_refers: referrer.total_successful_refers + 1,
-              last_successful_refer: refDate,
-            });
+      const referrer = await referrers.findOne({
+        where: { account_id: user.ref_id },
+      });
 
-            // Add a payout record to our payouts table
-            payouts.create({
-              payee_name: referrer.name,
-              payee_id: referrer.account_id,
-              paid_out: false,
-            });
-          }
+      if (referrer) {
+        // Update the Referrer's total_successful_refers
+        await referrer.update({
+          total_successful_refers: referrer.total_successful_refers + 1,
+          last_successful_refer: refDate,
         });
+
+        const defaultPayoutPercentage = 60; // percent
+        const payoutAmount =
+          (defaultPayoutPercentage * Math.round(assetAmount)) / 100;
+
+        // Add a payout record to our payouts table
+        const payout = await payouts.create({
+          payee_name: referrer.name,
+          payee_id: referrer.account_id,
+          payout_amount: payoutAmount,
+          payout_percentage: defaultPayoutPercentage + "%",
+          payout_status: "unpaid",
+        });
+
+        // Associate the payout with the referrer
+        await referrer.addPayout(payout);
+      }
 
       res.status(201).json({
         message: "Asset stored successfully",

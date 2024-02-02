@@ -17,10 +17,6 @@ const Referrers = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    gender: {
-      type: DataTypes.STRING(60),
-      allowNull: false,
-    },
     email: {
       type: DataTypes.STRING(255),
       allowNull: true,
@@ -45,14 +41,6 @@ const Referrers = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: true,
     },
-    total_payouts: {
-      type: DataTypes.BIGINT,
-      allowNull: true,
-    },
-    payout_percentage: {
-      type: DataTypes.BIGINT,
-      allowNull: true,
-    },
     total_refers: {
       type: DataTypes.BIGINT,
       allowNull: true,
@@ -68,6 +56,11 @@ const Referrers = sequelize.define(
     last_login_date: {
       type: DataTypes.STRING(60),
       allowNull: true,
+    },
+    is_admin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: 0,
     },
   },
   {

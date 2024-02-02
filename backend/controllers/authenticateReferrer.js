@@ -132,6 +132,7 @@ export const authenticateReferrer = async (req, res) => {
       name: referrer.name,
       email: referrer.email,
       accountId: referrer.account_id,
+      isAdmin: referrer.is_admin,
     };
 
     res.status(200).json({

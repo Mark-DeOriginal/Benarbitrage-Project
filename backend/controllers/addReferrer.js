@@ -31,26 +31,14 @@ const isEmailExist = async (email) => {
 
 // Adds a new Referrer
 export const addReferrer = async (req, res) => {
-  const {
-    name,
-    gender,
-    email,
-    phone,
-    password,
-    confirmPassword,
-    usdtTronAddress,
-  } = req.body;
+  const { name, email, phone, password, confirmPassword, usdtTronWallet } =
+    req.body;
 
   var isInputError = false;
   var inputsInfo = {
     inputs: {
       name: {
         type: "name",
-        isError: false,
-        errMsg: "",
-      },
-      gender: {
-        type: "gender",
         isError: false,
         errMsg: "",
       },
@@ -70,14 +58,6 @@ export const addReferrer = async (req, res) => {
   if (name.trim() === "") {
     inputsInfo.inputs.name.errMsg = "Full name required.";
     inputsInfo.inputs.name.isError = true;
-
-    isInputError = true;
-  }
-
-  // Check if the gender input is empty
-  if (gender.trim() === "") {
-    inputsInfo.inputs.gender.errMsg = "Gender is required.";
-    inputsInfo.inputs.gender.isError = true;
 
     isInputError = true;
   }
@@ -146,13 +126,12 @@ export const addReferrer = async (req, res) => {
     try {
       const referrer = await referrers.create({
         name: name,
-        gender: gender,
         email: email,
         phone: phone,
         password: password,
         account_id: account_id,
         date_registered: date_registered,
-        usdt_tron_address: usdtTronAddress,
+        usdt_tron_address: usdtTronWallet,
       });
 
       res.status(201).json({

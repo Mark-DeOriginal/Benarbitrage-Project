@@ -7,15 +7,15 @@ import Users from "./users.js";
 export default function initModels() {
   var assets = Assets;
   var users = Users;
-  var referrers = Referrers;
   var payouts = Payouts;
+  var referrers = Referrers;
   var cryptoCommunitySubscribers = CryptoCommunitySubscribers;
 
   return {
     assets,
     users,
-    referrers,
     payouts,
+    referrers,
     cryptoCommunitySubscribers,
   };
 }

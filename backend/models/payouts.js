@@ -21,7 +21,11 @@ const Payouts = sequelize.define(
       allowNull: false,
     },
     payout_amount: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.BIGINT,
+      allowNull: true,
+    },
+    payout_percentage: {
+      type: DataTypes.STRING(60),
       allowNull: true,
     },
     payout_method: {
@@ -32,9 +36,9 @@ const Payouts = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: true,
     },
-    paid_out: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
+    payout_status: {
+      type: DataTypes.STRING(60),
+      allowNull: true,
     },
     payout_date: {
       type: DataTypes.STRING(60),
