@@ -20,6 +20,10 @@ import getCookie from "./utilities/getCookie.js";
 
 import TradingPage from "./pages/trade-area.jsx";
 import setCookie from "./utilities/setCookie.js";
+import deleteAllCookies from "./utilities/deleteCookies.js";
+import ReferrerSignUpPage from "./pages/referrer-signup.jsx";
+import ReferrerLoginPage from "./pages/referrer-login.jsx";
+import AffiliateDashboardPage from "./pages/affiliate-dashboard.jsx";
 
 export function redirectTo(location) {
   window.location.href = location;
@@ -28,7 +32,9 @@ export function redirectTo(location) {
 function App() {
   const pageUrl = window.location.pathname;
 
-  // Codes here run once this NavBar Component is mounted, which is on page load
+  // We'll call this function whenever we want to delete our cookies from the User's browser
+  // deleteAllCookies();
+  // localStorage.clear();
 
   // Our color scheme is light by default
   var isDark = false;
@@ -41,7 +47,7 @@ function App() {
     const isDarkMode = localStorage.getItem("isDarkMode");
     // If the User chose dark mode
     if (isDarkMode === "true") {
-      // Add the "dark" class to the document's <html> element
+      // add the "dark" class to the document's <html> element
       document.documentElement.classList.add("dark");
 
       themeColor = "#434172";
@@ -75,6 +81,33 @@ function App() {
         <RootLayout>
           <LearnPage />
         </RootLayout>
+      </>
+    ) : pageUrl === "/affiliate/signup" ? (
+      <>
+        <MetaData
+          title="Affiliate Sign Up"
+          description="Become an affiliate and start earning on Benarbitrage."
+          themeColor={themeColor}
+        />
+        <ReferrerSignUpPage />
+      </>
+    ) : pageUrl === "/affiliate/login" ? (
+      <>
+        <MetaData
+          title="Affiliate Login"
+          description="Login to your affiliate account to manage it."
+          themeColor={themeColor}
+        />
+        <ReferrerLoginPage />
+      </>
+    ) : pageUrl === "/affiliate/dashboard" ? (
+      <>
+        <MetaData
+          title="Affiliate Dashboard"
+          description="Manage your affiliate account."
+          themeColor={themeColor}
+        />
+        <AffiliateDashboardPage />
       </>
     ) : pageUrl === "/get-started" ? (
       <>
@@ -138,7 +171,7 @@ function App() {
         />
         <TradingPage />
       </>
-    ) : pageUrl.startsWith("/ref") ? (
+    ) : pageUrl.startsWith("/ref") || pageUrl === "/" ? (
       <>
         <MetaData
           title="Benarbitrage"
@@ -149,19 +182,8 @@ function App() {
           <HomePage />
         </RootLayout>
       </>
-    ) : pageUrl !== "/" ? (
-      redirectTo("/get-started")
     ) : (
-      <>
-        <MetaData
-          title="Benarbitrage"
-          description="Benarbitrage is an arbitrage trading platform that uses Artificial Intelligence to trade the financial market."
-          themeColor={themeColor}
-        />
-        <RootLayout>
-          <HomePage />
-        </RootLayout>
-      </>
+      redirectTo("/get-started")
     );
 
   return <HelmetProvider>{pageContent}</HelmetProvider>;

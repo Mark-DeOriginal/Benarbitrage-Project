@@ -1,32 +1,21 @@
 import React, { useState } from "react";
-import { HidePasswordIcon, ShowPasswordIcon } from "../icons";
-import { inputFields } from "./constants/inputFields";
-import setCookie, { setCookiesExpiration } from "../../utilities/setCookie";
-import getCookie from "../../utilities/getCookie";
+import setCookie, { setCookiesExpiration } from "../../../utilities/setCookie";
+import { inputFields } from "../constants/inputFields";
+import { HidePasswordIcon, ShowPasswordIcon } from "../../icons";
 
-export default function SignUpForm() {
+export default function ReferrerLoginForm() {
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
     password: "",
-    confirmPassword: "",
     staySignedInOnDevice: false,
   });
 
   const [inputFieldsInfo, setInputFieldsInfo] = useState({
-    name: {
-      isError: false,
-      errMsg: "",
-    },
     email: {
       isError: false,
       errMsg: "",
     },
     password: {
-      isError: false,
-      errMsg: "",
-    },
-    confirmPassword: {
       isError: false,
       errMsg: "",
     },
@@ -53,52 +42,53 @@ export default function SignUpForm() {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const [isNetOrServerError, setIsNetOrServerError] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       setIsLoading(true);
 
-      const refID = getCookie("refID", "");
-
       // Send form data to server for processing
       const processFormData = await fetch(
-        "https://p0xq2gpd-5174.uks1.devtunnels.ms/user/create-user",
+        "https://p0xq2gpd-5174.uks1.devtunnels.ms/referrer/login",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ ...formData, refID: refID }),
+          body: JSON.stringify(formData),
         }
       );
 
       // If the form was processed successfully,
       if (processFormData.ok) {
         const response = await processFormData.json();
-        console.log(response);
+        const { name, email, accountId, isAdmin } = response.referrerDetails;
 
         // Set these cookies in the User's browser
-        setCookie("userName", formData.name.trim());
-        setCookie("userEmail", formData.email.trim());
-        setCookie("accountId", response.accountId);
-        setCookie("isSignedIn", "true");
-        setCookie("onboardingStage", "SIGN_UP_SUCCESS");
+        setCookie("referrerUserName", name.trim());
+        setCookie("referrerUserEmail", email.trim());
+        setCookie("referrerAccountId", accountId);
+        setCookie("isSignedInAsReferrer", "true");
+        setCookie("isAdmin", isAdmin);
         setCookiesExpiration(7);
 
         if (formData.staySignedInOnDevice) {
-          localStorage.setItem("userName", formData.name.trim());
-          localStorage.setItem("userEmail", formData.email.trim());
-          localStorage.setItem("accountId", response.accountId);
-          localStorage.setItem("isSignedIn", true);
-          localStorage.setItem("onboardingStage", "SIGN_UP_SUCCESS");
+          localStorage.setItem("referrerUserName", name.trim());
+          localStorage.setItem("referrerUserEmail", email.trim());
+          localStorage.setItem("referrerAccountId", accountId);
+          localStorage.setItem("isSignedInAsReferrer", true);
+          localStorage.setItem("isAdmin", isAdmin);
         }
 
-        // Then reload the page
-        location.reload();
+        window.location.href = "/affiliate/dashboard";
 
         // Proceed with this block if there were some errors during form processing
       } else {
+        setIsNetOrServerError(false);
+
         const response = await processFormData.json();
 
         // Destructure the response and return these values
@@ -106,16 +96,11 @@ export default function SignUpForm() {
 
         if (messageType === "INPUT_ERROR") {
           // Destructure the inputs too and extract these values
-          const { name, email, password, confirmPassword } = inputs;
+          const { email, password } = inputs;
 
           // Set the inputFieldsInfo by appending the values returned from the inputs "destructuring"
           setInputFieldsInfo({
             ...inputFieldsInfo,
-            [name.type]: {
-              ...name,
-              isError: name.isError,
-              errMsg: name.errMsg,
-            },
             [email.type]: {
               ...email,
               isError: email.isError,
@@ -126,48 +111,32 @@ export default function SignUpForm() {
               isError: password.isError,
               errMsg: password.errMsg,
             },
-            [confirmPassword.type]: {
-              ...confirmPassword,
-              isError: confirmPassword.isError,
-              errMsg: confirmPassword.errMsg,
-            },
           });
 
           setIsLoading(false);
         } else if (messageType === "SERVER_ERROR") {
           console.log(response.messageType + ": " + response.error);
-
-          setCookie("onboardingStage", "SIGN_UP_FAILED");
-          localStorage.setItem("onboardingStage", "SIGN_UP_FAILED");
-
-          location.reload();
+          setIsNetOrServerError(true);
+          setIsLoading(false);
         }
       }
     } catch (error) {
       console.error(error);
-
-      setCookie("onboardingStage", "SIGN_UP_FAILED");
-      localStorage.setItem("onboardingStage", "SIGN_UP_FAILED");
-
-      location.reload();
+      setIsNetOrServerError(true);
+      setIsLoading(false);
     }
   };
 
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
-  const toggleShowConfirmPassword = () => {
-    setShowConfirmPassword((prev) => !prev);
-  };
 
   const passwordVisibility = showPassword ? "text" : "password";
-  const confirmPasswordVisibility = showConfirmPassword ? "text" : "password";
 
   return (
-    <form onSubmit={handleSubmit} className="get-started flex flex-col gap-2">
+    <form onSubmit={handleSubmit} className="log-in flex flex-col gap-2">
       {inputFields.map((input, index) =>
         input.type === "checkbox" ? (
           <label
@@ -182,16 +151,12 @@ export default function SignUpForm() {
             />
             Keep me signed-in on this device
           </label>
-        ) : (
+        ) : ["email", "password"].includes(input.name) ? (
           <div key={index} className="input-wrapper flex flex-col gap-1">
             <div className="input relative">
               <input
                 type={
-                  input.name === "password"
-                    ? passwordVisibility
-                    : input.name === "confirmPassword"
-                    ? confirmPasswordVisibility
-                    : input.type
+                  input.name === "password" ? passwordVisibility : input.type
                 }
                 name={input.name}
                 value={formData[input.name]}
@@ -215,19 +180,6 @@ export default function SignUpForm() {
                   )}
                 </div>
               )}
-
-              {input.name === "confirmPassword" && (
-                <div
-                  onClick={toggleShowConfirmPassword}
-                  className="eye-toggle absolute right-0 top-[25%] bottom-[25%] flex items-center mr-4 cursor-pointer"
-                >
-                  {showConfirmPassword ? (
-                    <HidePasswordIcon className="h-auto w-[22px] fill-benBlue-lightD" />
-                  ) : (
-                    <ShowPasswordIcon className="h-auto w-[22px] fill-benBlue-lightD" />
-                  )}
-                </div>
-              )}
             </div>
             {
               // If there's an error, render the <p> element with the error message
@@ -238,29 +190,24 @@ export default function SignUpForm() {
               )
             }
           </div>
+        ) : (
+          ""
         )
       )}
-      <p className="agreement text-xs mt-4 text-benBlue-300">
-        By signing up for an account, I agree to the <br />
-        <a href="/terms-of-use" className="font-medium">
-          Terms of Use
-        </a>
-        ,{" "}
-        <a href="/terms-of-use" className="font-medium">
-          Privacy Policy
-        </a>{" "}
-        and{" "}
-        <a href="/terms-of-use" className="font-medium">
-          Refund Policy
-        </a>
-        .
-      </p>
+      {isNetOrServerError && (
+        <p className="message my-4 text-xs mobile_lg:text-sm text-errorColor">
+          An error occurred during the login process. <br />
+          This could be due to a network or server error. <br />
+          Please try again.
+        </p>
+      )}
+
       <button
         type="submit"
         disabled={isLoading ? true : ""}
         className="bg-benBlue-lightE text-benBlue-100 ring-offset-2 focus:ring-2 active:scale-[0.9] ring-benBlue-lightD drop-shadow-sm rounded-2xl w-full py-3 mx-auto text-center mt-2 font-medium disabled:cursor-not-allowed"
       >
-        {isLoading ? "Signing Up" : "Sign Up"}
+        {isLoading ? "Signing In" : "Sign In"}
       </button>
     </form>
   );

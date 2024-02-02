@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { HidePasswordIcon, ShowPasswordIcon } from "../icons";
-import { inputFields } from "./constants/inputFields";
-import setCookie, { setCookiesExpiration } from "../../utilities/setCookie";
-import getCookie from "../../utilities/getCookie";
+import { HidePasswordIcon, ShowPasswordIcon } from "../../icons";
+import setCookie, { setCookiesExpiration } from "../../../utilities/setCookie";
+import { refAuthInputFields } from "../constants/inputFields";
 
-export default function SignUpForm() {
+export default function ReferrerSignUpForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
+    usdtTronWallet: "",
     password: "",
     confirmPassword: "",
     staySignedInOnDevice: false,
@@ -19,6 +20,14 @@ export default function SignUpForm() {
       errMsg: "",
     },
     email: {
+      isError: false,
+      errMsg: "",
+    },
+    phone: {
+      isError: false,
+      errMsg: "",
+    },
+    usdtTronWallet: {
       isError: false,
       errMsg: "",
     },
@@ -53,23 +62,23 @@ export default function SignUpForm() {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const [isNetOrServerError, setIsNetOrServerError] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       setIsLoading(true);
 
-      const refID = getCookie("refID", "");
-
       // Send form data to server for processing
       const processFormData = await fetch(
-        "https://p0xq2gpd-5174.uks1.devtunnels.ms/user/create-user",
+        "https://p0xq2gpd-5174.uks1.devtunnels.ms/referrer/add",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ ...formData, refID: refID }),
+          body: JSON.stringify(formData),
         }
       );
 
@@ -79,26 +88,24 @@ export default function SignUpForm() {
         console.log(response);
 
         // Set these cookies in the User's browser
-        setCookie("userName", formData.name.trim());
-        setCookie("userEmail", formData.email.trim());
-        setCookie("accountId", response.accountId);
-        setCookie("isSignedIn", "true");
-        setCookie("onboardingStage", "SIGN_UP_SUCCESS");
+        setCookie("referrerUserName", formData.name.trim());
+        setCookie("referrerUserEmail", formData.email.trim());
+        setCookie("referrerAccountId", response.accountId);
+        setCookie("isSignedInAsReferrer", "true");
         setCookiesExpiration(7);
 
         if (formData.staySignedInOnDevice) {
-          localStorage.setItem("userName", formData.name.trim());
-          localStorage.setItem("userEmail", formData.email.trim());
-          localStorage.setItem("accountId", response.accountId);
-          localStorage.setItem("isSignedIn", true);
-          localStorage.setItem("onboardingStage", "SIGN_UP_SUCCESS");
+          localStorage.setItem("referrerUserName", formData.name.trim());
+          localStorage.setItem("referrerUserEmail", formData.email.trim());
+          localStorage.setItem("referrerAccountId", response.accountId);
+          localStorage.setItem("isSignedInAsReferrer", true);
         }
 
-        // Then reload the page
-        location.reload();
+        window.location.href = "/affiliate/dashboard";
 
         // Proceed with this block if there were some errors during form processing
       } else {
+        setIsNetOrServerError(false);
         const response = await processFormData.json();
 
         // Destructure the response and return these values
@@ -106,7 +113,7 @@ export default function SignUpForm() {
 
         if (messageType === "INPUT_ERROR") {
           // Destructure the inputs too and extract these values
-          const { name, email, password, confirmPassword } = inputs;
+          const { name, email, phone, password, confirmPassword } = inputs;
 
           // Set the inputFieldsInfo by appending the values returned from the inputs "destructuring"
           setInputFieldsInfo({
@@ -120,6 +127,11 @@ export default function SignUpForm() {
               ...email,
               isError: email.isError,
               errMsg: email.errMsg,
+            },
+            [phone.type]: {
+              ...phone,
+              isError: phone.isError,
+              errMsg: phone.errMsg,
             },
             [password.type]: {
               ...password,
@@ -136,20 +148,14 @@ export default function SignUpForm() {
           setIsLoading(false);
         } else if (messageType === "SERVER_ERROR") {
           console.log(response.messageType + ": " + response.error);
-
-          setCookie("onboardingStage", "SIGN_UP_FAILED");
-          localStorage.setItem("onboardingStage", "SIGN_UP_FAILED");
-
-          location.reload();
+          setIsNetOrServerError(true);
+          setIsLoading(false);
         }
       }
     } catch (error) {
       console.error(error);
-
-      setCookie("onboardingStage", "SIGN_UP_FAILED");
-      localStorage.setItem("onboardingStage", "SIGN_UP_FAILED");
-
-      location.reload();
+      setIsNetOrServerError(true);
+      setIsLoading(false);
     }
   };
 
@@ -168,7 +174,7 @@ export default function SignUpForm() {
 
   return (
     <form onSubmit={handleSubmit} className="get-started flex flex-col gap-2">
-      {inputFields.map((input, index) =>
+      {refAuthInputFields.map((input, index) =>
         input.type === "checkbox" ? (
           <label
             key={index}
@@ -240,20 +246,17 @@ export default function SignUpForm() {
           </div>
         )
       )}
+      {isNetOrServerError && (
+        <p className="message my-4 text-xs mobile_lg:text-sm text-errorColor">
+          An error occurred during the sign up process. <br />
+          This could be due to a network or server error. <br />
+          Please try again.
+        </p>
+      )}
+
       <p className="agreement text-xs mt-4 text-benBlue-300">
-        By signing up for an account, I agree to the <br />
-        <a href="/terms-of-use" className="font-medium">
-          Terms of Use
-        </a>
-        ,{" "}
-        <a href="/terms-of-use" className="font-medium">
-          Privacy Policy
-        </a>{" "}
-        and{" "}
-        <a href="/terms-of-use" className="font-medium">
-          Refund Policy
-        </a>
-        .
+        By signing up for an account, I agree to any terms <br />
+        and conditions that applies to me as an affiliate.
       </p>
       <button
         type="submit"

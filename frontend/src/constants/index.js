@@ -87,7 +87,7 @@ export const footerLinks = [
       {
         type: "link",
         content: "Become an affiliate",
-        url: "/affiliate/register",
+        url: "/affiliate/signup",
       },
     ],
   },
