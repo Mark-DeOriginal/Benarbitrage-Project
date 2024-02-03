@@ -69,22 +69,22 @@ export const MobileNavLink = ({ link }) => {
   const pathname = window.location.pathname;
 
   const toggleOptionsOpen = (element) => {
-    const optionsScrollHeight = document.querySelector(".options").scrollHeight;
+    const optionsScrollHeight = element.scrollHeight;
     const extraHeight = 20;
     const slideHeight = optionsScrollHeight + extraHeight + "px";
 
-    const toggleBtn = element;
+    const content = element;
 
-    if (toggleBtn) {
-      if (toggleBtn.parentElement.classList.contains("opened")) {
-        toggleBtn.style.maxHeight = "";
-        toggleBtn.style.opacity = "";
-        toggleBtn.parentElement.classList.remove("opened");
+    if (content) {
+      if (content.parentElement.classList.contains("opened")) {
+        content.style.maxHeight = "";
+        content.style.opacity = "";
+        content.parentElement.classList.remove("opened");
       } else {
-        toggleBtn.style.maxHeight = slideHeight;
-        toggleBtn.style.opacity = "1";
+        content.style.maxHeight = slideHeight;
+        content.style.opacity = "1";
 
-        toggleBtn.parentElement.classList.add("opened");
+        content.parentElement.classList.add("opened");
       }
     }
   };

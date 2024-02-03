@@ -7,6 +7,8 @@ import Logo from "./BenarbitrageLogo";
 import LanguageSelector from "./LanguageSelector";
 import DarkModeToggle from "./DarkModeToggle";
 import CopyRight from "./Copyright";
+import Collapsible from "./Collapsible";
+import PayoutsTable from "./affiliate/PayoutsTable";
 
 export default function AffiliateDashboard() {
   const [showloader, setShowLoader] = useState(true);
@@ -113,7 +115,7 @@ export default function AffiliateDashboard() {
               <a href="/dashboard"> &gt; dashboard</a>
             </p>
           </div>
-          <div className="bg-benWhite dark:bg-[#4b4a73] rounded-xl">
+          <div className="bg-benBlue-light dark:bg-[#4b4a73] rounded-xl">
             <div className="block-content px-4 tablet:px-6 py-4 flex justify-between items-center">
               <h1 className="text-lg tablet:text-xl font-bold dark:text-benOrange-400">
                 DASHBOARD
@@ -175,34 +177,48 @@ export default function AffiliateDashboard() {
           </div>
           <div className="overview-block pt-8 mobile_lg:pt-12 space-y-4 text-sm laptop:text-xl">
             <div className="row flex justify-center gap-4">
-              <div className="column w-[300px] bg-benWhite dark:bg-[#4b4a73] rounded-xl p-4 tablet:p-6">
-                <p className="text-xl mobile:text-3xl font-bold">$2,300</p>
+              <div className="column w-[300px] space-y-4 bg-benWhite dark:bg-[#4b4a73] rounded-xl p-4 tablet:p-6">
+                <p className="text-xl mobile:text-2xl mobile_lg:text-3xl font-bold">
+                  $2,300
+                </p>
                 <h2>Total payouts</h2>
               </div>
-              <div className="column w-[300px] bg-benWhite dark:bg-[#4b4a73] rounded-xl p-4 tablet:p-6">
-                <p className="text-xl mobile:text-3xl font-bold">$500</p>
+              <div className="column w-[300px] space-y-4 bg-benWhite dark:bg-[#4b4a73] rounded-xl p-4 tablet:p-6">
+                <p className="text-xl mobile:text-2xl mobile_lg:text-3xl font-bold">
+                  $500
+                </p>
                 <h2>Pending payouts</h2>
               </div>
             </div>
             <div className="row flex justify-center gap-4">
-              <div className="column w-[300px] bg-benWhite dark:bg-[#4b4a73] rounded-xl p-4 tablet:p-6">
-                <p className="text-xl mobile:text-3xl font-bold">23</p>
+              <div className="column w-[300px] space-y-4 bg-benWhite dark:bg-[#4b4a73] rounded-xl p-4 tablet:p-6">
+                <p className="text-xl mobile:text-2xl mobile_lg:text-3xl font-bold">
+                  23
+                </p>
                 <h2>Total refers</h2>
               </div>
-              <div className="column w-[300px] bg-benWhite dark:bg-[#4b4a73] rounded-xl p-4 tablet:p-6">
-                <p className="text-xl mobile:text-3xl font-bold">16</p>
+              <div className="column w-[300px] space-y-4 bg-benWhite dark:bg-[#4b4a73] rounded-xl p-4 tablet:p-6">
+                <p className="text-xl mobile:text-2xl mobile_lg:text-3xl font-bold">
+                  16
+                </p>
                 <h2>Successful refers</h2>
               </div>
             </div>
           </div>
-          <div className="general-block pt-8 mobile_lg:pt-12">
+          <div className="info-block pt-8 mobile_lg:pt-12 space-y-2">
             <div className="payout-activities">
-              <div className="header w-fit mx-auto">
-                <h2 className="text-xl laptop:text-2xl font-bold">
-                  Payout activities
-                </h2>
-                <button>Next &gt;</button>
-              </div>
+              <Collapsible title={`Payout activities`}>
+                <div className="content py-4 overflow-x-auto">
+                  <PayoutsTable />
+                </div>
+              </Collapsible>
+            </div>
+            <div className="profile-information">
+              <Collapsible title={`Profile information`}>
+                <div className="content py-4">
+                  <p>Profile information will be displayed here.</p>
+                </div>
+              </Collapsible>
             </div>
           </div>
         </div>

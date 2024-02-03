@@ -346,6 +346,10 @@ label {
   width: 6px;
 }
 
+.payout-activities .content::-webkit-scrollbar {
+  height: 6px;
+}
+
 .popup::-webkit-scrollbar-thumb {
   border-radius: 25px;
 }

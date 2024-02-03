@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  table {
+    @apply border-collapse table-auto text-xs mobile_lg:text-sm w-full text-left;
+  }
+  th,
+  td {
+    @apply p-2;
+  }
+  th,
+  td {
+    @apply border border-benBlue-light dark:border-benBlue-lightC;
+  }
+}
