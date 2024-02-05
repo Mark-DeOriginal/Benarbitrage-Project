@@ -1,16 +1,6 @@
-import db from "../config/database.js";
 import initModels from "../models/init-models.js";
-
-const sequelize = db;
-
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Connection to database was successful!");
-  })
-  .catch((error) => {
-    console.error("Unable to connect to the database.", error);
-  });
+import getPendingPayouts from "../utilities/referrers/getPendingPayouts.js";
+import getTotalPayouts from "../utilities/referrers/getTotalPayouts.js";
 
 // Get this Model
 const { referrers } = initModels();
@@ -128,11 +118,24 @@ export const authenticateReferrer = async (req, res) => {
       last_login_date: dateOfLogin,
     });
 
+    const totalPayouts = await getTotalPayouts(referrer);
+    const pendingPayouts = await getPendingPayouts(referrer);
+    const payouts = await referrer.getPayouts();
+
     const referrerDetails = {
       name: referrer.name,
       email: referrer.email,
+      phone: referrer.phone,
+      usdtTronAddress: referrer.usdt_tron_address,
+      password: referrer.password,
       accountId: referrer.account_id,
+      totalPayouts: totalPayouts,
+      pendingPayouts: pendingPayouts,
+      totalRefers: referrer.total_refers,
+      successfulRefers: referrer.total_successful_refers,
+      payouts: payouts,
       isAdmin: referrer.is_admin,
+      isSignedInAsReferrer: true,
     };
 
     res.status(200).json({
@@ -142,12 +145,3 @@ export const authenticateReferrer = async (req, res) => {
     });
   }
 };
-
-sequelize
-  .sync()
-  .then(() => {
-    console.log("Database synchronized successfully!");
-  })
-  .catch((error) => {
-    console.error("An error occurred during synchronization.", error);
-  });

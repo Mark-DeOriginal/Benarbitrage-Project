@@ -79,7 +79,7 @@ const Referrers = sequelize.define(
 );
 
 // Establish the association
-Referrers.hasMany(Payouts, { foreignKey: "id" });
-Payouts.belongsTo(Referrers, { foreignKey: "id" });
+Referrers.hasMany(Payouts);
+Payouts.belongsTo(Referrers);
 
 export default Referrers;

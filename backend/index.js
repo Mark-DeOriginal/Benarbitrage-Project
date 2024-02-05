@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import userRoutes from "./routes/userRoutes.js";
 import referrerRoutes from "./routes/referrerRoutes.js";
 import cryptoCommunityRoutes from "./routes/cryptoCommunityRoutes.js";
+import db from "./config/database.js";
 
 dotenv.config();
 
@@ -32,6 +33,23 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 5174;
 
-app.listen(PORT, () => {
-  console.log(`The Server is running at ${process.env.HOST}:${PORT}`);
-});
+const sequelize = db;
+
+// Authenticate the database connection
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Connection to database was successful!");
+    // Sync models with the database
+    return sequelize.sync({ force: true });
+  })
+  .then(() => {
+    console.log("Database synchronization complete!");
+    // Start the Express server
+    app.listen(PORT, () => {
+      console.log(`The Server is running at ${process.env.HOST}:${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error("Unable to connect to the database.", error);
+  });

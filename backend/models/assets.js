@@ -20,6 +20,10 @@ const Assets = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
+    asset_owner_id: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
     asset_amount: {
       type: DataTypes.BIGINT,
       allowNull: false,

@@ -1,17 +1,5 @@
-import db from "../config/database.js";
 import initModels from "../models/init-models.js";
 import confirmCryptoPmt from "../utilities/confirmCryptoPmt.js";
-
-const sequelize = db;
-
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Connection to database was successful!");
-  })
-  .catch((error) => {
-    console.error("Unable to connect to the database.", error);
-  });
 
 // Our Subscriber Model
 const { cryptoCommunitySubscribers: subscriber } = initModels();
@@ -95,12 +83,3 @@ export const addCryptoCommunitySubscriber = async (req, res) => {
     console.error(error);
   }
 };
-
-sequelize
-  .sync()
-  .then(() => {
-    console.log("Database synchronized successfully!");
-  })
-  .catch((error) => {
-    console.error("An error occurred during synchronization.", error);
-  });

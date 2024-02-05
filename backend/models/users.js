@@ -101,7 +101,7 @@ const Users = sequelize.define(
 );
 
 // Establish the association
-Users.hasMany(Assets, { foreignKey: "id" });
-Assets.belongsTo(Users, { foreignKey: "id" });
+Users.hasMany(Assets);
+Assets.belongsTo(Users);
 
 export default Users;

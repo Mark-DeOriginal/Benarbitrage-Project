@@ -1,17 +1,5 @@
-import db from "../config/database.js";
 import initModels from "../models/init-models.js";
 import generateId from "../utilities/generateId.js";
-
-const sequelize = db;
-
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Connection to database was successful!");
-  })
-  .catch((error) => {
-    console.error("Unable to connect to the database.", error);
-  });
 
 // Our these Models
 const { users, referrers } = initModels();
@@ -353,12 +341,3 @@ export const authenticateUser = async (req, res) => {
     });
   }
 };
-
-sequelize
-  .sync()
-  .then(() => {
-    console.log("Database synchronized successfully!");
-  })
-  .catch((error) => {
-    console.error("An error occurred during synchronization.", error);
-  });
