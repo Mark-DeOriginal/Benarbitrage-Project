@@ -13,6 +13,9 @@ import getAccountBalance from "../../utilities/getAccountBalance";
 import { setAccountBalance } from "../../redux-states/uiSlice";
 import getCookie from "../../utilities/getCookie";
 import insertDelimiters from "../../utilities/insertDelimiters";
+import isLoggedIn from "../../utilities/isLoggedIn";
+import { MetaData } from "../../metadata";
+import GetStartedSection from "../../pages/get-started";
 
 export default function BuyAndTrade() {
   const [showloader, setShowLoader] = useState(true);
@@ -21,16 +24,20 @@ export default function BuyAndTrade() {
   const delay = 2000;
 
   useEffect(() => {
-    new Promise((resolve, reject) => {
-      setTimeout(() => {
-        setShowLoader(false);
-        resolve();
-      }, delay);
-    }).then(() => {
-      setTimeout(() => {
-        setShowDashboard(true);
-      }, 500);
-    });
+    if (isLoggedIn()) {
+      new Promise((resolve, reject) => {
+        setTimeout(() => {
+          setShowLoader(false);
+          resolve();
+        }, delay);
+      }).then(() => {
+        setTimeout(() => {
+          setShowDashboard(true);
+        }, 500);
+      });
+    } else {
+      history.pushState(null, "", "/get-started");
+    }
   }, []);
 
   const [showLogout, setShowLogout] = useState(false);
@@ -131,10 +138,10 @@ export default function BuyAndTrade() {
   };
 
   const handleLogout = () => {
-    logout();
+    logout("user", "/login");
   };
 
-  return (
+  return isLoggedIn() ? (
     <>
       <nav className="bg-navBarLightBg dark:bg-navBarDarkBg border-b border-navBarBorderLight dark:border-navBarBorderDark tablet:px-10 px-6 py-4 fixed top-0 left-0 z-10 w-full backdrop-blur-sm">
         <div className="wrapper relative flex space-x-2 justify-between mobile_lg:justify-center items-center h-[50px]">
@@ -320,6 +327,14 @@ export default function BuyAndTrade() {
       >
         <LoadingSpinner />
       </div>
+    </>
+  ) : (
+    <>
+      <MetaData
+        title="Get Started"
+        description="Sign up and start trading with AI."
+      />
+      <GetStartedSection />
     </>
   );
 }

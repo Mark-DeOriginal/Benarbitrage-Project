@@ -138,8 +138,6 @@ function App() {
         />
         <SignUpSection />
       </>
-    ) : pageUrl === "/dashboard" && isLoggedIn() == false ? (
-      redirectTo("/signup")
     ) : pageUrl === "/dashboard" &&
       isLoggedIn() &&
       getCookie("onboardingStage", "") !== "COMPLETED" ? (

@@ -65,22 +65,16 @@ export default function ReferrerLoginForm() {
       // If the form was processed successfully,
       if (processFormData.ok) {
         const response = await processFormData.json();
-        const { name, email, accountId, isAdmin } = response.referrerDetails;
 
-        // Set these cookies in the User's browser
-        setCookie("referrerUserName", name.trim());
-        setCookie("referrerUserEmail", email.trim());
-        setCookie("referrerAccountId", accountId);
-        setCookie("isSignedInAsReferrer", "true");
-        setCookie("isAdmin", isAdmin);
+        // Set these data in the Referrer's browser
+        setCookie("referrerDetails", JSON.stringify(response.referrerDetails));
         setCookiesExpiration(7);
 
         if (formData.staySignedInOnDevice) {
-          localStorage.setItem("referrerUserName", name.trim());
-          localStorage.setItem("referrerUserEmail", email.trim());
-          localStorage.setItem("referrerAccountId", accountId);
-          localStorage.setItem("isSignedInAsReferrer", true);
-          localStorage.setItem("isAdmin", isAdmin);
+          localStorage.setItem(
+            "referrerDetails",
+            JSON.stringify(response.referrerDetails)
+          );
         }
 
         window.location.href = "/affiliate/dashboard";
@@ -174,9 +168,9 @@ export default function ReferrerLoginForm() {
                   className="eye-toggle absolute right-0 top-[25%] bottom-[25%] flex items-center mr-4 cursor-pointer"
                 >
                   {showPassword ? (
-                    <HidePasswordIcon className="h-auto w-[22px] fill-benBlue-lightD" />
+                    <HidePasswordIcon className="h-auto w-[22px] fill-benBlue-lightD active:scale-[0.95] select-none" />
                   ) : (
-                    <ShowPasswordIcon className="h-auto w-[22px] fill-benBlue-lightD" />
+                    <ShowPasswordIcon className="h-auto w-[22px] fill-benBlue-lightD active:scale-[0.95] select-none" />
                   )}
                 </div>
               )}

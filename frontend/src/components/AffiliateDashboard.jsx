@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import getCookie from "../utilities/getCookie";
 import { useSelector } from "react-redux";
-import { CaretIcon, EditIcon, LogoutIcon } from "./icons";
+import { CaretIcon, LogoutIcon } from "./icons";
 import LoadingSpinner from "./LoadingSpinner";
 import Logo from "./BenarbitrageLogo";
 import LanguageSelector from "./LanguageSelector";
@@ -9,60 +8,70 @@ import DarkModeToggle from "./DarkModeToggle";
 import CopyRight from "./Copyright";
 import Collapsible from "./Collapsible";
 import PayoutsTable from "./affiliate/PayoutsTable";
+import ProfileInformation from "./affiliate/ProfileInfo";
+import logout from "../utilities/logout";
+import getReferrerDetails from "../utilities/getReferrerDetails";
+import syncReferrerDetails from "../utilities/syncReferrerDetails";
+import ReferrerLoginPage from "../pages/referrer-login";
+import { MetaData } from "../metadata";
+import insertDelimiters from "../utilities/insertDelimiters";
 
 export default function AffiliateDashboard() {
   const [showloader, setShowLoader] = useState(true);
   const [showDashboard, setShowDashboard] = useState(false);
 
-  const delay = 2000;
+  const isLoggedIn = getReferrerDetails("email", null) == null ? false : true;
 
   useEffect(() => {
-    new Promise((resolve, reject) => {
-      setTimeout(() => {
-        setShowLoader(false);
-        resolve();
-      }, delay);
-    }).then(() => {
-      setTimeout(() => {
-        setShowDashboard(true);
-      }, 500);
-    });
+    if (isLoggedIn) {
+      syncReferrerDetails()
+        .then(() => {
+          setShowLoader(false);
+          setTimeout(() => {
+            setShowDashboard(true);
+          }, 500);
+        })
+        .catch((error) => {
+          setShowLoader(false);
+          setTimeout(() => {
+            setShowDashboard(true);
+          }, 500);
+          console.error(error);
+        });
+    } else {
+      history.pushState(null, "", "/affiliate/login");
+    }
   }, []);
+
+  const [isReferrerLinkCopied, setIsReferrerLinkCopied] = useState(false);
+
+  const copyReferrerLink = () => {
+    navigator.clipboard
+      .writeText(
+        `https://benarbitrage.com/ref/${getReferrerDetails(
+          "accountId",
+          "Not logged in"
+        )}`
+      )
+      .then(() => {
+        setIsReferrerLinkCopied(true);
+      });
+
+    setTimeout(() => {
+      setIsReferrerLinkCopied(false);
+    }, 3000);
+  };
 
   const [showLogout, setShowLogout] = useState(false);
 
   const getNameInitials = () => {
-    let initials = getCookie("referrerUserName", "JD")
+    let initials = getReferrerDetails("name", "John Doe")
       .split(" ")
       .map((part) => part.charAt(0).toUpperCase())
       .join("");
 
     return initials;
   };
-
-  // const dispatch = useDispatch();
-  // getAccountBalance(getCookie("accountId", ""))
-  //   .then((response) => {
-  //     dispatch(
-  //       setAccountBalance({
-  //         balance: insertDelimiters(response.walletBalance) + ".00",
-  //         interest: insertDelimiters(response.accumulatedInterest) + ".00",
-  //       })
-  //     );
-  //   })
-  //   .catch(() => {
-  //     dispatch(
-  //       setAccountBalance({
-  //         balance: "reload",
-  //         interest: "reload",
-  //       })
-  //     );
-  //   });
-
-  const walletBalance = useSelector((state) => state.ui.accountBalance.balance);
-  const accumulatedInterest = useSelector(
-    (state) => state.ui.accountBalance.interest
-  );
 
   const toggleShowLogout = () => {
     setShowLogout((prev) => !prev);
@@ -83,10 +92,10 @@ export default function AffiliateDashboard() {
   }, [showLogout]);
 
   const handleLogout = () => {
-    // affiliateLogout();
+    logout("referrer", "/affiliate/login");
   };
 
-  return (
+  return isLoggedIn ? (
     <>
       <nav className="bg-navBarLightBg dark:bg-navBarDarkBg border-b border-navBarBorderLight dark:border-navBarBorderDark tablet:px-10 px-6 py-4 fixed top-0 left-0 z-10 w-full backdrop-blur-sm">
         <div className="wrapper relative flex space-x-2 justify-between mobile_lg:justify-center items-center h-[50px]">
@@ -136,10 +145,10 @@ export default function AffiliateDashboard() {
                   <div className="profile-info absolute z-10 overflow-hidden top-[45px] w-60 right-0 rounded-xl shadow-cardShadow border border-navBarBorderLight dark:border-navBarBorderDark bg-benWhitishBlue dark:bg-[#4b4a73]">
                     <div className="login-details py-2 px-4">
                       <p className="user-name font-bold text-sm mobile:text-base">
-                        {getCookie("referrerUserName", "User")}
+                        {getReferrerDetails("name", "User")}
                       </p>
                       <p className="user-email truncate mt-0 text-xs mobile:text-sm">
-                        {getCookie("referrerUserEmail", "Not logged in")}
+                        {getReferrerDetails("email", "Not logged in")}
                       </p>
                     </div>
 
@@ -158,20 +167,28 @@ export default function AffiliateDashboard() {
           <div className="welcome-block text-center pt-8 mobile_lg:pt-12 flex flex-col gap-4">
             <div className="welcome-message">
               <h2 className="text-lg mobile:text-xl">Welcome</h2>
-              <p className="text-2xl mobile:text-3xl font-bold">Solomon Madu</p>
+              <p className="text-2xl mobile:text-3xl font-bold">
+                {getReferrerDetails("name", "John Doe")}
+              </p>
             </div>
             <div className="referrer-link-wrapper w-fit mx-auto text-sm mobile:text-base flex items-center p-1 pl-4 border-2 border-navBarBorderLight dark:border-navBarBorderDark rounded-full">
-              <div className="referrer-link w-[120px] relative">
+              <div className="w-[120px] relative">
                 <input
                   type="text"
-                  value={"ref/WsdSsgwfhr2"}
+                  value={`ref/${getReferrerDetails(
+                    "accountId",
+                    "Not logged in"
+                  )}`}
                   readOnly={true}
-                  className="bg-transparent w-full"
+                  className="referrer-link bg-transparent w-full"
                 />
                 <div className="feather absolute top-0 right-0 h-full w-12 bg-gradient-to-l from-[#ededf2] dark:from-[#3d3c62] to-transparent"></div>
               </div>
-              <button className="referrer-btn flex-none bg-benBlue-light dark:bg-benBlue-lightC2 py-2 px-4 rounded-full active:scale-[0.95]">
-                Copy referrer link
+              <button
+                onClick={copyReferrerLink}
+                className="referrer-btn flex-none bg-benBlue-light dark:bg-benBlue-lightC2 py-2 px-4 rounded-full active:scale-[0.95]"
+              >
+                {isReferrerLinkCopied ? "Copied" : "Copy referrer link"}
               </button>
             </div>
           </div>
@@ -179,13 +196,15 @@ export default function AffiliateDashboard() {
             <div className="row flex justify-center gap-4">
               <div className="column w-[300px] space-y-4 bg-benWhite dark:bg-[#4b4a73] rounded-xl p-4 tablet:p-6">
                 <p className="text-xl mobile:text-2xl mobile_lg:text-3xl font-bold">
-                  $2,300
+                  ${insertDelimiters(getReferrerDetails("totalPayouts", "0"))}
+                  .00
                 </p>
                 <h2>Total payouts</h2>
               </div>
               <div className="column w-[300px] space-y-4 bg-benWhite dark:bg-[#4b4a73] rounded-xl p-4 tablet:p-6">
                 <p className="text-xl mobile:text-2xl mobile_lg:text-3xl font-bold">
-                  $500
+                  ${insertDelimiters(getReferrerDetails("pendingPayouts", "0"))}
+                  .00
                 </p>
                 <h2>Pending payouts</h2>
               </div>
@@ -193,13 +212,13 @@ export default function AffiliateDashboard() {
             <div className="row flex justify-center gap-4">
               <div className="column w-[300px] space-y-4 bg-benWhite dark:bg-[#4b4a73] rounded-xl p-4 tablet:p-6">
                 <p className="text-xl mobile:text-2xl mobile_lg:text-3xl font-bold">
-                  23
+                  {getReferrerDetails("totalRefers", "23")}
                 </p>
                 <h2>Total refers</h2>
               </div>
               <div className="column w-[300px] space-y-4 bg-benWhite dark:bg-[#4b4a73] rounded-xl p-4 tablet:p-6">
                 <p className="text-xl mobile:text-2xl mobile_lg:text-3xl font-bold">
-                  16
+                  {getReferrerDetails("successfulRefers", "16")}
                 </p>
                 <h2>Successful refers</h2>
               </div>
@@ -215,8 +234,8 @@ export default function AffiliateDashboard() {
             </div>
             <div className="profile-information">
               <Collapsible title={`Profile information`}>
-                <div className="content py-4">
-                  <p>Profile information will be displayed here.</p>
+                <div className="content py-4 max-w-[400px] mx-auto">
+                  <ProfileInformation />
                 </div>
               </Collapsible>
             </div>
@@ -233,6 +252,14 @@ export default function AffiliateDashboard() {
       >
         <LoadingSpinner />
       </div>
+    </>
+  ) : (
+    <>
+      <MetaData
+        title="Affiliate Login"
+        description="Login to your affiliate account to manage it."
+      />
+      <ReferrerLoginPage />
     </>
   );
 }

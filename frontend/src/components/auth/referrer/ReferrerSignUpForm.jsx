@@ -85,20 +85,16 @@ export default function ReferrerSignUpForm() {
       // If the form was processed successfully,
       if (processFormData.ok) {
         const response = await processFormData.json();
-        console.log(response);
 
-        // Set these cookies in the User's browser
-        setCookie("referrerUserName", formData.name.trim());
-        setCookie("referrerUserEmail", formData.email.trim());
-        setCookie("referrerAccountId", response.accountId);
-        setCookie("isSignedInAsReferrer", "true");
+        // Set these data in the Referrer's browser
+        setCookie("referrerDetails", JSON.stringify(response.referrerDetails));
         setCookiesExpiration(7);
 
         if (formData.staySignedInOnDevice) {
-          localStorage.setItem("referrerUserName", formData.name.trim());
-          localStorage.setItem("referrerUserEmail", formData.email.trim());
-          localStorage.setItem("referrerAccountId", response.accountId);
-          localStorage.setItem("isSignedInAsReferrer", true);
+          localStorage.setItem(
+            "referrerDetails",
+            JSON.stringify(response.referrerDetails)
+          );
         }
 
         window.location.href = "/affiliate/dashboard";
@@ -228,9 +224,9 @@ export default function ReferrerSignUpForm() {
                   className="eye-toggle absolute right-0 top-[25%] bottom-[25%] flex items-center mr-4 cursor-pointer"
                 >
                   {showConfirmPassword ? (
-                    <HidePasswordIcon className="h-auto w-[22px] fill-benBlue-lightD" />
+                    <HidePasswordIcon className="h-auto w-[22px] fill-benBlue-lightD active:scale-[0.95] select-none" />
                   ) : (
-                    <ShowPasswordIcon className="h-auto w-[22px] fill-benBlue-lightD" />
+                    <ShowPasswordIcon className="h-auto w-[22px] fill-benBlue-lightD active:scale-[0.95] select-none" />
                   )}
                 </div>
               )}

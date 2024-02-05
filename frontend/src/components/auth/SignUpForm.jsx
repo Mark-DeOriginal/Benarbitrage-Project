@@ -209,9 +209,9 @@ export default function SignUpForm() {
                   className="eye-toggle absolute right-0 top-[25%] bottom-[25%] flex items-center mr-4 cursor-pointer"
                 >
                   {showPassword ? (
-                    <HidePasswordIcon className="h-auto w-[22px] fill-benBlue-lightD" />
+                    <HidePasswordIcon className="h-auto w-[22px] fill-benBlue-lightD active:scale-[0.95] select-none" />
                   ) : (
-                    <ShowPasswordIcon className="h-auto w-[22px] fill-benBlue-lightD" />
+                    <ShowPasswordIcon className="h-auto w-[22px] fill-benBlue-lightD active:scale-[0.95] select-none" />
                   )}
                 </div>
               )}
