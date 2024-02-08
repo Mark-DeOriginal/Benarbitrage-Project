@@ -199,48 +199,39 @@ export const setUserAccType = async (req, res) => {
 
   const nextOnboardingStage = 3;
 
-  users
+  const user = await users
     .findOne({
       where: {
         email: userEmail,
       },
     })
-    .then((user) => {
-      if (user) {
-        user
-          .update({
-            account_type: account_type,
-            onboarding_stage: nextOnboardingStage,
-            account_validated: true,
-            accumulated_interest: 0,
-          })
-          .then((updatedUser) => {
-            console.log("Account type updated successfully.", updatedUser);
-            res.status(201).json({
-              message: "Account validated successfully.",
-              messageType: "SERVER_SUCCESS",
-            });
-          })
-          .catch((error) => {
-            console.error("Error updating account type.", error);
-            res.status(500).json({
-              error: "Internal Server Error",
-              messageType: "SERVER_ERROR",
-            });
-          });
-      } else {
-        console.error("User not found");
-        res.status(500).json({
-          error: "User not found",
-          messageType: "USER_NOT_FOUND",
-        });
-      }
-    })
-    .catch((error) => {
+    .catch(() => {
       console.error("Error finding user.", error);
       res.status(500).json({
         error: "User not found",
         messageType: "USER_NOT_FOUND",
+      });
+    });
+
+  await user
+    .update({
+      account_type: account_type,
+      onboarding_stage: nextOnboardingStage,
+      account_validated: true,
+      accumulated_interest: 0,
+    })
+    .then((updatedUser) => {
+      console.log("Account type updated successfully.", updatedUser);
+      res.status(201).json({
+        message: "Account validated successfully.",
+        messageType: "SERVER_SUCCESS",
+      });
+    })
+    .catch((error) => {
+      console.error("Error updating account type.", error);
+      res.status(500).json({
+        error: "Internal Server Error",
+        messageType: "SERVER_ERROR",
       });
     });
 };
