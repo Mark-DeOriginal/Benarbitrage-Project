@@ -205,7 +205,7 @@ export const setUserAccType = async (req, res) => {
         email: userEmail,
       },
     })
-    .catch(() => {
+    .catch((error) => {
       console.error("Error finding user.", error);
       res.status(500).json({
         error: "User not found",
