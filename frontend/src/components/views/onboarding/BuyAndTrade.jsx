@@ -124,7 +124,7 @@ export default function BuyAndTrade() {
                 setCookie("onboardingStage", "COMPLETED");
                 localStorage.setItem("onboardingStage", "COMPLETED");
                 console.log(response);
-              } else if (response.message === "SERVER_SUCCESS") {
+              } else if (response.message === "Confirm Success") {
                 setTxConfirmStatus("confirmed");
 
                 // If the payment was confirmed successfully...

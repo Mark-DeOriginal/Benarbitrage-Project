@@ -87,7 +87,7 @@ const PaymentSystem = () => {
                 }, 1000);
 
                 console.log(response);
-              } else if (response.message === "SERVER_SUCCESS") {
+              } else if (response.message === "Confirm Success") {
                 setTxConfirmStatus("confirmed");
 
                 dispatch(
