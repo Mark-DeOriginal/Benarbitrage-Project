@@ -134,39 +134,23 @@ export const createUser = async (req, res) => {
     const onboarding_stage = "2";
 
     try {
-      const user = await users.create(
-        {
-          name,
-          email,
-          password,
-          account_id,
-          was_referred,
-          ref_id: refID,
-          account_validated,
-          account_type,
-          date_registered,
-          onboarding_stage,
-          reg_completed,
-        },
-        {
-          fields: [
-            "name",
-            "email",
-            "password",
-            "account_id",
-            "was_referred",
-            "ref_id",
-            "account_validated",
-            "account_type",
-            "date_registered",
-            "onboarding_stage",
-            "reg_completed",
-          ],
-        }
-      );
+      const user = await users.create({
+        name: name,
+        email: email,
+        password: password,
+        account_id: account_id,
+        was_referred: was_referred,
+        ref_id: refID,
+        account_validated: account_validated,
+        account_type: account_type,
+        date_registered: date_registered,
+        onboarding_stage: onboarding_stage,
+        reg_completed: reg_completed,
+        has_asset: false,
+      });
 
       // Get the Referral
-      const referrer = await referrers
+      await referrers
         .findOne({
           where: { account_id: user.ref_id },
         })

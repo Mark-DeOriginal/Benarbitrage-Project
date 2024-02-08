@@ -1,6 +1,5 @@
 import initModels from "../models/init-models.js";
 
-// Our Users, Assets, Referrer and Payouts Models
 const { users, assets, referrers, payouts } = initModels();
 
 export const storeAsset = async (req, res) => {
@@ -15,22 +14,19 @@ export const storeAsset = async (req, res) => {
   } = req.body;
 
   try {
-    const user = await users
-      .findOne({ where: { account_id: userID } })
-      .catch(() => {
-        return res.status(404).json({
-          error: "User not found",
-          messageType: "USER_NOT_FOUND",
-        });
+    // Find the user
+    const user = await users.findOne({ where: { account_id: userID } });
+    if (!user) {
+      return res.status(404).json({
+        error: "User not found",
+        messageType: "USER_NOT_FOUND",
       });
+    }
 
-    const assetExists = async () => {
-      const userAssets = await user.getAssets();
-
+    // Check if asset already exists
+    const assetExists = () => {
       if (user.has_asset) {
-        return userAssets.some(
-          (asset) => transactionID === asset.transaction_id
-        );
+        return true;
       } else {
         return false;
       }
@@ -39,7 +35,8 @@ export const storeAsset = async (req, res) => {
     const allowPassTxId =
       "3194a00c5cf427a931b908453588b2ca3f661dafa3860b76a6362d08b3b08583";
 
-    if ((await assetExists()) == false || transactionID === allowPassTxId) {
+    if (!assetExists || transactionID === allowPassTxId) {
+      // Create the asset
       const asset = await assets.create({
         asset_name: assetName,
         asset_owner: user.name,
@@ -51,93 +48,82 @@ export const storeAsset = async (req, res) => {
         transaction_id: transactionID,
       });
 
+      // Associate the asset with the user
       await user.addAsset(asset);
 
-      const newPortfolioBalance = async () => {
-        const userAssets = await user.getAssets();
-        let balance = 0;
-        userAssets.map((asset) => {
-          balance += asset.asset_amount;
-        });
-
-        return balance;
-      };
-
-      user.update({
+      // Update user's details
+      const newPortfolioBalance = await calculatePortfolioBalance(user);
+      await user.update({
         onboarding_stage: "Completed",
         reg_completed: true,
         has_asset: true,
-        portfolio_balance: await newPortfolioBalance(),
-        accumulated_interest: Math.round(
-          (6.2 * (await newPortfolioBalance())) / 100
-        ),
+        portfolio_balance: newPortfolioBalance,
+        accumulated_interest: Math.round(6.2 * newPortfolioBalance) / 100,
       });
 
-      const ref_date = new Date().toISOString().split("T")[0];
+      // Update referrer's details if exists
+      await updateReferrerDetails(user);
 
-      const ref_time = new Date().toLocaleTimeString({
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true,
-      });
-
-      const refDate = `${ref_date} ${ref_time}`;
-
-      // Get the Referrer
-      const referrer = await referrers.findOne({
-        where: { account_id: user.ref_id },
-      });
-
-      if (referrer) {
-        // Update the Referrer's total_successful_refers
-        await referrer.update({
-          total_successful_refers: referrer.total_successful_refers + 1,
-          last_successful_refer: refDate,
-        });
-
-        const defaultPayoutPercentage = 60; // percent
-        const payoutAmount =
-          (defaultPayoutPercentage * Math.round(assetAmount)) / 100;
-
-        // Add a payout record to our payouts table
-        const payout = await payouts.create({
-          payee_name: referrer.name,
-          payee_id: referrer.account_id,
-          payout_amount: payoutAmount,
-          payout_wallet_address: referrer.usdt_tron_address,
-          original_amount: assetAmount,
-          payout_percentage: defaultPayoutPercentage + "%",
-          payout_status: "unpaid",
-          payout_date: refDate,
-        });
-
-        // Associate the payout with the referrer
-        await referrer.addPayout(payout);
-      }
-
-      res.status(201).json({
-        message: "Asset stored successfully",
+      // Return success response
+      return res.status(201).json({
+        message: "Confirm Success",
         walletBalance: user.portfolio_balance,
         accumulatedInterest: user.accumulated_interest,
-        message: "SERVER_SUCCESS",
+        messageType: "SERVER_SUCCESS",
       });
     } else {
+      // Asset already exists
       console.error("Asset already confirmed");
-      res.status(409).json({
+      return res.status(409).json({
         message: "Already Confirmed",
         walletBalance: user.portfolio_balance,
         accumulatedInterest: user.accumulated_interest,
       });
     }
   } catch (error) {
-    console.error(
-      "Something went wrong while storing the asset:",
-      error.message
-    );
-    res.status(500).json({
-      error: "Internal Server Error",
-      errorMsg: "Something went wrong while storing the asset",
-      messageType: "SERVER_ERROR",
+    // Handle errors
+    console.error("Error storing asset:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+// Function to calculate portfolio balance
+const calculatePortfolioBalance = async (user) => {
+  const userAssets = await user.getAssets();
+  return userAssets.reduce((total, asset) => total + asset.asset_amount, 0);
+};
+
+// Function to update referrer's details
+const updateReferrerDetails = async (user) => {
+  if (user.ref_id) {
+    const referrer = await referrers.findOne({
+      where: { account_id: user.ref_id },
     });
+    if (referrer) {
+      const refDate = new Date().toISOString();
+      await referrer.update({
+        total_successful_refers: referrer.total_successful_refers + 1,
+        last_successful_refer: refDate,
+      });
+
+      const defaultPayoutPercentage = 60;
+      const payoutAmount =
+        (defaultPayoutPercentage * user.portfolio_balance) / 100;
+
+      // Add a payout record to payouts table
+      const payout = await payouts.create({
+        payee_name: referrer.name,
+        payee_id: referrer.account_id,
+        payout_amount: payoutAmount,
+        payout_wallet_address: referrer.usdt_tron_address,
+        original_amount: user.portfolio_balance,
+        payout_percentage: defaultPayoutPercentage + "%",
+        payout_status: "unpaid",
+        payout_date: refDate,
+      });
+
+      // Associate the payout with the referrer
+      await referrer.addPayout(payout);
+    }
   }
 };
