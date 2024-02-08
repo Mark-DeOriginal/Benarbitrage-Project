@@ -72,7 +72,7 @@ export default function ReferrerSignUpForm() {
 
       // Send form data to server for processing
       const processFormData = await fetch(
-        "https://p0xq2gpd-5174.uks1.devtunnels.ms/referrer/add",
+        "https://benarbitrage-server.up.railway.app/referrer/add",
         {
           method: "POST",
           headers: {

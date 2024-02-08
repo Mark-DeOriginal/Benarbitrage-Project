@@ -92,7 +92,7 @@ export const Payout = ({ payouts }) => {
         };
 
         return fetch(
-          "https://p0xq2gpd-5174.uks1.devtunnels.ms/referrer/confirm-payout",
+          "https://benarbitrage-server.up.railway.app/referrer/confirm-payout",
           {
             method: "POST",
             headers: {

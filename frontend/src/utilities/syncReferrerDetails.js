@@ -9,7 +9,7 @@ export default async function syncReferrerDetails() {
 
   // To keep data in UI in sync with database, let's make a request to the referrer get-details endpoint
   return fetch(
-    "https://p0xq2gpd-5174.uks1.devtunnels.ms/referrer/get-details",
+    "https://benarbitrage-server.up.railway.app/referrer/get-details",
     {
       method: "POST",
       headers: {
