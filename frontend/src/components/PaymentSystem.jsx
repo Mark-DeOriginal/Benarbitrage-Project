@@ -64,7 +64,7 @@ const PaymentSystem = () => {
             userID: getCookie("accountId", ""),
           };
           // Make a POST request with the purchaseDetails to our /store-asset api endpoint
-          fetch("http://localhost:5174/user/store-asset", {
+          fetch("https://benarbitrage-server.up.railway.app/user/store-asset", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
