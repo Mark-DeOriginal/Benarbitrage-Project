@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setDarkMode } from "./redux-states/uiSlice.js";
-import { HelmetProvider } from "react-helmet-async";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { MetaData } from "./metadata";
 import "./App.css";
 import "./styles/form.css";
@@ -20,7 +20,6 @@ import getCookie from "./utilities/getCookie.js";
 
 import TradingPage from "./pages/trade-area.jsx";
 import setCookie from "./utilities/setCookie.js";
-import deleteAllCookies from "./utilities/deleteCookies.js";
 import ReferrerSignUpPage from "./pages/referrer-signup.jsx";
 import ReferrerLoginPage from "./pages/referrer-login.jsx";
 import AffiliateDashboardPage from "./pages/affiliate-dashboard.jsx";
@@ -32,28 +31,24 @@ export function redirectTo(location) {
 function App() {
   const pageUrl = window.location.pathname;
 
-  // We'll call this function whenever we want to delete our cookies from the User's browser
-  // deleteAllCookies();
-  // localStorage.clear();
-
-  // Our color scheme is light by default
-  var isDark = false;
-  var themeColor = "#eeeef1";
+  // Our color scheme is dark by default
+  var isDark = true;
+  var themeColor = "#434172";
 
   // Check if we have "isDarkMode" set in the Browser's localStorage before proceeding
   // If it's set, then the User changed the color scheme
   if (localStorage.getItem("isDarkMode")) {
     // So get the User's choice scheme
     const isDarkMode = localStorage.getItem("isDarkMode");
-    // If the User chose dark mode
-    if (isDarkMode === "true") {
-      // add the "dark" class to the document's <html> element
-      document.documentElement.classList.add("dark");
+    // If the User chose light mode
+    if (isDarkMode === "false") {
+      // remove the "dark" class from the document's <html> element
+      document.documentElement.classList.remove("dark");
 
-      themeColor = "#434172";
+      themeColor = "#eeeef1";
 
-      // And set this variable to true
-      isDark = true;
+      // And set this variable to false
+      isDark = false;
     }
   }
 
@@ -76,7 +71,6 @@ function App() {
         <MetaData
           title="What is Arbitrage Trading?"
           description="Learn what arbitrage trading is and how you can trade smarter with AI."
-          themeColor={themeColor}
         />
         <RootLayout>
           <LearnPage />
@@ -87,7 +81,6 @@ function App() {
         <MetaData
           title="Affiliate Sign Up"
           description="Become an affiliate and start earning on Benarbitrage."
-          themeColor={themeColor}
         />
         <ReferrerSignUpPage />
       </>
@@ -96,7 +89,6 @@ function App() {
         <MetaData
           title="Affiliate Login"
           description="Login to your affiliate account to manage it."
-          themeColor={themeColor}
         />
         <ReferrerLoginPage />
       </>
@@ -105,7 +97,6 @@ function App() {
         <MetaData
           title="Affiliate Dashboard"
           description="Manage your affiliate account."
-          themeColor={themeColor}
         />
         <AffiliateDashboardPage />
       </>
@@ -114,7 +105,6 @@ function App() {
         <MetaData
           title="Get Started"
           description="Sign up and start trading with AI."
-          themeColor={themeColor}
         />
         <GetStartedSection />
       </>
@@ -125,7 +115,6 @@ function App() {
         <MetaData
           title="Login"
           description="Login and continue with your account."
-          themeColor={themeColor}
         />
         <LoginSection />
       </>
@@ -134,7 +123,6 @@ function App() {
         <MetaData
           title="Get Started"
           description="Sign up and start trading with AI."
-          themeColor={themeColor}
         />
         <SignUpSection />
       </>
@@ -144,11 +132,7 @@ function App() {
       redirectTo("/get-started")
     ) : pageUrl === "/dashboard" ? (
       <>
-        <MetaData
-          title="Dashboard"
-          description="Welcome to your dashboard."
-          themeColor={themeColor}
-        />
+        <MetaData title="Dashboard" description="Welcome to your dashboard." />
         <UserDashboard />
       </>
     ) : pageUrl === "/terms-of-use" ? (
@@ -156,17 +140,12 @@ function App() {
         <MetaData
           title="Terms of Use"
           description="Read our terms and conditions, privacy and refund policy here."
-          themeColor={themeColor}
         />
         <TermsAndConditions />
       </>
     ) : pageUrl === "/trading-area" ? (
       <>
-        <MetaData
-          title="Trading Area"
-          description="AI Trading Area."
-          themeColor={themeColor}
-        />
+        <MetaData title="Trading Area" description="AI Trading Area." />
         <TradingPage />
       </>
     ) : pageUrl.startsWith("/ref") || pageUrl === "/" ? (
@@ -174,7 +153,6 @@ function App() {
         <MetaData
           title="Benarbitrage"
           description="Benarbitrage is an arbitrage trading platform that uses Artificial Intelligence to trade the financial market."
-          themeColor={themeColor}
         />
         <RootLayout>
           <HomePage />
@@ -184,7 +162,14 @@ function App() {
       redirectTo("/get-started")
     );
 
-  return <HelmetProvider>{pageContent}</HelmetProvider>;
+  return (
+    <HelmetProvider>
+      <Helmet>
+        <meta name="theme-color" content={themeColor} />
+      </Helmet>
+      {pageContent}
+    </HelmetProvider>
+  );
 }
 
 export default App;

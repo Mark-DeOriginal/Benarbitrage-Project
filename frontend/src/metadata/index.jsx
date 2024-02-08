@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 
-export const MetaData = ({ title, description, themeColor }) => {
+export const MetaData = ({ title, description }) => {
   return (
     <Helmet>
       <title>{title}</title>
@@ -23,7 +23,6 @@ export const MetaData = ({ title, description, themeColor }) => {
       <meta name="twitter:image:width" content="1200" />
       <meta name="twitter:image:height" content="630" />
       <meta name="twitter:image" content="/twitter-image.png" />
-      <meta name="theme-color" content={themeColor} />
 
       <meta name="robots" content="index, follow, nocache" />
       <meta name="googlebot" content="index, follow" />

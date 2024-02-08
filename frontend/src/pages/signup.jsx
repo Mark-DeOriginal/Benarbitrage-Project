@@ -5,7 +5,7 @@ import GetStartedSection from "./get-started";
 
 export default function SignUpSection() {
   // If User visits the Sign Up page via the "/signup" url, log out the User
-  logout("user", "/get-started");
+  logout("user", "");
 
   return (
     <>
