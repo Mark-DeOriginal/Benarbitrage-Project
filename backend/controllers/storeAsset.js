@@ -104,7 +104,6 @@ const updateReferrerDetails = async (user) => {
       where: { account_id: user.ref_id },
     });
     if (referrer) {
-      const refDate = new Date().toISOString();
       await referrer.update({
         total_successful_refers: referrer.total_successful_refers + 1,
         last_successful_refer: refDate,
@@ -113,6 +112,16 @@ const updateReferrerDetails = async (user) => {
       const defaultPayoutPercentage = 60;
       const payoutAmount =
         (defaultPayoutPercentage * user.portfolio_balance) / 100;
+
+      const payout_day = new Date().toISOString().split("T")[0];
+
+      const payout_time = new Date().toLocaleTimeString({
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      });
+
+      const payoutDate = `${payout_day} ${payout_time}`;
 
       // Add a payout record to payouts table
       const payout = await payouts.create({
@@ -123,7 +132,7 @@ const updateReferrerDetails = async (user) => {
         original_amount: user.portfolio_balance,
         payout_percentage: defaultPayoutPercentage + "%",
         payout_status: "unpaid",
-        payout_date: refDate,
+        payout_date: payoutDate,
       });
 
       // Associate the payout with the referrer
