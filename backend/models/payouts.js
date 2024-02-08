@@ -24,6 +24,10 @@ const Payouts = sequelize.define(
       type: DataTypes.BIGINT,
       allowNull: true,
     },
+    original_amount: {
+      type: DataTypes.BIGINT,
+      allowNull: true,
+    },
     payout_percentage: {
       type: DataTypes.STRING(60),
       allowNull: true,
@@ -33,6 +37,10 @@ const Payouts = sequelize.define(
       allowNull: true,
     },
     tx_id: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+    },
+    payout_wallet_address: {
       type: DataTypes.STRING(255),
       allowNull: true,
     },

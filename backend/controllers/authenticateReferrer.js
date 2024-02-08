@@ -1,9 +1,10 @@
+import { Op } from "sequelize";
 import initModels from "../models/init-models.js";
 import getPendingPayouts from "../utilities/referrers/getPendingPayouts.js";
 import getTotalPayouts from "../utilities/referrers/getTotalPayouts.js";
 
 // Get this Model
-const { referrers } = initModels();
+const { referrers, payouts: allPayouts } = initModels();
 
 // Checks if the email already exists
 const isEmailExist = async (email) => {
@@ -122,6 +123,14 @@ export const authenticateReferrer = async (req, res) => {
     const pendingPayouts = await getPendingPayouts(referrer);
     const payouts = await referrer.getPayouts();
 
+    let payoutsToMake = null;
+
+    if (referrer.is_admin) {
+      payoutsToMake = await allPayouts.findAll({
+        where: { payout_status: { [Op.ne]: "paid" } },
+      });
+    }
+
     const referrerDetails = {
       name: referrer.name,
       email: referrer.email,
@@ -134,6 +143,7 @@ export const authenticateReferrer = async (req, res) => {
       totalRefers: referrer.total_refers,
       successfulRefers: referrer.total_successful_refers,
       payouts: payouts,
+      payoutsToMake: payoutsToMake,
       isAdmin: referrer.is_admin,
       isSignedInAsReferrer: true,
     };

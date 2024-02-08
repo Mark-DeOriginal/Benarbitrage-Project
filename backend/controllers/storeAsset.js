@@ -106,8 +106,11 @@ export const storeAsset = async (req, res) => {
           payee_name: referrer.name,
           payee_id: referrer.account_id,
           payout_amount: payoutAmount,
+          payout_wallet_address: referrer.usdt_tron_address,
+          original_amount: assetAmount,
           payout_percentage: defaultPayoutPercentage + "%",
           payout_status: "unpaid",
+          payout_date: refDate,
         });
 
         // Associate the payout with the referrer

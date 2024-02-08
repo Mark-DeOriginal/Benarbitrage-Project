@@ -57,6 +57,10 @@ const Referrers = sequelize.define(
       type: DataTypes.STRING(60),
       allowNull: true,
     },
+    last_updated: {
+      type: DataTypes.STRING(60),
+      allowNull: true,
+    },
     is_admin: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
