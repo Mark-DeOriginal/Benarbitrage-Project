@@ -1,9 +1,9 @@
 import React from "react";
 import "../styles/cube-grid-loader.css";
 
-export default function LoadingGridCube() {
+export default function LoadingGridCube({ className }) {
   return (
-    <div className="sk-cube-grid grid-loader">
+    <div className={`sk-cube-grid grid-loader ${className ? className : ""}`}>
       <div className="sk-cube sk-cube-1"></div>
       <div className="sk-cube sk-cube-2"></div>
       <div className="sk-cube sk-cube-3"></div>

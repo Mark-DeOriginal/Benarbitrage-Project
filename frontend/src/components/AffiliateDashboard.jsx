@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { CaretIcon, LogoutIcon } from "./icons";
 import LoadingSpinner from "./LoadingSpinner";
 import Logo from "./BenarbitrageLogo";
@@ -15,6 +14,7 @@ import syncReferrerDetails from "../utilities/syncReferrerDetails";
 import ReferrerLoginPage from "../pages/referrer-login";
 import { MetaData } from "../metadata";
 import insertDelimiters from "../utilities/insertDelimiters";
+import MakePayout from "./affiliate/MakePayout";
 
 export default function AffiliateDashboard() {
   const [showloader, setShowLoader] = useState(true);
@@ -97,7 +97,7 @@ export default function AffiliateDashboard() {
 
   return isLoggedIn ? (
     <>
-      <nav className="bg-navBarLightBg dark:bg-navBarDarkBg border-b border-navBarBorderLight dark:border-navBarBorderDark tablet:px-10 px-6 py-4 fixed top-0 left-0 z-10 w-full backdrop-blur-sm">
+      <nav className="bg-navBarLightBg dark:bg-navBarDarkBg border-b border-benBlue-light dark:border-navBarBorderDark tablet:px-10 px-6 py-4 fixed top-0 left-0 z-10 w-full backdrop-blur-sm">
         <div className="wrapper relative flex space-x-2 justify-between mobile_lg:justify-center items-center h-[50px]">
           <Logo />
           <div className="left hidden mobile_lg:block absolute left-0">
@@ -212,19 +212,25 @@ export default function AffiliateDashboard() {
             <div className="row flex justify-center gap-4">
               <div className="column w-[300px] space-y-4 bg-benWhite dark:bg-[#4b4a73] rounded-xl p-4 tablet:p-6">
                 <p className="text-xl mobile:text-2xl mobile_lg:text-3xl font-bold">
-                  {getReferrerDetails("totalRefers", "23")}
+                  {getReferrerDetails("totalRefers", "0")}
                 </p>
                 <h2>Total refers</h2>
               </div>
               <div className="column w-[300px] space-y-4 bg-benWhite dark:bg-[#4b4a73] rounded-xl p-4 tablet:p-6">
                 <p className="text-xl mobile:text-2xl mobile_lg:text-3xl font-bold">
-                  {getReferrerDetails("successfulRefers", "16")}
+                  {getReferrerDetails("successfulRefers", "0")}
                 </p>
                 <h2>Successful refers</h2>
               </div>
             </div>
           </div>
           <div className="info-block pt-8 mobile_lg:pt-12 space-y-2">
+            {getReferrerDetails("isAdmin", false) == true && (
+              <div className="make-payout-wrapper">
+                <MakePayout />
+              </div>
+            )}
+
             <div className="payout-activities">
               <Collapsible title={`Payout activities`}>
                 <div className="content py-4 overflow-x-auto">
@@ -234,7 +240,7 @@ export default function AffiliateDashboard() {
             </div>
             <div className="profile-information">
               <Collapsible title={`Profile information`}>
-                <div className="content py-4 max-w-[400px] mx-auto">
+                <div className="content py-4 max-w-[400px] mx-auto flex flex-col gap-4">
                   <ProfileInformation />
                 </div>
               </Collapsible>

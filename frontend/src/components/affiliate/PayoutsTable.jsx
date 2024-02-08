@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import getReferrerDetails from "../../utilities/getReferrerDetails";
 import insertDelimiters from "../../utilities/insertDelimiters";
 import copyToClipboard from "../../utilities/copyToClipboard";
@@ -91,7 +91,7 @@ export default function PayoutsTable() {
   ) : (
     <p className="no-payouts-info text-sm tablet:text-base text-center">
       There are no payout activities yet. <br />
-      When payouts come in, you will see them here.
+      When payouts come in, you'll see them here.
     </p>
   );
 }

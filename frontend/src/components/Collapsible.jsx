@@ -28,7 +28,7 @@ export default function Collapsible({ title, children }) {
         onClick={(e) => {
           toggleOptionsOpen(e.target.nextElementSibling);
         }}
-        className={`flex w-full justify-between px-4 py-2 mobile_lg:py-4 mobile_lg:px-6 text-base mobile_lg:text-lg laptop:text-xl font-medium mobile_lg:font-bold bg-benBlue-light dark:bg-benBlue-lightC rounded-xl`}
+        className={`flex w-full justify-between px-4 py-4 mobile_lg:px-6 text-base mobile_lg:text-lg laptop:text-xl font-bold bg-benBlue-light dark:bg-benBlue-lightC rounded-xl`}
       >
         {title}
         <svg
