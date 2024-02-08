@@ -21,10 +21,6 @@ export const Payout = ({ payouts }) => {
 
   const [currentPayout, setCurrentPayout] = useState(0); // Selects the first payout to make on initialization
 
-  const [payoutTxId, setPayoutTxId] = useState(
-    payoutsToMake[currentPayout].tx_id || ""
-  );
-
   const handleTxIdChange = (value) => {
     let payouts = [...payoutsToMake];
     payouts[currentPayout].tx_id = value;
