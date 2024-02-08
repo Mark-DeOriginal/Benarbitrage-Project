@@ -24,9 +24,13 @@ export const storeAsset = async (req, res) => {
     }
 
     // Check if asset already exists
-    const assetExists = () => {
+    const assetExists = async () => {
+      const userAssets = await user.getAssets();
+
       if (user.has_asset) {
-        return true;
+        return userAssets.some(
+          (asset) => transactionID === asset.transaction_id
+        );
       } else {
         return false;
       }
