@@ -213,7 +213,7 @@ export const setUserAccType = async (req, res) => {
       });
     });
 
-  await user
+  user
     .update({
       account_type: account_type,
       onboarding_stage: nextOnboardingStage,
