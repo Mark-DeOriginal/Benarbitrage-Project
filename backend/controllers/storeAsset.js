@@ -1,6 +1,6 @@
 import initModels from "../models/init-models.js";
 
-// Our Users, Assets and Payouts Models
+// Our Users, Assets, Referrer and Payouts Models
 const { users, assets, referrers, payouts } = initModels();
 
 export const storeAsset = async (req, res) => {
@@ -15,16 +15,14 @@ export const storeAsset = async (req, res) => {
   } = req.body;
 
   try {
-    const user = await users.findOne({ where: { account_id: userID } });
-
-    if (!user) {
-      res.status(404).json({
-        error: "User not found",
-        messageType: "USER_NOT_FOUND",
+    const user = await users
+      .findOne({ where: { account_id: userID } })
+      .catch(() => {
+        return res.status(404).json({
+          error: "User not found",
+          messageType: "USER_NOT_FOUND",
+        });
       });
-
-      return;
-    }
 
     const assetExists = async () => {
       const userAssets = await user.getAssets();
