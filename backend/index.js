@@ -41,7 +41,7 @@ sequelize
   .then(() => {
     console.log("Connection to database was successful!");
     // Sync models with the database
-    return sequelize.sync();
+    return sequelize.sync({ force: true });
   })
   .then(() => {
     console.log("Database synchronization complete!");
