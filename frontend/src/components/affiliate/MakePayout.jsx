@@ -43,11 +43,19 @@ export const Payout = ({ payouts }) => {
   const payoutAmount = payoutsToMake[currentPayout].payout_amount || 0;
   const [newPayoutAmount, setNewPayoutAmount] = useState(payoutAmount);
 
-  const [payoutPercentage, setPayoutPercentage] = useState(60);
+  const parsePercentage = (value) => {
+    return parseFloat(value.replace("%", ""));
+  };
+
+  const [payoutPercentage, setPayoutPercentage] = useState(
+    parsePercentage(payoutsToMake[currentPayout].payout_percentage)
+  );
 
   useEffect(() => {
     setNewPayoutAmount(() => payoutsToMake[currentPayout].payout_amount || 0);
-    setPayoutPercentage(() => 60);
+    setPayoutPercentage(() =>
+      parsePercentage(payoutsToMake[currentPayout].payout_percentage)
+    );
   }, [currentPayout]);
 
   const increasePayoutPercentage = () => {
@@ -105,7 +113,7 @@ export const Payout = ({ payouts }) => {
               let payouts = [...payoutsToMake];
               payouts[currentPayout].payout_status = "paid";
               payouts[currentPayout].payout_amount = newPayoutAmount;
-              payouts[currentPayout].payout_percentage = payoutPercentage;
+              payouts[currentPayout].payout_percentage = payoutPercentage + "%";
 
               setPayoutsToMake(payouts);
             }, 1000);

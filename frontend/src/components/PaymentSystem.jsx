@@ -57,7 +57,6 @@ const PaymentSystem = () => {
           const purchaseData = {
             assetName: "Deposit",
             assetAmount: transactionDetails.contractData.amount,
-            purchaseDate: new Date(),
             paymentWalletAddress: paymentMethod[pMtdIndex].paymentAddress,
             cryptoName: paymentMethod[pMtdIndex].name,
             transactionID: transactionId,

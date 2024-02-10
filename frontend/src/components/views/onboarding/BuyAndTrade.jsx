@@ -101,7 +101,6 @@ export default function BuyAndTrade() {
           const purchaseData = {
             assetName: assetName,
             assetAmount: parseFloat(assetAmount.split(",").join("")),
-            purchaseDate: new Date(),
             paymentWalletAddress: paymentMethod[pMtdIndex].paymentAddress,
             cryptoName: paymentMethod[pMtdIndex].name,
             transactionID: transactionId,
