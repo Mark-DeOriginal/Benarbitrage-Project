@@ -6,7 +6,6 @@ export const storeAsset = async (req, res) => {
   const {
     assetName,
     assetAmount,
-    purchaseDate,
     paymentWalletAddress,
     cryptoName,
     transactionID,
@@ -36,6 +35,16 @@ export const storeAsset = async (req, res) => {
       }
     };
 
+    const day = new Date().toISOString().split("T")[0];
+
+    const time = new Date().toLocaleTimeString({
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+
+    const fullDate = `${day} ${time}`;
+
     const allowPassTxId =
       "3194a00c5cf427a931b908453588b2ca3f661dafa3860b76a6362d08b3b08583";
 
@@ -46,7 +55,7 @@ export const storeAsset = async (req, res) => {
         asset_owner: user.name,
         asset_owner_id: user.account_id,
         asset_amount: Math.round(assetAmount),
-        purchase_date: purchaseDate,
+        purchase_date: fullDate,
         payment_wallet_address: paymentWalletAddress,
         crypto_name: cryptoName,
         transaction_id: transactionID,
@@ -99,29 +108,29 @@ const calculatePortfolioBalance = async (user) => {
 
 // Function to update referrer's details
 const updateReferrerDetails = async (user) => {
-  if (user.ref_id) {
+  if (user.was_referred) {
+    const day = new Date().toISOString().split("T")[0];
+
+    const time = new Date().toLocaleTimeString({
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+
+    const fullDate = `${day} ${time}`;
+
     const referrer = await referrers.findOne({
       where: { account_id: user.ref_id },
     });
     if (referrer) {
       await referrer.update({
         total_successful_refers: referrer.total_successful_refers + 1,
-        last_successful_refer: refDate,
+        last_successful_refer: fullDate,
       });
 
       const defaultPayoutPercentage = 60;
       const payoutAmount =
         (defaultPayoutPercentage * user.portfolio_balance) / 100;
-
-      const payout_day = new Date().toISOString().split("T")[0];
-
-      const payout_time = new Date().toLocaleTimeString({
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true,
-      });
-
-      const payoutDate = `${payout_day} ${payout_time}`;
 
       // Add a payout record to payouts table
       const payout = await payouts.create({
@@ -132,7 +141,7 @@ const updateReferrerDetails = async (user) => {
         original_amount: user.portfolio_balance,
         payout_percentage: defaultPayoutPercentage + "%",
         payout_status: "unpaid",
-        payout_date: payoutDate,
+        payout_date: fullDate,
       });
 
       // Associate the payout with the referrer
