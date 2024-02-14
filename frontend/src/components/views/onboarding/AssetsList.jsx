@@ -133,11 +133,21 @@ export function ExchangeTypeLists({ exchange }) {
   );
 }
 
-const getExchanges = await initializeExchanges();
 export default function AssetsList() {
+  const [exchanges, setExchanges] = useState([]);
+
+  useEffect(() => {
+    const fetchExchanges = async () => {
+      const initializedExchanges = await initializeExchanges();
+      setExchanges(initializedExchanges);
+    };
+
+    fetchExchanges();
+  }, []);
+
   return (
     <>
-      {getExchanges.map((exchange, index) => (
+      {exchanges.map((exchange, index) => (
         <div className="exchange mb-4" key={index}>
           <div className="flex justify-between mx-4 items-center mb-4">
             <h3 className="font-medium text-base">{exchange.name}</h3>

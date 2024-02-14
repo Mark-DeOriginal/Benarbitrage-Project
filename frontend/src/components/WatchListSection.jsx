@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { initializeExchanges } from "../constants";
 
 import ExchangeTypeLists from "./TradingExchangeTypeList";
 
-const getExchanges = await initializeExchanges();
-
 export default function WatchListSection() {
+  const [exchanges, setExchanges] = useState([]);
+
+  useEffect(() => {
+    const fetchExchanges = async () => {
+      const initializedExchanges = await initializeExchanges();
+      setExchanges(initializedExchanges);
+    };
+
+    fetchExchanges();
+  }, []);
+
   return (
     <section className="p-6 pt-20 tablet:pt-28 tablet:pb-12 tablet:px-[50px] max-w-[900px] mx-auto">
       <h2 className="text-2xl tablet:text-3xl font-bold text-benBlue-400 dark:text-benOrange-400 text-center">
@@ -16,7 +25,7 @@ export default function WatchListSection() {
         </span>
       </h2>
       <div className="mt-10 text-benBlue-lightC2 dark:text-benBlue-200 max-w-[600px] mx-auto flex flex-col gap-10">
-        {getExchanges.map((exchange, index) => (
+        {exchanges.map((exchange, index) => (
           <div className="exchange mb-4" key={index}>
             <div className="flex justify-between mx-4 items-center mb-4">
               <h3 className="font-medium text-lg tablet:text-xl">
