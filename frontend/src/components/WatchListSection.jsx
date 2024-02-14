@@ -3,7 +3,7 @@ import { initializeExchanges } from "../constants";
 
 import ExchangeTypeLists from "./TradingExchangeTypeList";
 
-const getExchanges = initializeExchanges();
+const getExchanges = await initializeExchanges();
 
 export default function WatchListSection() {
   return (

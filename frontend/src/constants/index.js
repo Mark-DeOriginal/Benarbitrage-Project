@@ -18,6 +18,7 @@ import netflixLogo from "../assets/brands/netflix.svg";
 import amazonLogo from "../assets/brands/amazon.svg";
 import microsoftLogo from "../assets/brands/microsoft.svg";
 import metaPlatformsLogo from "../assets/brands/meta-platforms.svg";
+import getCryptoMarketPrices from "../utilities/getCryptoMarketPrices";
 
 export const navLinks = [
   {
@@ -185,7 +186,15 @@ export const statistics = [
   },
 ];
 
-export function initializeExchanges() {
+export async function initializeExchanges() {
+  const cryptoPrices = await getCryptoMarketPrices();
+  const prices = (cryptoName) => {
+    const foundCrypto = cryptoPrices.find((crypto) => crypto.id === cryptoName);
+    if (foundCrypto) {
+      return foundCrypto.current_price;
+    }
+  };
+
   const exchanges = [
     {
       name: "Cryptos",
@@ -194,7 +203,7 @@ export function initializeExchanges() {
           name: "Bitcoin",
           abbr: "BTC",
           logo: bitcoinLogo,
-          marketPrice: 42113.3,
+          marketPrice: prices("bitcoin") || 42113,
           currency: "$",
           performance: 0.17,
         },
@@ -202,7 +211,7 @@ export function initializeExchanges() {
           name: "Ethereum",
           abbr: "ETH",
           logo: ethereumLogo,
-          marketPrice: 2327.55,
+          marketPrice: prices("ethereum") || 2327.55,
           currency: "$",
           performance: 0.21,
         },
@@ -210,7 +219,7 @@ export function initializeExchanges() {
           name: "BNB",
           abbr: "BNB",
           logo: bnbLogo,
-          marketPrice: 413.5,
+          marketPrice: prices("binancecoin") || 413.5,
           currency: "$",
           performance: 0.52,
         },
@@ -218,7 +227,7 @@ export function initializeExchanges() {
           name: "Avalanche",
           abbr: "AVAX",
           logo: avalancheLogo,
-          marketPrice: 160.76,
+          marketPrice: prices("avalanche-2") || 160.76,
           currency: "$",
           performance: 1.62,
         },
@@ -226,7 +235,7 @@ export function initializeExchanges() {
           name: "Litecoin",
           abbr: "LTC",
           logo: litecoinLogo,
-          marketPrice: 150.94,
+          marketPrice: prices("litecoin") || 150.94,
           currency: "$",
           performance: 1.27,
         },
@@ -234,7 +243,7 @@ export function initializeExchanges() {
           name: "TRON",
           abbr: "TRX",
           logo: tronTrxLogo,
-          marketPrice: 1.13,
+          marketPrice: prices("tron") || 1.13,
           currency: "$",
           performance: 1.3,
         },

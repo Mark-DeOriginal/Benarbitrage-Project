@@ -133,7 +133,7 @@ export function ExchangeTypeLists({ exchange }) {
   );
 }
 
-const getExchanges = initializeExchanges();
+const getExchanges = await initializeExchanges();
 export default function AssetsList() {
   return (
     <>
