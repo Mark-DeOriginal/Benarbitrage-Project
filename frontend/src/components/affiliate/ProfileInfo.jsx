@@ -111,7 +111,7 @@ export const EditableField = ({
             }`}
           />
 
-          <div className="absolute right-0 top-[25%] bottom-[25%] flex gap-3 items-center mr-4">
+          <div className="absolute right-0 top-[25%] bottom-[25%] flex gap-3 items-center mr-4 pl-12 bg-gradient-to-l from-[#ededf2] dark:from-[#3d3c62] to-transparent">
             {isEditMode ? (
               <button
                 className="save-profile-btn"

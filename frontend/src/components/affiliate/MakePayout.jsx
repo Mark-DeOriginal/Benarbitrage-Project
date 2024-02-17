@@ -201,7 +201,7 @@ export const Payout = ({ payouts }) => {
           </div>
           <div className="column">
             <h3>Payout Transaction Id</h3>
-            <div className="referrer-link-wrapper flex items-center p-1 pl-4 rounded-2xl border border-benBlue-light dark:border-benBlue-lightC2 mt-1">
+            <div className="tx-id-wrapper flex items-center p-1 pl-4 rounded-2xl border border-benBlue-light dark:border-benBlue-lightC2 mt-1">
               <div className="relative flex-grow font-medium">
                 <input
                   type="text"
@@ -214,13 +214,13 @@ export const Payout = ({ payouts }) => {
                       : false
                   }
                   placeholder="Enter TxId"
-                  className="referrer-link bg-transparent w-full"
+                  className="bg-transparent w-full"
                 />
                 <div className="feather absolute top-0 right-0 h-full w-6 bg-gradient-to-l from-[#ededf2] dark:from-benBlue-lightC to-transparent"></div>
               </div>
               <button
                 onClick={() => confirmPayout()}
-                className={`referrer-btn flex-none ${
+                className={`confirm-payout-btn flex-none ${
                   payoutsToMake[currentPayout].payout_status === "unpaid" ||
                   payoutsToMake[currentPayout].payout_status === "confirming"
                     ? "bg-benBlue-light dark:bg-benBlue-lightC2"

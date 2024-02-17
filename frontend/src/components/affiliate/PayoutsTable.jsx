@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import getReferrerDetails from "../../utilities/getReferrerDetails";
 import insertDelimiters from "../../utilities/insertDelimiters";
 import copyToClipboard from "../../utilities/copyToClipboard";
+import { CopyIcon } from "../icons";
 
 export const CopyTxIdBtn = ({ txId }) => {
   const [isTxIdCopied, setIsTxIdCopied] = useState(false);
@@ -18,9 +19,15 @@ export const CopyTxIdBtn = ({ txId }) => {
   return (
     <button
       onClick={() => copyTxId(txId)}
-      className="referrer-btn flex-none bg-benBlue-light dark:bg-benBlue-lightC2 py-1 px-2 mobile_lg:py-2 mobile_lg:px-4 rounded-full active:scale-[0.95]"
+      className="referrer-btn flex-none active:scale-[0.95]"
     >
-      {isTxIdCopied ? "Copied" : "Copy TxId"}
+      {isTxIdCopied ? (
+        "Copied"
+      ) : (
+        <CopyIcon
+          className={`fill-benBlue-lightB dark:fill-benBlue-200 w-[18px]`}
+        />
+      )}
     </button>
   );
 };
@@ -68,7 +75,7 @@ export default function PayoutsTable() {
             <td>${insertDelimiters(payout.payout_amount)}</td>
             <td>
               <div className="flex items-center justify-between">
-                <div className="referrer-link relative hidden mobile:block">
+                <div className="referrer-link relative">
                   <input
                     type="text"
                     value={payout.tx_id || "--"}
