@@ -5,7 +5,6 @@ import setCookie from "../../../../utilities/setCookie";
 export default function ValidationFailed() {
   function handleBackToValidation() {
     setCookie("onboardingStage", "VALIDATION");
-    localStorage.setItem("onboardingStage", "VALIDATION");
     location.reload();
   }
 

@@ -5,7 +5,6 @@ import setCookie from "../../../../utilities/setCookie";
 export default function SignUpSuccess() {
   function handleProceed() {
     setCookie("onboardingStage", "VALIDATION");
-    localStorage.setItem("onboardingStage", "VALIDATION");
     location.reload();
   }
 

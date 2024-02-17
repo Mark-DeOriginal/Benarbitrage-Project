@@ -121,14 +121,12 @@ export default function BuyAndTrade() {
               if (response.message === "Already Confirmed") {
                 setTxConfirmStatus("already-confirmed");
                 setCookie("onboardingStage", "COMPLETED");
-                localStorage.setItem("onboardingStage", "COMPLETED");
                 console.log(response);
               } else if (response.message === "Confirm Success") {
                 setTxConfirmStatus("confirmed");
 
                 // If the payment was confirmed successfully...
                 setCookie("onboardingStage", "COMPLETED");
-                localStorage.setItem("onboardingStage", "COMPLETED");
                 console.log("Asset saved successfully.");
                 console.log(response);
               } else {
