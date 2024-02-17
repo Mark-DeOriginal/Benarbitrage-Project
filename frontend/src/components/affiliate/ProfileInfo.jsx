@@ -158,13 +158,13 @@ export const EditableField = ({
 };
 
 export default function ProfileInformation() {
-  const [profileData, setProfileData] = useState({
+  const profileData = {
     name: getReferrerDetails("name", "John Doe"),
     email: getReferrerDetails("email", "johndoe@gmail.com"),
     phone: getReferrerDetails("phone", "0803222246"),
     usdtTronWallet: getReferrerDetails("usdtTronAddress", "Not yet provided"),
     password: getReferrerDetails("password", "johndoe99"),
-  });
+  };
 
   return (
     <>
