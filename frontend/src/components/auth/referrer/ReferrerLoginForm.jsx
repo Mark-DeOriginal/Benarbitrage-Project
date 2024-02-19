@@ -52,7 +52,7 @@ export default function ReferrerLoginForm() {
 
       // Send form data to server for processing
       const processFormData = await fetch(
-        "http://localhost:5174/referrer/login",
+        "https://benarbitrage-server.up.railway.app/referrer/login",
         {
           method: "POST",
           headers: {

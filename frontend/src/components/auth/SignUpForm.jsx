@@ -63,7 +63,7 @@ export default function SignUpForm() {
 
       // Send form data to server for processing
       const processFormData = await fetch(
-        "http://localhost:5174/user/create-user",
+        "https://benarbitrage-server.up.railway.app/user/create-user",
         {
           method: "POST",
           headers: {

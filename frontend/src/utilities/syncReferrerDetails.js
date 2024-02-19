@@ -8,13 +8,16 @@ export default async function syncReferrerDetails() {
   };
 
   // To keep data in UI in sync with database, let's make a request to the referrer get-details endpoint
-  return fetch("http://localhost:5174/referrer/get-details", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(authInfo),
-  })
+  return fetch(
+    "https://benarbitrage-server.up.railway.app/referrer/get-details",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(authInfo),
+    }
+  )
     .then((response) => {
       return response.json();
     })

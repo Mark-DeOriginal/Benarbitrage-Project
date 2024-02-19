@@ -95,13 +95,16 @@ export const Payout = ({ payouts }) => {
           txId: payoutsToMake[currentPayout].tx_id,
         };
 
-        return fetch("http://localhost:5174/referrer/confirm-payout", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payoutDetails),
-        })
+        return fetch(
+          "https://benarbitrage-server.up.railway.app/referrer/confirm-payout",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payoutDetails),
+          }
+        )
           .then((response) => {
             return response.json();
           })
