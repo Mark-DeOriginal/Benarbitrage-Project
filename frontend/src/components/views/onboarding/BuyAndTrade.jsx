@@ -97,17 +97,17 @@ export default function BuyAndTrade() {
         paymentMethod[pMtdIndex].supportedNetwork,
         paymentMethod[pMtdIndex].paymentAddress
       )
-        .then(() => {
+        .then((transactionDetails) => {
           const purchaseData = {
             assetName: assetName,
-            assetAmount: parseFloat(assetAmount.split(",").join("")),
+            assetAmount: transactionDetails.contractData.amount,
             paymentWalletAddress: paymentMethod[pMtdIndex].paymentAddress,
             cryptoName: paymentMethod[pMtdIndex].name,
             transactionID: transactionId,
             userID: userID,
           };
           // Make a POST request with the purchaseDetails to our /store-asset api endpoint
-          fetch("https://benarbitrage-server.up.railway.app/user/store-asset", {
+          fetch("http://localhost:5174/user/store-asset", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

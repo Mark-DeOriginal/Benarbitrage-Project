@@ -4,6 +4,7 @@ import { setSelectedAsset } from "../../../redux-states/uiSlice";
 import insertDelimiters from "../../../utilities/insertDelimiters";
 import { scroller as scroll } from "react-scroll";
 import { initializeExchanges } from "../../../constants";
+import LoadingGridCube from "../../LoadingGridCube";
 
 export const ExchangeTypeList = ({ type }) => {
   const [performance, setPerformance] = useState(type.performance);
@@ -145,18 +146,18 @@ export default function AssetsList() {
     fetchExchanges();
   }, []);
 
-  return (
-    <>
-      {exchanges.map((exchange, index) => (
-        <div className="exchange mb-4" key={index}>
-          <div className="flex justify-between mx-4 items-center mb-4">
-            <h3 className="font-medium text-base">{exchange.name}</h3>
-            {exchange.CPT && <p className="text-sm">CPT: {exchange.CPT}</p>}
-          </div>
-
-          <ExchangeTypeLists exchange={exchange} />
+  return exchanges.length > 0 ? (
+    exchanges.map((exchange, index) => (
+      <div className="exchange mb-4" key={index}>
+        <div className="flex justify-between mx-4 items-center mb-4">
+          <h3 className="font-medium text-base">{exchange.name}</h3>
+          {exchange.CPT && <p className="text-sm">CPT: {exchange.CPT}</p>}
         </div>
-      ))}
-    </>
+
+        <ExchangeTypeLists exchange={exchange} />
+      </div>
+    ))
+  ) : (
+    <LoadingGridCube className={`!w-10 !h-10 !mx-4 !mb-4 !mt-10`} />
   );
 }
