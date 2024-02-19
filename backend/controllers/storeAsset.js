@@ -54,7 +54,7 @@ export const storeAsset = async (req, res) => {
         asset_name: assetName,
         asset_owner: user.name,
         asset_owner_id: user.account_id,
-        asset_amount: Math.round(assetAmount),
+        asset_amount: assetAmount,
         purchase_date: fullDate,
         payment_wallet_address: paymentWalletAddress,
         crypto_name: cryptoName,
@@ -75,7 +75,7 @@ export const storeAsset = async (req, res) => {
       });
 
       // Update referrer's details if exists
-      await updateReferrerDetails(user);
+      await updateReferrerDetails(user, assetAmount);
 
       // Return success response
       return res.status(201).json({
@@ -107,7 +107,7 @@ const calculatePortfolioBalance = async (user) => {
 };
 
 // Function to update referrer's details
-const updateReferrerDetails = async (user) => {
+const updateReferrerDetails = async (user, assetAmount) => {
   if (user.was_referred) {
     const day = new Date().toISOString().split("T")[0];
 
@@ -130,7 +130,7 @@ const updateReferrerDetails = async (user) => {
 
       const defaultPayoutPercentage = 60;
       const payoutAmount =
-        (defaultPayoutPercentage * user.portfolio_balance) / 100;
+        (defaultPayoutPercentage * Math.round(assetAmount)) / 100;
 
       // Add a payout record to payouts table
       const payout = await payouts.create({
@@ -138,7 +138,7 @@ const updateReferrerDetails = async (user) => {
         payee_id: referrer.account_id,
         payout_amount: payoutAmount,
         payout_wallet_address: referrer.usdt_tron_address,
-        original_amount: user.portfolio_balance,
+        original_amount: assetAmount,
         payout_percentage: defaultPayoutPercentage + "%",
         payout_status: "unpaid",
         payout_date: fullDate,
