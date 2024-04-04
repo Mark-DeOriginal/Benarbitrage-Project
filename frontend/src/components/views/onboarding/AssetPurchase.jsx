@@ -39,8 +39,8 @@ export default function AssetPurchase() {
     return ((percentageFee * tradeProfit) / 100).toFixed(2);
   }
 
-  function getNetProfit(gross, fee) {
-    return gross - fee;
+  function getGrossProfit(tradingAmount, profit, fee) {
+    return tradingAmount + profit - fee;
   }
 
   const [tradeSpeed, setTradeSpeed] = useState(
@@ -55,9 +55,13 @@ export default function AssetPurchase() {
     insertDelimiters(getTradingFee(assetAmount))
   );
 
-  const [tradeNetProfit, setTradeNetProfit] = useState(
+  const [tradeGrossProfit, setTradeGrossProfit] = useState(
     insertDelimiters(
-      getNetProfit(getTradingProfit(assetAmount), getTradingFee(assetAmount))
+      getGrossProfit(
+        parseFloat((assetAmount || "0").split(",").join("")),
+        getTradingProfit(assetAmount),
+        getTradingFee(assetAmount)
+      )
     )
   );
 
@@ -81,13 +85,14 @@ export default function AssetPurchase() {
       const fee = getTradingFee(strippedValue);
       return fee == 0 ? "0.00" : insertDelimiters(fee);
     });
-    setTradeNetProfit(() => {
-      const netProfit = getNetProfit(
+    setTradeGrossProfit(() => {
+      const grossProfit = getGrossProfit(
+        parseFloat((strippedValue || "0").split(",").join("")),
         getTradingProfit(strippedValue),
         getTradingFee(strippedValue)
       ).toFixed(2);
 
-      return netProfit == 0 ? "0.00" : insertDelimiters(netProfit);
+      return grossProfit == 0 ? "0.00" : insertDelimiters(grossProfit);
     });
 
     setIsAmountError(false);
@@ -228,9 +233,9 @@ export default function AssetPurchase() {
                         </div>
                       </div>
                       <div className="row text-center pt-4">
-                        <h4>Net profit </h4>
+                        <h4>Gross profit </h4>
                         <p className="text-xl tablet:text-2xl font-bold mt-2">
-                          ${tradeNetProfit}
+                          ${tradeGrossProfit}
                         </p>
                       </div>
                     </div>
