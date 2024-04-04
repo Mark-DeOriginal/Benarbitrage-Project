@@ -128,7 +128,7 @@ const updateReferrerDetails = async (user, assetAmount) => {
         last_successful_refer: fullDate,
       });
 
-      const defaultPayoutPercentage = 60;
+      const defaultPayoutPercentage = 50;
       const payoutAmount =
         (defaultPayoutPercentage * Math.round(assetAmount)) / 100;
 
