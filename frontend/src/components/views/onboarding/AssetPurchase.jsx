@@ -29,14 +29,14 @@ export default function AssetPurchase() {
 
   function getTradingProfit(tradingAmount) {
     let tradeAmount = parseFloat((tradingAmount || "0").split(",").join(""));
-    let percentage = 350;
+    let percentage = 16;
     return (percentage * tradeAmount) / 100;
   }
 
   function getTradingFee(tradingAmount) {
-    let tradeAmount = parseFloat((tradingAmount || "0").split(",").join(""));
-    let percentageFee = 12.3;
-    return ((percentageFee * tradeAmount) / 100).toFixed(2);
+    let tradeProfit = getTradingProfit(tradingAmount);
+    let percentageFee = 2.3;
+    return ((percentageFee * tradeProfit) / 100).toFixed(2);
   }
 
   function getNetProfit(gross, fee) {
@@ -146,11 +146,6 @@ export default function AssetPurchase() {
                   Assets
                 </h3>
                 <div className="info text-sm mt-2">
-                  <p>
-                    Prices and metrics are updated based on their trailing
-                    differential values in several other exchanges and should
-                    not be taken as current values.
-                  </p>
                   <p>Click an asset below to select it.</p>
                 </div>
               </div>
@@ -216,9 +211,7 @@ export default function AssetPurchase() {
                     <div className="trade-calc space-y-2">
                       <div className="row mt-4 flex justify-between items-center">
                         <h4>Trade speed</h4>
-                        <p className="text-base font-bold">
-                          {tradeSpeed} mkt/s
-                        </p>
+                        <p className="text-base font-bold">{tradeSpeed} t/s</p>
                       </div>
                       <div className="row flex justify-between items-center">
                         <h4>Trade duration</h4>
@@ -226,16 +219,16 @@ export default function AssetPurchase() {
                       </div>
                       <div className="group border-y border-benBlue-200 dark:border-benBlue-lightB py-2">
                         <div className="row flex justify-between items-center">
-                          <h4>Trade profit [350%]</h4>
+                          <h4>Trade profit [16%]</h4>
                           <p className="text-base font-bold">${tradeProfit}</p>
                         </div>
                         <div className="row flex justify-between items-center">
-                          <h4>Fee + Tax [12.3%]</h4>
+                          <h4>Trading fee [2.3%]</h4>
                           <p className="text-base font-bold">${tradeFee}</p>
                         </div>
                       </div>
                       <div className="row text-center pt-4">
-                        <h4>Net profit [profit - fee] </h4>
+                        <h4>Net profit </h4>
                         <p className="text-xl tablet:text-2xl font-bold mt-2">
                           ${tradeNetProfit}
                         </p>

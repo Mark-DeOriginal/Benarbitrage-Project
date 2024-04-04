@@ -5,7 +5,7 @@ import bitcoinLogo from "../assets/icons/cryptos/bitcoin.svg";
 export const uiSlice = createSlice({
   name: "ui",
   initialState: {
-    isDarkMode: true,
+    isDarkMode: false,
     isBuyAssetModalOpen: false,
     userBoardingStage: getCookie("onboardingStage", "SIGN_UP"),
     selectedAsset: {

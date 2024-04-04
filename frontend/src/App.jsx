@@ -31,9 +31,9 @@ export function redirectTo(location) {
 function App() {
   const pageUrl = window.location.pathname;
 
-  // Our color scheme is dark by default
-  var isDark = true;
-  var themeColor = "#434172";
+  // Our color scheme is light by default
+  var isDark = false;
+  var themeColor = "#eeeef1";
 
   // Check if we have "isDarkMode" set in the Browser's localStorage before proceeding
   // If it's set, then the User changed the color scheme
@@ -42,13 +42,13 @@ function App() {
     const isDarkMode = localStorage.getItem("isDarkMode");
     // If the User chose light mode
     if (isDarkMode === "false") {
-      // remove the "dark" class from the document's <html> element
-      document.documentElement.classList.remove("dark");
+      // add the "dark" class to the document's <html> element
+      document.documentElement.classList.add("dark");
 
-      themeColor = "#eeeef1";
+      themeColor = "#434172";
 
-      // And set this variable to false
-      isDark = false;
+      // And set this variable to true
+      isDark = true;
     }
   }
 

@@ -182,7 +182,7 @@ export default function BuyAndTrade() {
       name: "USDT",
       logo: <USDTIcon />,
       popularName: "USDT",
-      paymentAddress: "TAiTqyYFav1y1tJLWKYnVqFwgapEVtBYJw",
+      paymentAddress: "TFZRbPWNpfqepHoSP5Ldygza1fFuqMvLAC",
       supportedNetwork: "TRON (TRC20)",
       recommended: true,
     },
@@ -190,28 +190,29 @@ export default function BuyAndTrade() {
       name: "USDC - USD Coin",
       logo: <USDCIcon />,
       popularName: "USD Coin",
-      paymentAddress: "TAiTqyYFav1y1tJLWKYnVqFwgapEVtBYJw",
+      paymentAddress: "TFZRbPWNpfqepHoSP5Ldygza1fFuqMvLAC",
       supportedNetwork: "TRON (TRC20)",
     },
     {
       name: "TUSD - TrueUSD",
       logo: <TUSDIcon />,
       popularName: "TrueUSD",
-      paymentAddress: "TAiTqyYFav1y1tJLWKYnVqFwgapEVtBYJw",
+      paymentAddress: "TFZRbPWNpfqepHoSP5Ldygza1fFuqMvLAC",
       supportedNetwork: "TRON (TRC20)",
     },
     {
       name: "BTC - Bitcoin",
       logo: <BTCIcon />,
       popularName: "Bitcoin",
-      paymentAddress: "0xa435905664601dbba3fbe00431de7169a85dba55",
-      supportedNetwork: "Ethereum (ERC20)",
+      paymentAddress:
+        "bc1p29rnacycffdqsxjmvfxefy3l5ddlfjhpnnnfx0fv4madtxvf09uq43fyxl",
+      supportedNetwork: "Bitcoin",
     },
     {
       name: "ETH - Ethereum",
       logo: <ETHIcon />,
       popularName: "Ethereum",
-      paymentAddress: "0xa435905664601dbba3fbe00431de7169a85dba55",
+      paymentAddress: "0xdF4AAe50B8B9550e51ceB25261A6bdABAe2160C2",
       supportedNetwork: "Ethereum (ERC20)",
     },
   ]);
@@ -227,7 +228,17 @@ export default function BuyAndTrade() {
   };
 
   const goToTradingArea = () => {
-    window.location.href = "/trading-area";
+    if (transactionId.trim() === "") {
+      setIsTxIdError(true);
+      setTxIdErrorMessage("Please enter the TxID to confirm");
+    }
+
+    if (
+      txConfirmStatus === "confirmed" ||
+      txConfirmStatus === "already-confirmed"
+    ) {
+      window.location.href = "/trading-area";
+    }
   };
 
   const goToDashBoard = () => {
@@ -259,7 +270,7 @@ export default function BuyAndTrade() {
           </h2>
           <div className="info mt-4">
             <p>
-              Benarbitrage recommends using stable cryptos like USDT, TUSD and
+              Benarbitrage recommends using stable coins like USDT, TUSD and
               USDC for asset purchases, to eliminate risks associated with
               market volatility.
             </p>
@@ -444,12 +455,6 @@ export default function BuyAndTrade() {
               <div className="action-btns mt-8 flex justify-center gap-2">
                 <button
                   onClick={goToTradingArea}
-                  disabled={
-                    txConfirmStatus === "confirmed" ||
-                    txConfirmStatus === "already-confirmed"
-                      ? false
-                      : true
-                  }
                   className={`${
                     txConfirmStatus === "confirmed" ||
                     txConfirmStatus === "already-confirmed"

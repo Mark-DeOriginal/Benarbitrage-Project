@@ -1,5 +1,7 @@
 import React from "react";
 
 export default function CopyRight() {
-  return <p>Copyright &copy; 2023 - 2024 Benarbitrage</p>;
+  const date = new Date();
+  const currentYear = date.getFullYear();
+  return <p>Copyright &copy; 2023 - {currentYear} Benarbitrage</p>;
 }

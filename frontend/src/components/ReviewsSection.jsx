@@ -32,7 +32,7 @@ export default function ReviewsSection() {
             <h4 className="name text-xl font-bold dark:text-benOrange-400">
               George Harrison
             </h4>
-            <p>MD, CEO, Avid Exchange</p>
+            <p>CEO, Avid Exchange</p>
           </div>
         </div>
         <div className="testimonial-body mt-8 text-base tablet:text-lg">

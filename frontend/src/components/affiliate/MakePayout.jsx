@@ -66,7 +66,7 @@ export const Payout = ({ payouts }) => {
   };
 
   const reducePayoutPercentage = () => {
-    if (payoutPercentage > 60) {
+    if (payoutPercentage > 50) {
       setPayoutPercentage((prevPercentage) => prevPercentage - 5);
       setNewPayoutAmount(() => newPayoutAmount - (5 * originalAmount) / 100);
     }

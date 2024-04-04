@@ -174,11 +174,7 @@ export const statistics = [
   },
   {
     title: "Trading Volume",
-    figure: "$1.2B",
-  },
-  {
-    title: "Bullrun Trade",
-    figure: "$2.7B",
+    figure: "$14.7B",
   },
   {
     title: "Launch Date",
@@ -400,17 +396,17 @@ export const accountTypes = [
   {
     name: "Basic",
     least_trade: "$100",
-    trading_speed: "25 mkts/s",
+    trading_speed: "25 t/s",
   },
   {
     name: "Standard",
     least_trade: "$300",
-    trading_speed: "75 mkts/s",
+    trading_speed: "75 t/s",
     isMostPopular: true,
   },
   {
     name: "Business",
     least_trade: "$500",
-    trading_speed: "125 mkts/s",
+    trading_speed: "125 t/s",
   },
 ];
