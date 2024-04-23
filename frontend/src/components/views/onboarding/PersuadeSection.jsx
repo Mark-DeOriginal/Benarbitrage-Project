@@ -24,7 +24,7 @@ export default function PersuadeSection() {
           <br className="mobile:hidden" />
           more profitable.
         </h2>
-        <div className="mt-12">
+        {/* <div className="mt-12">
           <Review
             twitterUsername={`@fredemmanuel23`}
             alignment={`min-[980px]:items-start`}
@@ -32,7 +32,7 @@ export default function PersuadeSection() {
             "Manual arbitrage trading is like hell. <br />
             Thanks to AI for the relief."
           </Review>
-        </div>
+        </div> */}
       </div>
     </div>
   );

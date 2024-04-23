@@ -9,10 +9,6 @@ export default function HeroSection() {
 
       <div className="hero-texts relative z-5">
         <div>
-          <p className="text-sm mobile:text-xl font-medium text-benBlue-lightC dark:text-benBlue-200">
-            Take advantage of price differences in hundreds of financial
-            markets.
-          </p>
           <h1 className="mt-4 text-3xl min-[520px]:text-4xl tablet:text-5xl font-extrabold tracking-[-0.02em] text-benBlue-400 dark:text-benOrange-400 leading-[2.5rem] tablet:leading-[3.5rem]">
             We've made Arbitrage Trading easier, less risky and even more
             profitable with AI.
@@ -20,7 +16,7 @@ export default function HeroSection() {
         </div>
 
         <div className="mt-6 text-benBlue-lightC dark:text-benBlue-200 text-base mobile:text-xl mb">
-          <p>Join millions of active traders.</p>
+          <p>Join thousands of active traders.</p>
           <ul className="pl-2">
             <li className="flex items-center">
               <Caret

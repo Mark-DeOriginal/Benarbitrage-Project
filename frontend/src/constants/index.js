@@ -118,12 +118,8 @@ export const footerLinks = [
     ],
   },
   {
-    category: "Contact",
+    category: "Contact us",
     info: [
-      {
-        content: "23b Cheraton Block 1401, West Street, DC 98064, USA",
-        type: "address",
-      },
       {
         content: "info@benarbitrage.com",
         type: "email",
@@ -170,15 +166,15 @@ export const brands = [
 export const statistics = [
   {
     title: "Active Traders",
-    figure: "4.6M+",
+    figure: "653K",
   },
   {
-    title: "Trading Volume",
-    figure: "$14.7B",
+    title: "24hrs Valuation",
+    figure: "$13.7M",
   },
   {
     title: "Launch Date",
-    figure: "Sept, 2023",
+    figure: "Jan, 2024",
   },
 ];
 

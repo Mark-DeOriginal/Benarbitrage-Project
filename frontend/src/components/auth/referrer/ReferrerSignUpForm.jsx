@@ -67,6 +67,8 @@ export default function ReferrerSignUpForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    return (window.location.href = "/checkpoint");
+
     try {
       setIsLoading(true);
 

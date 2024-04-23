@@ -98,7 +98,7 @@ export default function WhyChooseUsSection() {
               </h4>
               <p>
                 Our dedicated Customer Support team is available around the
-                clock to provide you with the necessary assistance and support.
+                clock to provide you with necessary assistance.
               </p>
             </div>
           </div>

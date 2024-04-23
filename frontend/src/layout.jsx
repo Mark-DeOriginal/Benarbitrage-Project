@@ -3,15 +3,14 @@ import Footer from "./components/Footer";
 import LiveChat from "./components/live_chat/LiveChat";
 import HiringSection from "./components/HiringSection";
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children, showHiring }) {
   return (
     <>
       <NavBar />
       <main>{children}</main>
-      <HiringSection />
+      {showHiring === undefined && <HiringSection />}
       <Footer />
       <LiveChat />
     </>
-        
   );
 }

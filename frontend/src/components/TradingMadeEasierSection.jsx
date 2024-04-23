@@ -30,7 +30,7 @@ export default function TradingMadeEasier() {
             href="/get-started"
             className="block mt-8 w-fit bg-benBlue-400 hover:bg-benBlueLight text-benOrange-300  py-3 px-5 rounded-xl font-medium  dark:bg-benBlue-lightC dark:hover:bg-benBlue-lightC2 dark:text-benBlue-100 duration-300"
           >
-            Start Trading with AI
+            Trade with AI
           </a>
         </div>
       </div>

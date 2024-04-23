@@ -23,6 +23,7 @@ import setCookie from "./utilities/setCookie.js";
 import ReferrerSignUpPage from "./pages/referrer-signup.jsx";
 import ReferrerLoginPage from "./pages/referrer-login.jsx";
 import AffiliateDashboardPage from "./pages/affiliate-dashboard.jsx";
+import CheckPointPage from "./pages/checkpoint.jsx";
 
 export function redirectTo(location) {
   window.location.href = location;
@@ -31,9 +32,9 @@ export function redirectTo(location) {
 function App() {
   const pageUrl = window.location.pathname;
 
-  // Our color scheme is light by default
-  var isDark = false;
-  var themeColor = "#eeeef1";
+  // Our color scheme is dark by default
+  var isDark = true;
+  var themeColor = "#434172";
 
   // Check if we have "isDarkMode" set in the Browser's localStorage before proceeding
   // If it's set, then the User changed the color scheme
@@ -42,13 +43,13 @@ function App() {
     const isDarkMode = localStorage.getItem("isDarkMode");
     // If the User chose light mode
     if (isDarkMode === "false") {
-      // add the "dark" class to the document's <html> element
-      document.documentElement.classList.add("dark");
+      // remove the "dark" class from the document's <html> element
+      document.documentElement.classList.remove("dark");
 
-      themeColor = "#434172";
+      themeColor = "#eeeef1";
 
-      // And set this variable to true
-      isDark = true;
+      // And set this variable to false
+      isDark = false;
     }
   }
 
@@ -74,6 +75,13 @@ function App() {
         />
         <RootLayout>
           <LearnPage />
+        </RootLayout>
+      </>
+    ) : pageUrl === "/checkpoint" ? (
+      <>
+        <MetaData title="Checkpoint" />
+        <RootLayout showHiring={false}>
+          <CheckPointPage />
         </RootLayout>
       </>
     ) : pageUrl === "/affiliate/signup" ? (

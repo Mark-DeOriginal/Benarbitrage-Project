@@ -23,14 +23,17 @@ export default function HiringSection() {
             We love diversity and consider applications from every part of the
             world, regardless of race, gender, religion and ethnicity.
           </p>
-          <p>We're open to receiving your application.</p>
 
-          <a
-            href="/get-started"
-            className="block mt-8 w-fit bg-benBlue-400 hover:bg-benBlueLight text-[#dfd0bb]  py-3 px-5 rounded-xl font-medium duration-300 max-lg:mx-auto"
-          >
-            Get Started
-          </a>
+          <p>
+            Send an application to{" "}
+            <a
+              href="mailto:hr@benaritrage.com"
+              className="border-b border-dotted border-benBlue-lightE"
+            >
+              hr@benarbitrage.com
+            </a>
+            .
+          </p>
         </div>
       </div>
     </section>

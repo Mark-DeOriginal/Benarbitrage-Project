@@ -20,15 +20,17 @@ export default function Footer() {
             We are very optimistic of the capabilities of our AI Trading System
             and it's ability to trade the financial market and return profits
             for our users. However, market forces and other circumstances which
-            are beyond the control of our AI Systems may influence trade
-            profits, price of assets and duration of trades.
+            are beyond the control of our Systems may influence trade profits,
+            price of assets and duration of trades.
           </p>
         </div>
         {footerLinks.map((categories, index) => (
           <div
             key={index}
             className={`column space-y-2 mobile_lg:space-y-6 ${
-              categories.category === "Contact" ? "mobile_lg:max-w-[250px]" : ""
+              categories.category === "Contact us"
+                ? "mobile_lg:max-w-[250px]"
+                : ""
             }`}
           >
             <h2 className="header font-bold">{categories.category}</h2>

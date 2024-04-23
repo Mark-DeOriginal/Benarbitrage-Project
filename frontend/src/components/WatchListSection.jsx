@@ -19,7 +19,7 @@ export default function WatchListSection() {
   return (
     <section className="p-6 pt-20 tablet:pt-28 tablet:pb-12 tablet:px-[50px] max-w-[900px] mx-auto">
       <h2 className="text-2xl tablet:text-3xl font-bold text-benBlue-400 dark:text-benOrange-400 text-center">
-        Ben Exchange
+        Benarbitrage
         <br />{" "}
         <span className="text-xl tablet:text-2xl text-benBlue-lightB dark:text-benBlue-200 font-medium">
           Watch List

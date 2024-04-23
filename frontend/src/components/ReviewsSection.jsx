@@ -46,8 +46,8 @@ export default function ReviewsSection() {
           </p>
         </div>
         <div className="footer flex gap-2 text-base tablet:text-lg mt-8">
-          <TwitterIcon width={`35px`} height={`auto`} />
-          <p>@geo_harrison</p>
+          <TwitterIcon width={`auto`} height={`25px`} />
+          <p className="text-neutral-800">@geo_harrison</p>
         </div>
       </div>
     </section>
